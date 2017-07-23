@@ -19,13 +19,13 @@ var x = 10;
 
 function createFunction1() {
     var x = 20;
-    return new Function('return x;'); // esta x se refiere a la x global
+    return new Function('return x;'); // esta x se refiere a la x global. Devolverá 10
 }
 
 function createFunction2() {
     var x = 20;
     function f() {
-        return x; // esta x se refiere a la x de dos lineas más arria
+        return x; // esta x se refiere a la x de dos lineas más arriba. Devolverá 20 
     }
     return f;
 }
@@ -71,3 +71,8 @@ var miObjeto2 = function() {
 };
 
 miObjeto2(); //log window
+
+
+
+// Definir funciones
+
