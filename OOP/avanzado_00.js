@@ -62,5 +62,35 @@ console.log(Rect.prototype.area.apply(rect3)); //300
 
 // A esto se le llama cambiar el contexto de una función de JS. El valor de this en una función es el valor que tiene el contexto. El valor por defecto del contexto 
 // es el objeto propietario de una función, es decir, el objeto dentro del cual está definida la función. Apply lo que nos permite es cambiar el contexto de una función  
+// El método bind serviría para cambiar permanentemente el contexto de la invocaión de la función. Habría que mirar cómo ya que esto lo ha dicho en plan por encima sin especificar nada
+
+// Apply y call estaría bien por ejemplo para temas de eventos: creamos una librería con una función de click (que se va a ejecutar cuando se apriete  un botoón) que 
+// tiene una función de callback. yo kiero que los desarrolladores que utilicen mi librería usen la función de callback con un "this" que sea el del botón que sea pulsado. 
+
+
+
+
+/* ++++++++++ Otra forma de tener herencia por prottipo ++++++++++++ */
+
+// ¿Cómo puedo heredar el prototpipo de un objeto pero sin querer hacerlo por medio de la función constructora?
+
+var RoundButton = function(radius, text){
+    this.radius = radius;
+    this.text = text;
+};
+
+var rb = new RoundButton(10, "hola");
+rb.extraProperty = "extra";
+// Lo que queremos hacer es crear un objeto que sea hijo de rb: que tenga su prototipo pero que también todas sus propiedades.
+
+// Es decir, lo que quería sería esto más o menos
+// var rbchild = {};
+// rbchild.__proto__ = rb; // Pero __proto__ no está en el standar
+
+// La forma oficial de crearlo sería mediante Object.create(prototipo)
+var rbchild = Object.create(rb);
+
+console.log(JSON.stringify(rb.__proto__));
+console.log(JSON.stringify(rbchild.__proto__));
 
 
