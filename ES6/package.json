@@ -1,11 +1,17 @@
 {
 	"name": "curso-es6",
 	"version": "1.0.0",
+	"main": "webpack.config.js",
 	"scripts": {
-		"build": "babel src -d lib"
+		"babel": "babel src -d dist",
+		"build": "webpack"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.24.1",
-		"babel-preset-env": "^1.6.0"
-	}
+		"babel-loader": "^7.1.1",
+		"babel-polyfill": "^6.23.0",
+		"babel-preset-env": "^1.6.0",
+		"babel-preset-es2015": "^6.24.1",
+		"webpack": "^3.4.1"
+	}	
 }
