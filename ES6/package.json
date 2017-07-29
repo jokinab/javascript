@@ -1,5 +1,5 @@
 {
-	"name": "CursoES6",
+	"name": "curso-es6",
 	"version": "1.0.0",
 	"scripts": {
 		"build": "babel src -d lib"
