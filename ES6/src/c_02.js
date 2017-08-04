@@ -191,40 +191,70 @@ let { one, two } = object;
 // Ejm:
 
 
-
-/* let numbers = ['1', '2', '3'];
-
+// Teniendo un array
+// Se puede crear variables por cada valor del array
+let numbers = ['1', '2', '3'];
 let [one,two,three] = numbers;
+
 let ichi, ni, san;
-
-[ichi,ni,san] = numbers;
-
-// o tambien
-
 [ichi,ni,san] = [ 1, 2, 3 ];
 
 console.log( ichi,ni,san );
 
-//let objeto = { one: 1, two: 2 };
-//let {one,two} = objeto;
+
+
+// o tambien teniendo un objeto
 
 let objeto = { oneso: 1, doseso: 2 };
 let { oneso, doseso } = objeto;
 
-console.log(oneso,doseso);
 
-function sumaer({aer, ber} = {}){
+
+// Ejm:
+
+//Valores por defecto en los argumentos de una funcion
+
+function sum({aer, ber} = {}){
     return aer + ber; 
+}
+
+const th = 3;
+const fo = 4;
+
+console.log(sum({aer: th, ber: fo}));
+
+
+
+
+function sumaer({threes, four} = {}){
+    return threes + four; 
 }
 
 const threes = 3;
 const four = 4;
 
-
-console.log(sumaer({aer: threes, ber: four}));
- */
+console.log(sumaer({threes, four})); 
 
 
+// Cuidadin con los nombres de las propiedades. Fijarse en la utilidad de que propiedades y variables se llamen igual
+
+const newNumbers = {
+    threes:3,
+    four:9
+};
+
+console.log(sumaer(newNumbers));
+
+
+// Se pueden crear alias para las variables con desestructuracion 
+
+let persona ={
+    nombre: 'jok',
+    apellidos: 'arn bil'
+};
+
+let {nombre:name, apellidos:surname} = persona;
+console.log(name,surname);
 
 
 /******************************/
@@ -239,6 +269,40 @@ function sayHello({
 };
 
 sayHello({name:'jokin'});
+
+
+
+// Ejm:
+
+
+
+// Parametros por defecto
+
+// En ES5 era algon engorroso
+function drawCircle(options){
+    options = options === undefined ? {} : options;
+    var radius = options.radius === undefined ? 30 : options.radius;
+    var coords = options.coords === undefined ? { x: 0, y: 0 } : options.coords;
+    console.log(radius, coords);
+}
+drawCircle();
+drawCircle({radius:89});
+drawCircle({radius:10,coords:{x:9,y:90}})
+
+
+// En ES6 mejora sustancialmente
+
+function drawCircleNew( {radius = 33, coords = { x:89, y:98} } = {}){
+
+    // El raguments de toda la vidda sigue funcionando
+    console.log(arguments);
+
+    console.log(radius, coords);
+}
+
+console.log("new one: /n");
+drawCircleNew();
+drawCircleNew({radius:11});
 
 
 
