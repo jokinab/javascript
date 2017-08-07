@@ -322,12 +322,157 @@ console.log(values);    // [1, 2, 3, 4]
 console.log(...values); // 1 2 3 4  
 
 
+// Ejm:
+
+let values = [1,2,3,4];
+
+console.log(values);
+
+console.log(...values);
+// Seria lo mismo que hacer 
+console.log(1,2,3,4);
+// EL spread operator sirve para expandir un array o un objeto 
+
+function f(args){
+    return args.length;
+}
+
+console.log('without spreading', f(1,2,3));  // Esto da undefined porke los parametors pasados no son un array, por lo que no puede invocarse el metodo length
+
+function fspread(...args){
+    return args.length;
+}
+
+console.log('with spreading', fspread(1,2,3));
+
+
+
+// Ejm: 
+
+
+// Tambien se puede hacer al reves
+
+function spreadSuma(x, y, z){
+    return x + y + z;
+}
+
+console.log(spreadSuma(...[1,2,3]));
+
+
+
+let worker = {
+    id: 1337,
+    name: 'john',
+    surname:'Woo',
+    age: 'UI designer'
+};
+
+let customize = function(...worker){
+    return {
+        ...worker, 
+        fullname: `Mr./Mrs. ${worker.surname}, ${worker.name}`,
+        age: `${worker.age} years old`
+    };
+};
+
+
+
+console.log(customize(worker));
+
+
+
+
 /************************************************/
 /****** Arrow Functions / Funciones Flecha ******/
 /************************************************/
 
 const echo = text => text;
 console.log(echo('Hello, arrow funtions!'));
+
+
+
+// No se puede llamar como por medio de new. No pueden ser funciones constructoras.
+// No disponen de un prototipo
+// No crean un nuevo contexto, por lo que no se puede cambiar el valor de this
+// No tiene el paramentro arguments
+
+//  Ejm:
+// Con Parametros
+let echo = (a,b,c) => a+b+c;
+console.log(echo(1,2,3));
+
+// Sin Parametros
+let echoVoid = () => 'Aupa ahi!';
+console.log(echoVoid());
+
+var echoEsCinco = function() {
+    return arguments;
+};
+console.log(echoEsCinco("esto es"));
+
+
+// Con spread operator
+// Join lo que hace es teniendo un array, pasar todos los valores a un string separadado por lo que le pongas como parametro al metodo
+
+let concat = (...args) => args.join(' - ');
+console.log(concat('one', 'two', 'three', 'four'));
+
+// Operaciones mas complejas
+
+let resize = ({x, y}, ratio) => {
+    console.log(x);
+
+    return {
+        x: x * ratio,
+        y: y * ratio
+    };
+};
+
+console.log(resize({x:5,y:3},100));
+
+
+
+// Valor de this en las arrow functions
+
+let randomWinner = function(drivers) {
+    let winner = Math.floor(Math.random() * (0 - drivers.length) + drivers.length );
+    return drivers[winner];
+    
+};
+
+let f1Race = {
+    drivers: [
+        'Alonso',
+        'vettel',
+        'Button',
+        'Massa'
+    ],
+
+    init: function() {
+        console.log(`Los siguientes van a comenzar la carrera ${this.drivers}`);
+        
+        
+        setTimeout( (function(){
+            // function aqui crea otro contexto, por lo que no vale el this. En ES5 esto lo arreglabamos con bind  
+            console.log( `El ganador es ${randomWinner(this.drivers)}.` );
+        }).bind(this), 1000);
+
+            // O usando that
+        let that = this;
+        setTimeout( (function(){
+            console.log( `En segunda posicion tenemos a ${randomWinner(that.drivers)}.` );
+        }), 1000);
+    }
+};
+
+ 
+f1Race.init = function(){
+    console.log(`Los soguientes pilotos can a comenzar la carrera:  ${this.drivers}`);
+    // Las arrow functions no crean contexto, por lo que se mantiene el valor de this
+    setTimeout( () => console.log(`El ganador es ...trtrtrtrtrt.... ${randomWinner(this.drivers)}`), 1000 );
+}; 
+
+f1Race.init();
 
 
 
