@@ -123,5 +123,122 @@ console.log(loremIterator.next());
 // Para iterarlo, vamos a usar for of que permite iterar sobre iteradores
 
 for( let word of loremText ){    
-   // console.log(word);
+    console.log(word);
+}
+
+console.log([...loremText]);
+
+
+
+// Generadores
+// Los generadores no son mas que un tipo de funcion que puede devolver mas de un valor. 
+// Un generador lo que hace es pausar la ejecucion de una funcion hasta que se le vuelve a llamar de nuevo.
+
+
+import "babel-polyfill";
+
+
+ 
+function* generatorFunction() {
+    console.log('Hola');
+    yield 1;
+    console.log('Que tal?');
+    yield 2;
+}
+
+
+let objectGenerator = generatorFunction();
+
+//  console.log(objectGenerator.next().value); // 0
+//  console.log(objectGenerator.next().value); // 1
+//  console.log(objectGenerator.next().value); // 2
+  
+ 
+function* idMaker(){
+    var index = 0;
+    while(true)
+        yield index++;
+}
+
+var gen = idMaker();
+
+console.log(gen.next().value); // 0
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2 
+
+
+
+function* abc() {
+    yield 'a';
+    yield 'b';
+    yield 'c';
+    yield 'd';
+    yield 'e';
+}
+
+var char = abc();
+//console.log([...char]);
+console.log(char.next().value);
+console.log(char.next().value);
+console.log(char.next().value);
+
+ 
+
+for (let characters of abc()){
+    console.log(characters);
+} 
+
+
+// Ejemplo del lorem ipsum con generadores
+
+
+
+class LoremIpsumGen {
+    
+    constructor(text) {
+        this._text = text;
+    }
+
+    *words() {
+        const re = /\S+/g;
+        let match;
+        while( match = re.exec(this._text) ){
+            yield match[0];
+        }
+    }
+
+}
+
+const loremText = new LoremIpsumGen('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla auctor metus hendrerit, faucibus eros vitae, semper mauris. Curabitur pellentesque nisl ut sagittis auctor. Curabitur molestie, mi eu lacinia blandit, tellus nibh laoreet est, vel porttitor odio elit a tellus. Phasellus auctor massa in odio rhoncus maximus. Quisque lorem odio, hendrerit vitae porttitor eu, aliquet vitae sem. Fusce facilisis tristique quam nec pulvinar. Proin posuere lorem dolor, ac suscipit erat rutrum vitae. Praesent mi velit, fringilla commodo velit sed, elementum congue metus. Maecenas vel justo tincidunt, viverra tortor egestas, sollicitudin ipsum. In ut urna dolor. Morbi consectetur finibus hendrerit. Fusce at est mauris. Pellentesque bibendum ex non felis commodo, a condimentum magna mattis.');
+
+let wordsLorem = loremText.words();
+
+console.log(...wordsLorem);
+
+
+// Imprimir por pantlla Mr si es hombre o Mrs si es mujer = el nombre del usuario
+
+const users = [
+    {   sex: 'M',   name:   'John'  },
+    {   sex: 'W',   name:   'Lucia'  }
+];
+
+class Users {
+    constructor(people) {
+        this._people = people;
+    }
+
+    *alias() {
+        for ( let person of this._people ) {
+            yield person.sex === 'M' ? `Mr. ${person.name}` : `Mrs. ${person.name}`;
+        }
+    }
+}
+
+let displayUsers = new Users(users);
+
+let usersObj = displayUsers.alias();
+
+for ( let usersItem of usersObj) {
+    console.log(usersItem);
 }
