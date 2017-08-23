@@ -242,3 +242,90 @@ let usersObj = displayUsers.alias();
 for ( let usersItem of usersObj) {
     console.log(usersItem);
 }
+
+
+
+
+
+/*****************************/
+/*** ----- Promesas ------ ***/
+/*****************************/
+
+// ES una funcionalidad que te permite usar un valor que sabes en el momento de la escritura del codigo que puedes no tener, pero que en un 
+// futuro si tendras
+
+// Tiene un ciclo de vida copuesto por dos estados:
+//  - Fulfilled: la operacion asincrona de la promesa se ha completado con exito
+//  - Rejected: la operacion asincrona no se ha completado con exito, ya sea por un error o por otra causa
+
+// La sintaxis de la declaracion de la promesa es la siguiente:
+ 
+const doPromise = () => {
+    return new Promise( (resolve, reject) => {
+        // Do something
+        if (error) {
+            reject(error);
+        } 
+        // If success
+        resolve(result);
+    });
+}
+  
+// Uso
+ 
+let promiseResult = doPromise();
+
+promiseResult.then((result) => {
+    // fullfillment
+}).catch((err) => {
+    // rejection
+}); 
+
+ 
+function runAnimation(position) {
+    console.log('Moving to position...',position);
+}
+
+function delay(interval) {
+    return new Promise( function(resolve) {
+        setTimeout(resolve, interval);
+    });
+}
+
+runAnimation(0);
+delay(1000)
+    .then( function() {
+        runAnimation(1);
+        return delay(1000);
+    })
+    .then( function() {
+        runAnimation(2);
+    }); 
+
+
+// generar tiempos aleatorios 
+function getRandomTimeout() {
+    return Math.floot(Math.random() * (1 - 5) + 5) * 1000;
+};
+
+
+function animation(position) {
+    return new Promise( function(resolve) {
+        setTimeout(resolve, getRandomTimeout());
+    });
+}
+
+
+// Promise.all sirve para esperar a todas las promesas que se le pasa por array antes de ejecutar el then
+Promise.all([
+    animation(1),
+    animation(2),
+    animation(3),
+    animation(4),
+    animation(5),
+    animation(6),
+    animation(7),
+    animation(8)
+]).then(function() {
+    animation(9)
+})
