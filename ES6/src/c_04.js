@@ -329,3 +329,242 @@ Promise.all([
 ]).then(function() {
     animation(9)
 })
+
+
+
+// Export e import
+
+
+
+
+const square = (n) => n*n;
+console.log(square(3));
+
+import { Calculator } from './modules/calculator';
+
+let miCalculadora = new Calculator('Jokin');
+
+// console.log(miCalculadora.sumar(4,9,7,1));
+// console.log(miCalculadora.dividir(4,2,'3'));
+
+
+// Se puede importar todo el módulo y cada una de las clases serán métodos del objetos con nombre "alias" definido en la importación 
+
+import * as lib from './modules/calculator';
+
+let miOtraCalculadora = new lib.Calculator('Otra');
+
+// console.log(miOtraCalculadora.sumar(4,9,7,2));
+// console.log(miOtraCalculadora.dividir(4,2,1));
+
+
+// Se puede importar el módulo dándole un alias
+// import { member1 , member2 as alias2 , [...] } from "module-name";
+import { Calculator as miAliasCalculadora  } from './modules/calculator';
+
+
+let miOtraMasCalculadora = new miAliasCalculadora('Alias');
+
+// console.log(miOtraMasCalculadora.sumar(4,0));
+// console.log(miOtraMasCalculadora.dividir(4,1,1));
+
+
+// Cuando se exporta algo con default
+/*  Exportación:
+    
+        En ejem.js
+            export default function (obj) {
+                ...
+            };
+
+            
+    Importación:
+        
+        En index.js ( Las dos siguientes importaciones son equivalentes )
+            import { default as foo } from 'ejem';
+            import foo from 'ejem';    
+*/    
+
+// Export e import
+/*
+    https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Sentencias/export
+    https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Sentencias/import
+*/
+
+
+/*****************************/
+/*** ----- Promesas ------ ***/
+/*****************************/
+
+function runAnimation(position) {
+    console.log('Moving to position...',position);
+}
+
+function getRandomTimeout() {
+    return Math.floor(Math.random() * (1 - 5) + 5) * 300;
+};
+
+function delay(interval) {
+    return new Promise( function(resolve) {
+        setTimeout(resolve, getRandomTimeout());
+    });
+}
+/*
+runAnimation(0);
+
+delay(1000)
+    .then( function() {
+        runAnimation(1);
+        return delay(1000);
+    })
+    .then( function() {
+        runAnimation(2);
+        return delay(1000);
+    })
+    .then( function() {
+        runAnimation(3);
+        return delay(1000);
+    })
+    .then( function() {
+        runAnimation(4);
+    }); 
+
+*/
+
+
+/*******************************************************/
+/*** ----- Nuevos métodos añadidos a Objetos  ------ ***/
+/*******************************************************/
+
+
+
+/****************************/
+/*** ----- Strings ------ ***/
+/****************************/
+
+console.log('++++++++++ Strings +++++++++++');  
+
+let loremText = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.'; 
+
+console.log(loremText.startsWith('Lorem'));
+
+// .startWith puede recibir un parámetro que será el índice a partir del cual queremos ver si el texto empieza por 'Lorem'
+console.log(loremText.startsWith('ipsum',6));
+
+console.log(loremText.endsWith('tincidunt.'));
+
+console.log(loremText.includes('sociis'));
+
+console.log('x'.repeat(3)); // xxx
+
+
+
+/***************************/
+/*** ----- Number ------ ***/
+/***************************/
+
+console.log('++++++++++ Numbres +++++++++++');  
+
+console.log(Number.isInteger(25,9));  //true
+console.log(Number.isInteger(25,9));  //false
+console.log(Number.isInteger(25.0));  //true
+
+console.log(Number.isNaN(NaN));       //true
+
+console.log(Number.isNaN('asd'));     //false
+
+
+
+/**************************/
+/*** ----- Array ------ ***/
+/**************************/
+
+// new Array(element0, element1[, ...[, elementN]])
+// [ 1, 2 ]
+
+let items = new Array(1,2); 
+
+console.log(items.length);          // 2
+console.log(items[0]);              // 1
+console.log(items[1]);              // 2
+console.log("mapeo");
+console.log(items.map( a => 2*a )); // [ 2, 4 ]
+console.log("fin mapeo");    
+
+
+
+// new Array(arrayLength-N )
+// [ undefined, undefined, undefined, ..., elementN ]
+
+let items2 = new Array(2);   
+console.log(items2.length);  // 2
+console.log(items2[0]);      // undefined
+console.log(items2[1]);      // undefined
+  
+
+// The Array.of() method creates a new Array instance with a variable number of arguments, regardless of number or type of the arguments.
+
+let items3 = Array.of(2);
+console.log(items.length);  // 1 
+console.log(items[0]);      // 2
+
+
+
+// Convertir en Array los objetos que parecen arrays pero que no lo son
+// Por ejemplo, arguments
+
+function doSomething() {
+    
+    console.log(arguments);                     // { '0': 'a', '1': 'b', '2': 'c', '3': 'd' }
+    console.log(typeof arguments);              // object
+    
+    
+    // The Array.from() method creates a new Array instance from an array-like or iterable object.
+    //console.log(arguments.map( a => 2 * a ));     // TypeError: arguments.map is not a function
+    
+    let args = Array.from(arguments);           // Convierte arguments en un array
+    console.log(args);                          // [ 'a', 'b', 'c', 'd' ]
+    console.log(args.map( a => '2'+a ));        // [ '2a', '2b', '2c', '2d' ]
+}
+
+doSomething('a','b','c','d');
+
+
+let numberArray = [ 25, 30, 12, 55, 23, 45 ];
+
+// Array.prototype.find()
+// The find() method returns the value of the first element in the array that satisfies the provided testing function. 
+// Otherwise undefined is returned.
+
+// Buscar en un Array el primer item con numero mayor de 28
+
+console.log(numberArray.find(item => item > 28)); // Devuelve el primer elemento del array que sea mayor de 28
+
+// Array.prototype.findIndex()
+// The findIndex() method returns the index of the first element in the array that satisfies the provided testing function. 
+// Otherwise -1 is returned.
+
+// Buscar el indice en el Array del primer item con numero mayor de 28
+
+console.log(numberArray.findIndex(item => item > 28)); // 1
+
+
+
+
+
+/**************************/
+/*** ------ Sets ------ ***/
+/**************************/
+
+// Son parecidos a los arrays y permiten almacenar valor unicos, tanto valores primitivos como objetos referenciales
+// The Set object lets you store unique values of any type, whether primitive values or object references.
+// new Set([iterable]);
+
+let mySet = new Set();
+mySet.add('foo');
+
+for ( let item of mySet ) {
+    console.log(item);
+} 
+
+// min 40

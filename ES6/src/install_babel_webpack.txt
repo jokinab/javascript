@@ -1,0 +1,35 @@
+// Pasos a seguir para instalar Babel
+/*
+1.- Crear un fichero package.json
+    {
+        "name": "entorno prueba react",
+        "version": "1.0.0",
+        "main": "index.js",
+        "scripts": {
+            "start-1": "babel FICHERO_ENTRADA.js --out-file FICHERO_SALIDA.js",
+            "start-2": "babel src CARPETA_ORIGEN --out-dir CARPETA_SALIDA"
+        },
+        "keywords": [],
+        "author": "Jokin",
+        "license": "ISC",
+        "devDependencies": {
+           
+        }
+    }
+2.- Instalar Babel CLI 
+    npm i --save-dev babel-cli 
+
+    Instalar el conjunto de plugins y presets . Crear un fichero .babelrc
+    Instalar el preset para instalar todas las funcionalidades de es5:
+        npm i -D babel-preset-es2015
+
+    Presets: conjunto de plugins que definen un entorno de funcionalidades. 
+    {
+        "presets": [ "es2015" ],
+        "plugins": []
+    }
+3.- Para ejecutarlo:
+    npm run start-1 
+    ( start es el script configurado en el package.json )
+
+*/    
