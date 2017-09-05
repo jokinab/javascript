@@ -1,0 +1,12 @@
+Instalar reactJS cli:
+
+    sudo npm install -g create-react-app
+
+Crear proyecto:
+
+    create-react-app nommbre-proyecto
+
+Iniciar servidor:
+
+    npm start
+
