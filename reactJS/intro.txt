@@ -73,4 +73,12 @@ Creamos archivo de configuracion de webpack:
         }
     }
 
-   
+Configuramos los scripts en package.json:
+
+    "scripts": {
+        "serve": "webpack-dev-server --devtool sourcemap --progress --colors --content-base dist/ --inline",
+        "open": "opener http://localhost:8080",
+        "start": "npm run open && npm run serve",
+        "babel": "babel src -d dist",
+        "build": "webpack"
+    }
