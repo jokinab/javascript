@@ -1,3 +1,7 @@
+*****************************
+------- Con react CLI -------
+*****************************
+
 Instalar reactJS cli:
 
     sudo npm install -g create-react-app
@@ -10,3 +14,63 @@ Iniciar servidor:
 
     npm start
 
+
+*****************************
+-------- Con Webpack --------
+*****************************
+
+Inicializar repositorio GIT:
+
+    git init --> Esto nos crea el .git
+
+Inicializar repositorio npm:
+
+    npm init --> Esto nos crea el package.json
+
+Instalamos dependencias:
+
+    npm i webpack webpack-dev-server --save-dev         --> Dependencias de Webpack
+    npm i babel-core babel-loader babel-preset-react babel-preset-es2015 babel-preset-stage-1 -save-dev --> Dependencias de Babel
+    npm i opener -save-dev                              --> Nos permite abrir una pagina de forma automatica
+    npm i react react-dom --save                        --> Instalamos react como dependencia de produccion 
+
+
+Creamos archivo de configuracion de presets de babel e incluimos los presets a utilizar en la transpilacion:
+
+    touch .babelrc    
+
+    {
+        "presets": ["es2015","stage-1","react"]
+    }
+
+Creamos archivo de configuracion de webpack:
+
+    touch webpack.config.js    
+
+    var path = require('path');
+    var webpack = require('webpack');
+
+    module.exports = {
+        entry: './src/index.js',
+        output: {
+            filename: 'bundle.js',
+            path: path.resolve(__dirname, 'dist')
+        },
+        module: {
+            loaders: [
+                {
+                    test: /\.js$/,
+                    loader: 'babel-loader',
+                    query: {
+                        presets: ['es2015']
+                    },
+                    exclude: /node_modules/
+                }
+            ]
+        },
+        stats: {
+            colors: true
+        }
+    }
+
+   
