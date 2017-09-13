@@ -1,5 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+
+class DebuggerFunction extends React.Component {
+  onClickar () {
+    debugger;
+  }
+
+  render() {
+    return (
+      <button onClick={this.onClickar}>Debuuger!</button>
+    )
+  }
+}
 
 // Si solo se va a retornar un elemento en un componente stateless
 // la arrow function lo permite hacer en linea, sin especificar return
@@ -24,4 +36,10 @@ ReactDOM.render(
     caption={'Foto de gatito'}
   />,
   document.getElementById('app')
+)
+
+ReactDOM.render(
+  <DebuggerFunction
+  />,
+  document.getElementById('app2')
 )
