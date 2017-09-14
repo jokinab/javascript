@@ -2,13 +2,27 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
 class DebuggerFunction extends React.Component {
-  onClickar () {
-    debugger;
+  stopAlways () {
+    console.log('Stop Always!')
   }
 
-  render() {
+  stopConditional () {
+    const value = Math.floor(Math.random() * 2)
+    console.log('value: ', value)
+    console.log('Stop Conditional Value: ' + value)
+  }
+
+  stopDisabled () {
+    console.log('Stop Disabled!')
+  }
+
+  render () {
     return (
-      <button onClick={this.onClickar}>Debuuger!</button>
+      <div className='botones'>
+        <button onClick={this.stopAlways}>Stop always!</button>
+        <button onClick={this.stopConditional}>Stop conditional!</button>
+        <button onClick={this.stopDisabled}>Stop disbled!</button>
+      </div>
     )
   }
 }
