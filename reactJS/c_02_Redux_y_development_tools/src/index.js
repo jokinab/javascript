@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import {Contador} from './contador'
 
 class DebuggerFunction extends React.Component {
   stopAlways () {
@@ -56,4 +57,10 @@ ReactDOM.render(
   <DebuggerFunction
   />,
   document.getElementById('app2')
+)
+
+ReactDOM.render(
+  <Contador
+  />,
+  document.getElementById('app3')
 )
