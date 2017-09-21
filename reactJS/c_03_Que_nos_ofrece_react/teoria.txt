@@ -1,4 +1,4 @@
-Los componentes statefull tienen un ciclo de vida.
+ Los componentes statefull tienen un ciclo de vida.
 
 En cada etapa del ciclo de vida un componente puede hacer diferentes cosas. 
 
@@ -15,23 +15,80 @@ Se dividen en tres tipos:
     
     These methods are called when an instance of a component is being created and inserted into the DOM:
       
-      constructor()
-      componentWillMount()
-      render()
-      componentDidMount()
+      - constructor() {} [ getDefautProps() , geInitialState () ]
+      - componentWillMount() { /* Stuff to do */ } 
+          Este seria el primer punto de captura.  
+          Se ejecuta una vez, tanto en el cliente como en el servidor, inmediatemente antes del primer renderizado.
+          Si usamos setState en este metodo, render () { } vera el estado actualizado. 
+      - render()
+      - componentDidMount()
+        Este seria el segundo punto de captura. Se ejecuta una sola vez, solo en el cliente, inmediatemente despues del primer 
+        renderizado. Las referencias en el DOM ya existen y es el lugar ideal para hacer request AJAX, crear eventos o poner 
+        timers como setTimeout.
+        La idea de esto es que el componete se renderice como pueda, incluso aunque este vacio. Cuando se ejecute el 
+        componentDidMount() nos preocuparemos de buscar los datos y re-renderizar el componente con el nuevo estado. 
+        Importante: El componentDidMount () {} de los hijos sera ejecutado antes que el del padre.
 
-  -Actualizacion (Updating):
+  -Actualizacion Props (Updating Props):
   
     An update can be caused by changes to props or state. These methods are called when a component is being re-rendered:
       
-      componentWillReceiveProps()
+      - componentWillReceiveProps (nextProp) { /* Stuff to do */ } 
+        Se ejecuta cuando nuestro componente reciba nuevas propiedades. No se ejecuta con el primer render()
+        Esta funcion recibe como parametro las nuevas propiedades (muy util para hacer comparaciones y acutalizar el estado 
+        segun las propiedades) 
+
+        componentWillReceiveProps (nextProps) {
+          const changedValue = this.props.value !== nextProps.value ? true : false
+          this.setState( { changed: changedValue } )
+        }
+
+      - shouldComponentUpdate () { /* Stuff to do */ }  
+        
+        Justo antes de volver a renderizarse con las nuevas props y estado. No se ejecuta con el primer render (). 
+        Esta funcion recibe como parametros las nuevas props y estado y siempre debe devolver un booleano. Por defecto esta 
+        funcion siempre devuelve true.
+
+        shouldComponentUpdate () { 
+          /*Stuff to do*/  
+          return true/false;  debe devolver un booleano 
+        } 
+
+      - componentWillUpdate ()
+        
+        Se ejecuta justo antes de que el componente se vaya a renderizar con las nuevas propiedades o estado. No se ejecuta con el 
+        primer render (). Esta funcion recibe como parametro las nuevas propiedades y el nuevo estado. 
+        componentWillUpdate (nextProp, nextState) { /* Stuff to do */ }
+        En el componentWillUpdate no se deberia usar setState para cambar el estado o habra un bucle infinito
+      
+      - render()
+      - componentDidUpdate()
+
+  -Actualizacion State (Updating State):
+  
+    Igual que actualizar con cambios de props, pero sin componentWillReceiveProps()
+
+    An update can be caused by changes to props or state. These methods are called when a component is being re-rendered:
+      
       shouldComponentUpdate()
+
       componentWillUpdate()
       render()
-      componentDidUpdate()
+      componentDidUpdate()    
   
   -Desmontaje (Unmounting):
     
     This method is called when a component is being removed from the DOM:
       
       componentWillUnmount()
+
+Las fases de los componentes: 
+  http://javascript.tutorialhorizon.com/2014/09/13/execution-sequence-of-a-react-components-lifecycle-methods/      
+
+
+Digamos que estos son puntos de captura. 
+
+  montaje
+
+
+min 21
