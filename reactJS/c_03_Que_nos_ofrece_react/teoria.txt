@@ -9,19 +9,30 @@ o cuando se actualice, etc...
 
 info: https://facebook.github.io/react/docs/react-component.html
 
-Se dividen en tres tipos:
+Se dividen en tres escenarios:
 
-  -Montaje (Mounting):
+  * Montaje (Mounting) - Inital Render:
     
     These methods are called when an instance of a component is being created and inserted into the DOM:
       
-      - constructor() {} [ getDefautProps() , geInitialState () ]
+      - constructor () 
+      
+        - getDefautProps() 
+        - geInitialState ()
+
+      
       - componentWillMount() { /* Stuff to do */ } 
+      
           Este seria el primer punto de captura.  
           Se ejecuta una vez, tanto en el cliente como en el servidor, inmediatemente antes del primer renderizado.
           Si usamos setState en este metodo, render () { } vera el estado actualizado. 
+      
+      
       - render()
+      
+      
       - componentDidMount()
+      
         Este seria el segundo punto de captura. Se ejecuta una sola vez, solo en el cliente, inmediatemente despues del primer 
         renderizado. Las referencias en el DOM ya existen y es el lugar ideal para hacer request AJAX, crear eventos o poner 
         timers como setTimeout.
@@ -29,7 +40,8 @@ Se dividen en tres tipos:
         componentDidMount() nos preocuparemos de buscar los datos y re-renderizar el componente con el nuevo estado. 
         Importante: El componentDidMount () {} de los hijos sera ejecutado antes que el del padre.
 
-  -Actualizacion Props (Updating Props):
+
+  * Actualizacion Props (Updating Props) - Props Change:
   
     An update can be caused by changes to props or state. These methods are called when a component is being re-rendered:
       
@@ -43,7 +55,7 @@ Se dividen en tres tipos:
           this.setState( { changed: changedValue } )
         }
 
-      - shouldComponentUpdate () { /* Stuff to do */ }  
+      - shouldComponentUpdate (nextProps, nextState) { /* Stuff to do */ }  
         
         Justo antes de volver a renderizarse con las nuevas props y estado. No se ejecuta con el primer render (). 
         Esta funcion recibe como parametros las nuevas props y estado y siempre debe devolver un booleano. Por defecto esta 
@@ -62,33 +74,66 @@ Se dividen en tres tipos:
         En el componentWillUpdate no se deberia usar setState para cambar el estado o habra un bucle infinito
       
       - render()
-      - componentDidUpdate()
+      
+      - componentDidUpdate (prevProps, prevState) { /* Stuff to do */ }
 
-  -Actualizacion State (Updating State):
+        Se ejecuta justo despues de renderizarse. No se ejecuta con el primer render(). Este punto de captura nos indica que el coponente se 
+        ha renderizado de nuevo. Aqui, pues igual, las referencias del DOM han cambiado, por lo que ingual nos interesa cambiar eventos, o alguna
+        otra cosa. Procuraremos no tener que cambiar los eventos del DOM, pero puede ocurrir por ejemplo que tengamos una libreria externa que necesitamos que se 
+        vuelva a actualizar (por ejemplo un slider que habria que re-renderizar cuando tenga nuevos slides), etc...
+
+
+
+  * Actualizacion State (Updating State) - State Update:
   
     Igual que actualizar con cambios de props, pero sin componentWillReceiveProps()
 
     An update can be caused by changes to props or state. These methods are called when a component is being re-rendered:
       
       shouldComponentUpdate()
-
       componentWillUpdate()
       render()
       componentDidUpdate()    
-  
-  -Desmontaje (Unmounting):
+
+ 
+  * Desmontaje (Unmounting):
     
     This method is called when a component is being removed from the DOM:
       
-      componentWillUnmount()
+      componentWillUnmount (prevProps, precState) { /* Stuff to do */ }
+
+      Se ejecuta justo antes de que el coponente se vaya a eliminar. Especialmente util para limpiar eventos asignados a las referencias DOM de nuestro coponente,
+      eliminar timers y limpiar observables
+
+
+
+
 
 Las fases de los componentes: 
   http://javascript.tutorialhorizon.com/2014/09/13/execution-sequence-of-a-react-components-lifecycle-methods/      
 
 
-Digamos que estos son puntos de captura. 
-
-  montaje
+Digamos que estos son los puntos de captura que debemos tener en cuenta. 
 
 
-min 21
+
+// Ejemplo componente react con puntos d captura: 
+
+import React, { Component } from 'react'
+
+export default class HelloWorld extends Component {
+
+  // lifecycle methods
+  componentWillMount () { }
+  componentDidMount () { }
+  componentWillReceiveProps (nextProps) { }
+  componentWillUpdate (nextProps, nextState) { }
+  shouldComponentUpdate (nextProps, nextState) { }
+  componentDidUpdate (prevProps, prevtState) { }
+  componentWillUnmount () { }
+
+  render () {
+    return <p>Hello World!</p>
+  }
+  
+}
