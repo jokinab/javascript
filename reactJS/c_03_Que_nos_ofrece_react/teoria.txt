@@ -137,3 +137,17 @@ export default class HelloWorld extends Component {
   }
   
 }
+
+
+
+Hijos dinamicos
+
+  Componentes que renderizan coponentes totalmente diferentes segun el estado o las proiedades asignadas
+
+Muy util para: 
+  
+  - Renderizar un componente para cuando no tenemos resultados y otro para cuando si
+  - Renderizar un componente para indicar que estamos cargando el contenido
+  - Renderizar una lista de componentes
+
+

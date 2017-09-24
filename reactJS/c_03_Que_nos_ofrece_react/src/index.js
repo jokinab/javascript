@@ -1,73 +1,64 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import { LifeCycleDemo } from './life-cycle/LifeCycleDemo'
+import { DinamicChildsDemo } from './dinamic-childs/DinamicChilds'
+import { NestedComponentsDemo } from './nested-components/NestedComponentsDemo'
+import { EncapsulatingLibrariesDemo } from './encapsulating-libraries/EncapsulatingLibrariesDemo'
 
-export default class LifeCycleDemo extends Component {
+const DemoList = ['LifeCycleDemo', 'DinamicChildsDemo', 'NestedComponentsDemo', 'EncapsulatingLibrariesDemo']
+
+const Button = (props) => (
+  <button className={props.selected} key={props.index} onClick={props.onClick}>{props.text}</button>
+)
+
+class App extends Component {
   constructor (...args) {
     super(...args)
-
-    this.changeState = this.changeState.bind(this)
-
     this.state = {
-      mensaje: this.props.initialMessage
+      selectedOption: this.props.defaultDemo
     }
-
-    console.log('%c <LifeCycleDemo> constructor', 'color:green')
   }
 
-  componentWillMount () {
-    console.log('%c <LifeCycleDemo> ComponentWillMount', 'color:green')
-  }
-
-  componentDidMount () {
-    console.log('%c <LifeCycleDemo> ComponentDidMount', 'color:green')
-    this.interval = setInterval(() => {
-      console.log('go!')
-    }, 100)
-  }
-
-  componentWillReceiveProps (nextProps) {
-    console.log('<LifeCycleDemo> componentWillReceiveProps', nextProps)
-  }
-
-  shouldComponentUpdate (nextProps, nextState) {
-    console.log('%c <LifeCycleDemo> shouldComponentUpdate', 'color:green')
-    console.log('\t-actualProps ', this.props.sizeMessage)
-    console.log('\t-nextProps', nextProps.sizeMessage)
-    console.log('\t-actualState', this.state.mensaje)
-    console.log('\t-nextState', nextState.mensaje)
-    return (this.props.sizeMessage !== nextProps.sizeMessage) || (this.state.mensaje !== nextState.mensaje)
-  }
-
-  componentWillUpdate () {
-    console.log('%c <LifeCycleDemo> componentWillUpdate', 'color:green')
-  }
-
-  componentDidUpdate () {
-    console.log('%c <LifeCycleDemo> componentDidUpdate', 'color:green')
-  }
-
-  componentWillUnmount () {
-    /* console.log('%c <LifeCycleDemo> componentWillUnmount', 'color:green') */
-  }
-
-  changeState () {
-    this.setState({ mensaje: 'Mensaje actualizado!' })
+  changeOption (item) {
+    this.setState({selectedOption: item})
   }
 
   render () {
-    console.log('%c <LifeCycleDemo> render', 'color:green')
     return (
       <div>
-        <h1>Life Cycle Demo</h1>
-        <p><strong>State: </strong><code>{JSON.stringify(this.state)}</code></p>
-        <p><strong>Props: </strong><code>{JSON.stringify(this.props)}</code></p>
-        <button onClick={this.changeState}>Change conponent state</button>
+        <h1 className='main-title'>Wellcome to Demo</h1>
+        <header className='header'>
+          {DemoList.map(
+            (item, index) => (
+              <Button
+                key={index}
+                text={item}
+                selected={item === this.state.selectedOption ? 'active' : ''}
+                onClick={e => this.changeOption(item)}
+              />
+            )
+          )}
+        </header>
+        <main>
+          { this.state.selectedOption === 'LifeCycleDemo' &&
+            <LifeCycleDemo sizeMessage='12' initialMessage='Mensaje Inincial! Pasado como propiedad!' />
+          }
+          { this.state.selectedOption === 'DinamicChildsDemo' &&
+            <DinamicChildsDemo initialshow={false} />
+          }
+          { this.state.selectedOption === 'NestedComponentsDemo' &&
+            <NestedComponentsDemo />
+          }
+          { this.state.selectedOption === 'EncapsulatingLibrariesDemo' &&
+            <EncapsulatingLibrariesDemo />
+          }
+        </main>
       </div>
     )
   }
 }
 
 ReactDOM.render(
-  <LifeCycleDemo sizeMessage='12' initialMessage='Mensaje Inincial! Pasado como propiedad!'/>,
+  <App defaultDemo='DinamicChildsDemo' />,
   document.getElementById('root')
 )
