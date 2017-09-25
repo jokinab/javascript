@@ -1,0 +1,9 @@
+* Comunicacion padres a hijos
+    - Por medio de props
+
+* Comunicacion hijos a padres
+    - Por medio de handlers: los handlers son funciones que se pasan como props para hacer que la info del 
+    hijo pueda ser conocida por el padre cuando dicha funcion sea ejecutada en el padre.
+
+* Comunicacion entre componentes independientes
+    - Suscriptores (eje: Flux, Alt o Redux)
