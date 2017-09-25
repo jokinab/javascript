@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import { translations } from './../data'
 
 /* 
 Comunicacion padres a hijos
@@ -8,23 +9,14 @@ Comunicacion padres a hijos
   Se pueden hacer que las propiedades sean reuired por medio de la la validacion de las propiedades.
 */
 
-export default class TitleComponent extends Component {
-  static get propTypes () {
-    return {
-      title: PropTypes.string.isRequired
-    }
-  }
-
-  render () {
-    return <h1>{`Hello ${this.props.title}!`}</h1>
-  }
+export default function TitleComponent (props) {
+  const { language, title } = props
+  return (<h1 className='title'>{translations[language]['TITLE'].replace('%name%', title)}</h1>)
 }
 
-/* 
 // Se puede hacer fuera de la clase la validacion de las props
 
 TitleComponent.propTypes = {
-  title: PropTypes.number,
+  title: PropTypes.string,
   logo: PropTypes.string
 }
-*/

@@ -1,5 +1,22 @@
 * Comunicacion padres a hijos
     - Por medio de props
+    - Se puede hacer fuera de la clase la validacion de las props
+
+        * Desde fuera del componente
+
+            NombreComponenteHijo.propTypes = {
+                title: PropTypes.number,
+                logo: PropTypes.string
+            }
+
+        * Desde dentro del componente
+
+            static get propTypes () {
+                return {
+                title: PropTypes.string.isRequired
+                }
+            }
+
 
 * Comunicacion hijos a padres
     - Por medio de handlers: los handlers son funciones que se pasan como props para hacer que la info del 
@@ -7,3 +24,24 @@
 
 * Comunicacion entre componentes independientes
     - Suscriptores (eje: Flux, Alt o Redux)
+
+
+* JSX controla los formularios por medio de propiedades interactivas
+    
+    Las propiedades que react va a conntrolar de los forms son: 
+        - Value
+        - Checked
+        - selected
+    
+    Lo controlara por medio de los siguientes eventos:
+        - onChange
+        - onInput
+        - onInvalid
+        - onSubmit   
+
+    Enlaces de interes: 
+        https://facebook.github.io/react/docs/forms.html
+        https://facebook.github.io/react/docs/events.html#form-events
+        https://medium.com/@gaperton/managing-state-and-forms-with-react-part-1-12eacb647112
+        https://medium.com/@gaperton/react-forms-with-value-links-part-2-validation-9d1ba78f8e49
+        https://medium.com/@gaperton/state-and-forms-in-react-part-3-handling-the-complex-state-acf369244d37

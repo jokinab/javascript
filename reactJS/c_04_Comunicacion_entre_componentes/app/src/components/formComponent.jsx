@@ -1,13 +1,40 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import { languages } from '../config'
 
-export default class Form extends Component {
-  static get propTypes () {
-    return {
-    }
-  }
+const LanguageOption = (props) => (
+  <option key={props.index} value={props.value}>{props.value}</option>
+)
 
-  render () {
-    return (<div>Form</div>)
-  }
+export default function Form (props) {
+  return (
+    <div>
+      <div className='form-field'>
+        <label htmlFor='name'>Name: </label>
+        <input
+          id='name'
+          type='text'
+          value={props.name}
+          onChange={ props.handleNameChange }
+        />
+      </div>
+      <div className='form-field'>
+        <label htmlFor='language'>Language: </label>
+        <select id='language' onChange={props.handleLanguageChange} defaultValue={props.language}>
+          {languages.map((language, index) =>
+            <LanguageOption
+              value={language}
+              key={index}
+            />)}
+        </select>
+      </div>
+    </div>
+  )
+}
+
+Form.propTypes = {
+  name: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  handleNameChange: PropTypes.func.isRequired,
+  handleLanguageChange: PropTypes.func.isRequired
 }
