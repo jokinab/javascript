@@ -28,6 +28,15 @@ export default function Form (props) {
             />)}
         </select>
       </div>
+      <div className='form-field'>
+        <label htmlFor='highLight'>HighLight: </label>
+        <input
+          id='highLight'
+          type='checkbox'
+          onChange={props.handleHighLightChange}
+          defaultChecked={props.highLight}
+        />
+      </div>
     </div>
   )
 }
@@ -35,6 +44,8 @@ export default function Form (props) {
 Form.propTypes = {
   name: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
+  highLight: PropTypes.bool.isRequired,
   handleNameChange: PropTypes.func.isRequired,
-  handleLanguageChange: PropTypes.func.isRequired
+  handleLanguageChange: PropTypes.func.isRequired,
+  handleHighLightChange: PropTypes.func.isRequired
 }
