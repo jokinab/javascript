@@ -37,6 +37,14 @@ export default function Form (props) {
           defaultChecked={props.highLight}
         />
       </div>
+      <div className='form-field'>
+        <label htmlFor='name'>Notes: </label>
+        <input
+          id='notes'
+          type='text'
+          onKeyPress={ props.handleNotesKeyPress }
+        />
+      </div>
     </div>
   )
 }
@@ -47,5 +55,6 @@ Form.propTypes = {
   highLight: PropTypes.bool.isRequired,
   handleNameChange: PropTypes.func.isRequired,
   handleLanguageChange: PropTypes.func.isRequired,
-  handleHighLightChange: PropTypes.func.isRequired
+  handleHighLightChange: PropTypes.func.isRequired,
+  handleNotesKeyPress: PropTypes.func.isRequired
 }

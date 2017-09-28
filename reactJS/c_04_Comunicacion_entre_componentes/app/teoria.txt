@@ -26,7 +26,7 @@
     - Suscriptores (eje: Flux, Alt o Redux)
 
 
-* JSX controla los formularios por medio de propiedades interactivas
+* react controla los formularios por medio de propiedades interactivas
     
     Las propiedades que react va a conntrolar de los forms son: 
         - Value

@@ -14,13 +14,12 @@ export default class App extends Component {
       language: 'es',
       highLight: false,
       notesTitle: 'Notes',
-      notes: [
-        'Mi primera nota'
-      ]
+      notes: []
     }
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleLanguageChange = this.handleLanguageChange.bind(this)
     this.handleHighLightChange = this.handleHighLightChange.bind(this)
+    this.handleNotesKeyPress = this.handleNotesKeyPress.bind(this)
   }
 
   handleNameChange (event) {
@@ -33,6 +32,14 @@ export default class App extends Component {
 
   handleHighLightChange (event) {
     this.setState({highLight: event.target.checked})
+  }
+
+  handleNotesKeyPress (event) {
+    if (event.key === 'Enter') {
+      const newNotes = this.state.notes.slice()
+      newNotes.push(event.target.value)
+      this.setState({notes: newNotes})
+    }
   }
 
   render () {
@@ -53,11 +60,13 @@ export default class App extends Component {
             handleNameChange={this.handleNameChange}
             handleLanguageChange={this.handleLanguageChange}
             handleHighLightChange={this.handleHighLightChange}
+            handleNotesKeyPress={this.handleNotesKeyPress}
           />
         </div>
         <div className='sidebar'>
           <Notes
             title={this.state.notesTitle}
+            notes={this.state.notes}
           />
         </div>
       </div>
