@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
 import Logo from './logo';
-import dummyData from './dummyData';
+//import dummyData from './dummyData';
 import './App.css';
 import Card from './Card';
+import { PropTypes } from 'prop-types';
+import Searcher from './Searcher';
+
+const API_URL = 'http://gateway.marvel.com:80/v1/public';
+const APIKEY_QUERYSTRING = 'apikey=1746232ad739a6d56e75f025d04655f9';
 
 export default class App extends Component {
   constructor (...args) {
     super(...args);
     this.state = {
-      results: dummyData,
-      textToSearch: ''
+      initialState: true,
+      results: []
     };
-
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleCLick = this.handleClick.bind(this);
   }
 
-  handleSubmit (event) {
-    event.preventDefault();
-    console.log('Submit!');
-  }
-
-  handleChange (event) {
-    this.setState({textToSearch: event.currentTarget.value}, () =>
-      console.log('Texto con el nuevo estado: ', this.state.textToSearch)
-    );
+  handleSubmit (textToSearch) {
+    this.setState({ initialState: false });
+    const FETCH_URL = `${API_URL}/characters?nameStartsWith=${textToSearch}&${APIKEY_QUERYSTRING}`;
+    fetch(FETCH_URL)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ results: res.data.results });
+      })
+      .catch(err => console.log(err));
   }
 
   handleClick (event) {
@@ -35,13 +37,13 @@ export default class App extends Component {
   render () {
     return (
       <div className='container'>
+
         <Logo isCentered={true} />
 
-        <form onSubmit={this.handleSubmit}>
-          <input onChange={this.handleChange} type='text' />
-          <button onClick={this.handleClick}>Go!</button>
-        </form>
+        <Searcher onSubmit={this.handleSubmit} />
 
+        {this.state.initialState &&
+          <p className='has-text-centered'>Por favor, usa el formularion para buscar nuevos resultados</p>}        
         <div className='results'>
           {this.state.results.map(item => <Card item={item} key={item.id}/>)}
         </div>
