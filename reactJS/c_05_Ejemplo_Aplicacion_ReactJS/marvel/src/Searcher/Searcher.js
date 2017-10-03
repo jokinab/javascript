@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import './Searcher.css';
+import Button from './../Button/Button';
 
 export default class Searcher extends Component {
   constructor (...args) {
@@ -26,8 +27,14 @@ export default class Searcher extends Component {
   render () {
     return (
       <form className='Searcher' onSubmit={this.handleSubmit}>
-        <input onChange={this.handleChange} type='text' />
-        <button>Go!</button>
+        <input
+          disabled={this.props.isLoading}
+          onChange={this.handleChange}
+          placeholder='Find a Character'
+          type='text' />
+        <Button
+          isLoading={this.props.isLoading}
+          label='Search' />
       </form>
     );
   }
