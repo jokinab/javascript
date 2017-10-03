@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Logo from './Logo/logo';
-//import dummyData from './dummyData';
 import './App.css';
 import Card from './Card/Card';
-import { PropTypes } from 'prop-types';
 import Searcher from './Searcher/Searcher';
+import lscache from 'lscache';
 
 const API_URL = 'http://gateway.marvel.com:80/v1/public';
 const APIKEY_QUERYSTRING = 'apikey=1746232ad739a6d56e75f025d04655f9';
@@ -15,9 +14,15 @@ export default class App extends Component {
     this.state = {
       initialState: true,
       isLoading: false,
-      results: []
+      results: [],
+      favs: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount () {
+    const favs = lscache.get('favs') || [];
+    this.setState({ favs: favs });
   }
 
   handleSubmit (textToSearch) {
@@ -27,6 +32,7 @@ export default class App extends Component {
       .then(res => res.json())
       .then(res => {
         this.setState({ results: res.data.results, isLoading: false });
+        console.log(res);
       })
       .catch(err => console.log(err));
   }
@@ -47,9 +53,17 @@ export default class App extends Component {
         />
 
         {this.state.initialState &&
-          <p className='has-text-centered'>Por favor, usa el formularion para buscar nuevos resultados</p>}        
+          <p className='has-text-centered'>Por favor, usa el formularion para buscar nuevos resultados</p>}
         <div className='results'>
-          {this.state.results.map(item => <Card item={item} key={item.id}/>)}
+          {this.state.results.map(item => {
+            return (
+              <Card
+                item={item}
+                key={item.id}
+                isFav={this.state.favs.some(id => item.id === id)}
+              />
+            );
+          })}
         </div>
       </div>
     );
