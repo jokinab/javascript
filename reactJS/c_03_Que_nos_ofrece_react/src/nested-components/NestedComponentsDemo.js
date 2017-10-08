@@ -37,7 +37,7 @@ export class NestedComponentsDemo extends Component {
         <Article title='Titulo del Articulo'>
           <p>En un lugar de la Mancha, de cuyo nombre no quiero acordarme...</p>
           <p>Vivia un joven bla bla bla...</p>
-        </Article>      
+        </Article>
       </div>
     )
   }

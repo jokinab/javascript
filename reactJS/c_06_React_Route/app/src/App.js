@@ -45,13 +45,6 @@ export default class App extends Component {
   render () {
     return (
       <div className='demo'>
-        <header className='header'>
-          <img src={logo} className="App-logo" alt="logo" />
-          <TitleComponent
-            title={this.state.name}
-            language={this.state.language}
-          />
-        </header>
         <div className="main">
           <Form
             name={this.state.name}

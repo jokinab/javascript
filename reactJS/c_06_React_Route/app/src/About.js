@@ -1,22 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 
-export default class About extends Component {
-  constructor (...args) {
-    super(...args)
-
-    this.state = {
-      name: 'Jokin'
-    }
-  }
-
-  render () {
-    return (
-      <div className='about'>
-        <div className="main">
-          <p className='text'>{this.state.name}</p>
-          <p className='text'>{console.log(this.props)}</p>
-        </div>
-      </div>
-    )
-  }
+export default function About ({ children }) {
+  return (
+    <div>
+      <h1>Title</h1>
+      {children}
+    </div>
+  );
 }
+
+About.propTypes = {
+  children: PropTypes.node
+};

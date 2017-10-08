@@ -35,3 +35,11 @@ input,select {
   padding: 100px 0;
 }
 
+.nav{
+  list-style: none;
+}
+
+.nav-item{
+  display: inline-block;
+  margin:0 10px;
+}
