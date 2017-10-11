@@ -190,3 +190,20 @@ location: object                          // ???
                                           history location), then the location prop passed to <Route> will be overridden by the one used by the <Switch> (given here).
 
 
+
+<Router>                                  Es la interfaz comun de bajo nivel de todos los componentes de router. Tipicamente, las apps usaran estos routers de alto nivel:
+                                          <BrowserRouter>
+                                            
+                                          <HashRouter>
+                                          <MemoryRouter>
+                                          <NativeRouter> // Para apps de lenguage nativo
+                                          <StaticRouter> // Para renderizacion en el server
+
+
+<Switch>                                  Renderiza el primer hijo <Route> o <Redirect> que hace el match.     
+                                          La diferencia de usar switch o no ponerlo (sin wrapear un conjunto de <Route>):
+                                            Switch solo permite una renderizacion de entre todos los componentes hijos <Route>, mientras que sin switch, se pueden renderizar todos los que hagann match.
+                                          Propiedades:
+                                             - "location" a usar para hacer matching con los hijos en vez del location history actual (normalmente la url actual del navegador)
+                                             - Children :node - deben ser o <Route> o <Redirect>. Solo el primer match se renderizara.
+                                               Para matchear los Routes se usa la prop "path" y para los Redirects se usa la prop "from" 
