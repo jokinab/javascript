@@ -12,4 +12,4 @@ export default function About ({ children }) {
 
 About.propTypes = {
   children: PropTypes.node
-};
+}; 

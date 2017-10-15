@@ -52,15 +52,15 @@ class BasicExample extends Component {
               </ul>
             </nav>
           </header>
-          <hr/>
           <Switch>
-            <Route exact path="/" component={App}/>
+            <Route exact path="/:language" component={App}></Route>
             <Route path="/about" component={About}/>
             <Route path="/topics" component={Topics}/>
             <Route path="/auth" component={Auth}/>
             <Route path="/custom" component={CustomLinkExample}/>
           </Switch>
         </div>
+
       </Router>
     );
   }

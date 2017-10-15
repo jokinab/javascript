@@ -4,6 +4,14 @@ import './App.css'
 import TitleComponent from './components/titleComponent'
 import Form from './components/formComponent'
 import Notes from './components/notesComponent'
+import PropTypes from 'prop-types'
+import { languages } from './config/'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
 
 export default class App extends Component {
   constructor (...args) {
@@ -20,6 +28,10 @@ export default class App extends Component {
     this.handleLanguageChange = this.handleLanguageChange.bind(this)
     this.handleHighLightChange = this.handleHighLightChange.bind(this)
     this.handleNotesKeyPress = this.handleNotesKeyPress.bind(this)
+  }
+
+  getChildContext () {
+    return { language: this.props.match.params.language };
   }
 
   handleNameChange (event) {
@@ -46,6 +58,8 @@ export default class App extends Component {
     return (
       <div className='demo'>
         <div className="main">
+          {console.log('parametro recogido de la url: ', this.props.match.params.language)}
+          <TitleComponent title='Jokin' />
           <Form
             name={this.state.name}
             language={this.state.language}
@@ -66,3 +80,8 @@ export default class App extends Component {
     )
   }
 }
+
+
+App.childContextTypes = {
+  language: PropTypes.oneOf(languages)
+};
