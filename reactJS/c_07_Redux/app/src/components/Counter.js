@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Proptypes from 'prop-types';
 
 export default class Counter extends Component {
   constructor(...args) {
@@ -19,12 +20,15 @@ export default class Counter extends Component {
   render () {
     return (
       <div>
-          <h1>{this.state.counter}</h1>
-          <a onClick={this.handleAdd} className='btn-floating btn-large waves-effect waves-light red'>
-            <i className="material-icons">add</i>
-          </a>
-       </div> 
+        <h1>{this.state.counter}</h1>
+        <a onClick={this.handleAdd} className='btn-floating btn-large waves-effect waves-light red'>
+          <i className="material-icons">add</i>
+        </a>
+      </div>
     );
-  }
-  
+  }  
+}
+
+Counter.Proptypes = {
+  onAdd: Proptypes.func
 }

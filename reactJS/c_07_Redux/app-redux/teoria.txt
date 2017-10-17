@@ -1,0 +1,70 @@
+Patron de Arquitectura Flux 
+
+Action -> Dispatcher -> Store -> View
+
+View puede generar nuevas Acions y volver a empezar el ciclo.
+
+Store: Gestion datos y estado de la aplicacion
+View: Estructura jerarquica de componentes react 
+Action: Eventos generados por el usuario en la vista
+Dispatcher: Gestor centralizado y unico de eventos 
+
+Redux: Libreria que aplica el patron Flux
+
+    Cosas a destacar de Redux:
+        - Simplifica algunas cosas de Flux
+        - Implementa el patron de disenyo Event Emitter que siempre mantiene un unico valor (el estado)
+        - Varios entornos: native, server, cliente
+        - Ligero: 2KB, incluyendo dependencias
+
+    Reglas o Restricciones de Redux:
+        - Un unico arbol con el estado de la aplicacion
+        - Las Actions solo deben describir actualizaciones. Deben ser objetos planos, simples.
+        - Los Reducers aplican las actualizaciones 
+
+    Conceptos Redux:
+        - Singleton Store: Vamos a tener un unico estado gestionado por un store. El Store tendra la dispatch(action) function.     
+        - Provider: Algo que se subscribe a Store con interfazes que seran usadas por la vista (React, Angular)
+        - Actions: Eventos generados por las acciones de usuario
+        - Reducers: Funciones puras que sirven para transicionar de un estado previo a uno nuevo
+
+En Redux no se usan los dispatcher.
+
+Action -> View Provider -> Actions -> Store (Middleware, Reducer, State)        
+
+Reducer: funcion que recibe un estado y una accion y te devuelve un estado
+    
+    (state, action) => state
+
+    const counter = (state = 0, action) => {
+            switch (action.type) {
+                case 'INCREMENT':
+                    return state + 1;
+                case 'DECREMENT':
+                    return state - 1;
+                default:
+                    return state;
+            }
+        }
+
+
+Store: Como crear un store en redux?
+
+    import { createStore } from 'redux';  
+
+    const store = createStore(counter);  
+
+    Store API tiene:
+    
+        - un metodo subscribe que permite la subscripcion a los cambios que pasen en el store.
+            store.subscribe( () =>  
+                console.log(store.getState())
+            ) 
+    
+        - un metodo dispatch que permite disparar acciones 
+            store.dispatch({ type: 'INCREMENT' }) // 1
+            store.dispatch({ type: 'DECREMENT' }) // 2
+            store.dispatch({ type: 'INCREMENT' }) // 1
+            
+
+

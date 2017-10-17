@@ -18,11 +18,10 @@ export default class ReduxExample extends Component {
   }
 
   handleAdd () {
-    this.setState({ 
-      counter: this.state.counter + 1 
+    this.setState({
+      counter: this.state.counter + 1
     });
   }
-
 
   render () {
     return (
