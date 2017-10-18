@@ -4,14 +4,14 @@ import counterApp from './reducers/counterApp'
 import Appli from './containers/App'
 import { Provider } from 'react-redux'
 
-//import { logger } from './middlewares/logger'
+
 
 let store = createStore(counterApp);
 
-const ReduxExample = () => (
+const Application = () => (
   <Provider store={store}>
     <Appli />
   </Provider>
 );
 
-export default ReduxExample;
+export default Application;

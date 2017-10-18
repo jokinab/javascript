@@ -50,21 +50,224 @@ Reducer: funcion que recibe un estado y una accion y te devuelve un estado
 
 Store: Como crear un store en redux?
 
+    createStore(reducer, [initialState], [enhancer])
+    
+    Argumentos
+
+        - reducer (Función): Una función reductora que devuelve el siguiente árbol de estado, dado el árbol de estado actual y el una acción.
+        - [initialState] (cualquier cosa): El estado inicial. Puedes opcionalmente especificarlo para hidratar la aplicación con el estado del servidor en aplicaciones universales, 
+          o restaurar una sesión anterior serializada. Si crear el reducer con combineReducers, este debe ser un objeto plano con la misma forma usada ahí. De otra forma, eres libre de pasar cualquier cosa que el reducer pueda entender.
+        - [enhancer] (Función): El potenciador del store. Puedes opcionalmente especificarlo para mejorar el store con funcionalidad de terceros como los middlewares, time travel, persistencia, etc. El único 
+          potenciador de store que viene con Redux es applyMiddleware().
+
+
+
     import { createStore } from 'redux';  
 
     const store = createStore(counter);  
 
     Store API tiene:
     
+        - getState --> Regresa el actual estado de la aplicacion. Ultimo valor regresado por los reducers del store
+
         - un metodo subscribe que permite la subscripcion a los cambios que pasen en el store.
+            subscribe(listener)
+
             store.subscribe( () =>  
                 console.log(store.getState())
             ) 
     
         - un metodo dispatch que permite disparar acciones 
+            dispatch(action)
+
             store.dispatch({ type: 'INCREMENT' }) // 1
             store.dispatch({ type: 'DECREMENT' }) // 2
             store.dispatch({ type: 'INCREMENT' }) // 1
+
+        -  replaceReducer(nextReducer)
+
+            Reemplaza el reducer actualmente usado en el store para calcular el estado.
+            Es una API avanzada. Probablemente lo necesitas si tu aplicación implementa separación de código y quieres cargas algunos 
+            reducers dinamicamente. Además necesitas esto si implementas mecanismos como hot-reloading en Redux.   
             
 
 
+Buenas Practicas: 
+
+    - Usar Flux Standar Actions: un objeto plano con un tipo describiendo el tipo de action que estamos creando y un payload con cualquier
+      tipo de datos que se quiera enviar en ese evento
+
+        {
+            type: 'ADD_TODO',
+            payload: {
+                text: 'Do Something.'
+            }
+
+        }
+
+        En caso de que sea una action que dispara un error 
+
+        {
+            type: 'ADD_TODO',
+            payload: new Error(),
+            error: true
+        }
+
+    - Flux Standar Actions deben:
+        - ser un objeto plano
+        - tener una propiedad type
+
+        - tener una propiedad error
+        - tener una propiedad payload
+        - tener una propiedad meta
+
+        - NO DEBEN incluir propiedades diferentes a type, payload, error o meta 
+
+    - Tener como constantes las actions types
+
+        const ADD_TODO = 'ADD_TODO';
+        const REMOVE_TODO = 'REMOVE_TODO';
+        
+        export {
+            ADD_TODO,
+            REMOVE_TODO
+        }
+
+    - Disponer de funciones que sean action creators, en vez de crear la accion directamente en la vista
+
+        import { ADD_TODO, REMOVE_TODO } from '../actionTypes'    
+
+        const addTodo = (text) => {
+            return {
+                type: ADD_TODO,
+                text
+            }
+        }
+
+    - Separar datos de logica de negocio de los datos necesarios para la vista
+
+        {
+            visibilityFilter: 'SHOW_ALL',   // Datos que necesitamos para la vista
+            todos: [                        // Datos   recogidos de base de datos, por ejemplo
+                {
+                    text: 'Consider using Redux',
+                    completed: true
+                },
+                {
+                    text: 'Keep all state in a single tree',
+                    completed: false
+                }
+            ]
+        }    
+
+    - Reducers:
+        - No mutar los Argumentos que se les pasa. Hay que devolver un nuevo estado, no el antiguo mutado
+        - No hacer nunca acciones que tengan efectos secundarios como llamadas a API o routing transitions. El reducer se debe limitar a transicionar el estado
+        - No debe llamar a funciones impuras
+
+            Ejm: 
+
+                function todoApp (state = initialState, action) {
+                    switch (action.type) {
+                        case SET_VISIBILITY_FILTER:
+                            return Object.assign( {}, state, {
+                                visibilityFilter: action.filter
+                            });
+                        default:
+                            return state;
+                    }
+                }
+
+        - No hacer reducers demasiado complejos. Dividir reducers para que se encarguen de una responsabilidad 
+
+            function visibilityFilter (state = SHOW_ALL, action) {
+                switch (action.type) {
+                    case SET_VISIBILITY_FILTER:
+                        return action.filter;
+                    default:
+                        return state;    
+                }
+            } 
+
+            function todos (state, action) { ... }
+
+
+            import { combineReducers } from 'redux'
+            import { visibilityFilter, todos } from './reducers'
+
+            const todoApp = combineReducers ({
+                visibilityFilter,
+                todos
+            });
+
+            export default todoApp;
+
+
+Como aplicarlo en ReactJS:
+
+    Diferenciar componentes de presentacion de componentes containers
+
+                            presentacion                                    Container
+
+    Proposito               Como se visualizan las cosas (styles,           Como funcionan las cosas (captura de datos, actualizacion de estado) 
+                            markup)
+
+    Consciente              No                                              Si
+    de Redux
+
+    Para leer               Lectura a traves de las propiedades             Subscripcion al estado de Redux
+    datos
+
+    Para cambiar            Invocacion de callbacks desde las propiedades   Despachar acciones de Redux
+    datos
+
+    Son creados             A mano                                          Generalmente creados por React Redux
+    por 
+
+
+
+Para trabajar con Redux en React hay una libreria, React Redux, que proporciona utilidades para trabajar:
+
+    - Provider, que envuelve nuestra aplicacion y le proporciona un store.
+
+        import React from 'react'
+        import {render} from 'react-dom'
+        import {Provider} from 'react-redux'
+        import {createStore} from 'redux'
+        import todoApp from './reducers'
+        import App from './components/App'
+
+        let store = createStore(todoApp)
+
+        render(
+            <Provider store={store}>    // Provider seria el componente contenedor
+                <App />                 // App seria solo vista aqui, se nutriria de los datos que le pasa Provider
+            </Provider>,
+            document.getElementById('root')
+        )
+
+    - Otro concepto que nos proporciona react redux es la funcion de connect:
+        En nuestros componentes contenedores, algo que esta bien de hacer es tratar de evitar lanzar acciones desde el propio codigo de react. En su
+        lugar, se debe llamar a la funcion connect y pasarle un par de funciones 
+
+        const MyComponent = () => (
+            // ...
+        )
+
+        const mapStateToProps = (state) => state    // Mapea el estado recibido por el provider (componente padre) a las propiedades 
+                                                    // del componente
+
+        const mapDispatchToProps = (dispatch) => {  // En vez de lanzar acciones desde nuestra vista, lo que hacemos es mapear las propiedades de 
+            return {                                // nuesro componente a dispatch de Redux y decidir la accion que toca. Por ejemplo, si nuestro    
+                onSomethingHappened: dispatch(yourAction())  // componente tiene una propiedad 'onSomethingHappened', cuando pase este evento se va a  
+            }                                       // hacer un dispatch de nuestra accion (totalmente personalizada)
+        }
+
+        export default connect(
+            mapStateToProps,
+            mapDispatchToProps
+        )(MyComponent)
+
+
+        Teniendo esto, esto es un componente de orden superior que envuelve a nuestro componente, tendremos a nuestro componente totalmente agnostico a 
+        la herramienta de gestion de estado que estamos usando.
