@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import counterApp from './reducers/counterApp';
 import App from './containers/App';
 import { Provider } from 'react-redux';
@@ -13,3 +13,6 @@ const ReduxExample = () => (
 );
 
 export default ReduxExample;
+
+
+
