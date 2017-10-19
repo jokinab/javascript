@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import counterApp from './reducers/counterApp';
 import App from './containers/App';
 import { Provider } from 'react-redux';
+import { logger } from './middleware/logger';
 
-let store = createStore(counterApp);
+let store = createStore(counterApp, applyMiddleware(logger));
 
 const ReduxExample = () => (
   <Provider store={store}>

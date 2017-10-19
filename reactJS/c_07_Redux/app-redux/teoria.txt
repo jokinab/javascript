@@ -271,3 +271,23 @@ Para trabajar con Redux en React hay una libreria, React Redux, que proporciona 
 
         Teniendo esto, esto es un componente de orden superior que envuelve a nuestro componente, tendremos a nuestro componente totalmente agnostico a 
         la herramienta de gestion de estado que estamos usando.
+
+    - Los Middleware son mejoradores del store que sirven, por ejemplo, para logear las acciones del store y cosas asi:
+
+        import { applyMiddleware } from 'redux'   
+
+        el middleware sera algo como:
+
+        export const logger = store => next => action => {
+            console.log('Prev. state: ', store.getState());   // Loggeamos el estado previo 
+            console.log('Action: ', action);                  // Loogeamos la accion a realizar
+
+            const result = next(action);                      // next ejecutara mi reducer sobre el store y cuando vuelva
+
+            console.log('Next state: ', store.getState());    // Loggeare el nuevo estado 
+            return result;                                    // 
+        }
+  
+        Se anyadiria al store:
+
+            let store = createStore(counterApp, applyMiddleware(logger));

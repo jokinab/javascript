@@ -7,7 +7,6 @@ import { increment } from './../actions/increment';
 
 // Componente contenedor. Es consciente de Redux, y conecta la logica de la aplicacion con los componentes de presentacion
 class ReduxExample extends Component {
-
   render () {
     return (
       <div>
