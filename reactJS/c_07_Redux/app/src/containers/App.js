@@ -6,16 +6,12 @@ import { connect } from 'react-redux';
 import { increment } from './../actions/increment';
 
 // Componente contenedor. Es consciente de Redux, y conecta la logica de la aplicacion con los componentes de presentacion
-class ReduxExample extends Component {
-  render () {
-    return (
-      <div>
-        <Counter counter={this.props.counter} onAdd={this.props.onAdd} />
-        <InputList counter={this.props.counter} />
-      </div>
-    );
-  }
-}
+const ReduxExample = ({ counter, onAdd }) => (
+  <div>
+    <Counter counter={counter} onAdd={onAdd} />
+    <InputList counter={counter} />
+  </div>
+);
 
 // Mapeamos el estado a las propiedades del componente contenedor
 const mapStateToProps = (state) => state;
