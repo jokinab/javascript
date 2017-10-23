@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Proptypes from 'prop-types';
-import Teacher from './teacher';
-import './teachers.css';
+import Card from './card';
+import './teacherList.css';
 
-const Teachers = ({teachers}) => {
+const TeacherList = ({teachers}) => {
   return (
     <ul className='teachersList'>
-      {teachers.map((teacher) => <Teacher key={teacher.id} {...teacher} />)}
+      {teachers.map((teacher) => <Card key={teacher.id} {...teacher} />)}
     </ul>
   );
 };
@@ -15,4 +15,4 @@ Proptypes.TeacherList = {
   teachers: Proptypes.array
 };
 
-export default Teachers;
+export default TeacherList;

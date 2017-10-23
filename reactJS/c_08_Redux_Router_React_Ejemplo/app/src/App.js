@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import { createStore } from 'redux';
 import { searcher } from './reducers';
 import { Provider } from 'react-redux';

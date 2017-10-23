@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SearchFilter, Teachers } from './../components';
+import { SearchFilter, TeacherList } from './../components';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
 import { filterTeachers } from './../actions/searcher';
@@ -9,7 +9,7 @@ class Searcher extends Component {
     return (
       <div className="App">
         <SearchFilter onFilter={this.props.onFilter}/>
-        <Teachers teachers={this.props.teachers} />
+        <TeacherList teachers={this.props.teachers} />
       </div>
     );
   }

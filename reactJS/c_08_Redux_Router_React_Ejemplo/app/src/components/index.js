@@ -1,7 +1,9 @@
 import SearchFilter from './searchFilter';
-import Teachers from './teachers';
+import TeacherList from './teacherList';
+import Teacher from './teacher';
 
 export {
   SearchFilter,
-  Teachers
+  TeacherList,
+  Teacher
 };
