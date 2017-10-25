@@ -1,3 +1,4 @@
 import Searcher from './searcher';
+import Teacher from './teacher';
 
-export { Searcher };
+export { Searcher, Teacher };

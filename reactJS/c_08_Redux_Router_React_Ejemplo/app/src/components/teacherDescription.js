@@ -8,4 +8,16 @@ const TeacherDescription = ({ avatar, description }) => (
   </div>
 );
 
+Proptypes.TeacherDescription = {
+  avatar: Proptypes.string,
+  description: Proptypes.string
+};
+
+// Specifies the default values for props:
+
+TeacherDescription.defaultProps = {
+  avatar: '',
+  description: 'Teacher Description'
+};
+
 export default TeacherDescription;

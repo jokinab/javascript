@@ -28,7 +28,7 @@ class SearchFilter extends Component {
         <input type='search'
           id='searchFilter'
           className='searchFilter'
-          ref={ (input) => this.input = input } // refferencia del input para luego, en el nSubmit, poder acceder a su valor
+          ref={ (input) => this.input = input } // refferencia del input para luego, en el Submit, poder acceder a su valor
           onChange={this.handleChange}
           required
         />

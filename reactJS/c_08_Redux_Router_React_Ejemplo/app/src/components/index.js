@@ -1,9 +1,11 @@
 import SearchFilter from './searchFilter';
 import TeacherList from './teacherList';
-import Teacher from './teacher';
+import TeacherTitle from './teacherTitle';
+import TeacherDescription from './teacherDescription';
 
 export {
   SearchFilter,
   TeacherList,
-  Teacher
+  TeacherTitle,
+  TeacherDescription
 };

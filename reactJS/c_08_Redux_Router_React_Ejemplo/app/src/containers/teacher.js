@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import Proptypes from 'prop-types';
-import './teacher.css';
-import TeacherTitle from './teacherTitle';
-import TeacherDescription from './teacherDescription';
-
+import TeacherTitle from './../components/teacherTitle';
+import TeacherDescription from './../components/teacherDescription';
 
 class Teacher extends Component {
   render () {
-    return(
+    return (
       <div>
         <TeacherTitle {...this.props} />
         <TeacherDescription {...this.props} />
@@ -16,8 +14,8 @@ class Teacher extends Component {
   }
 };
 
-Proptypes.Teacher = { 
-
+Teacher.Proptypes = {
+  
 };
 
 export default Teacher;
