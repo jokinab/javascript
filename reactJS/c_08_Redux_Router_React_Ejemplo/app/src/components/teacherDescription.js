@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Proptypes from 'prop-types';
 
 const TeacherDescription = ({ avatar, description }) => (
   <div className='description-wraper'>
-    <img src={avatar} className='avatar' />
+    <img src={avatar} className='avatar' alt='avatar img' />
     <p className='description-text'>{description}</p>
   </div>
 );

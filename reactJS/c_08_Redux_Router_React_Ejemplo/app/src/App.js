@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { createStore } from 'redux';
 import { searcher } from './reducers';
 import { Provider } from 'react-redux';
@@ -15,7 +15,7 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route path='/teacher/(:id)' component={Teacher} />
+        <Route path='/teacher/:id' component={Teacher} />
         <Route path='/' component={Searcher} />
       </Switch>
     </Router>

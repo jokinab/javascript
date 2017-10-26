@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Proptypes from 'prop-types';
 import Card from './card';
 import './teacherList.css';
