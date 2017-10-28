@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStore } from 'redux';
-import { searcher } from './reducers';
+import rootReducer from './reducers/root';
 import { Provider } from 'react-redux';
 import { Searcher, Teacher } from './containers';
 import { 
@@ -9,7 +9,9 @@ import {
   Switch
 } from 'react-router-dom';
 
-let store = createStore(searcher); // Creamos nuestro store en el punto de entrada de la app pasandole el reducer
+let store = createStore(rootReducer); // Creamos nuestro store en el punto de entrada de la app pasandole el reducer
+
+console.log(store.getState());
 
 const App = () => (
   <Provider store={store}>

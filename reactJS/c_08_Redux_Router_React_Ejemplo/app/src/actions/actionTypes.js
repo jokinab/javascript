@@ -1,3 +1,4 @@
 const FILTER = 'FILTER';
+const REQUEST_TEACHER = 'REQUEST_TECHER';
 
-export { FILTER };
+export { FILTER, REQUEST_TEACHER };

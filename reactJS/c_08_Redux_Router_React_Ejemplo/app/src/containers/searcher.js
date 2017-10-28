@@ -27,7 +27,7 @@ Proptypes.Searcher = {
 
 const mapStateToProps = (state) => {
   return {
-    ...state
+    ...state.searcher
   };
 };
 
