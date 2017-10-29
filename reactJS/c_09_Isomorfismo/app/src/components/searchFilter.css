@@ -1,0 +1,11 @@
+.search-bar{
+  background-color: #b4b7b4;
+  padding: 20px;
+  text-align: center;
+}
+
+.searchFilter{
+  height: 30px;
+  width: 400px;
+  text-indent: 20px;
+}
