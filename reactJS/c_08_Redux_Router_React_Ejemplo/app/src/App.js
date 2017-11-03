@@ -18,7 +18,7 @@ const App = () => (
     <Router>
       <Switch>
         <Route path='/teacher/:id' component={Teacher} />
-        <Route path='/' component={Searcher} />
+        <Route path='/:filter' component={Searcher} />
       </Switch>
     </Router>
   </Provider>

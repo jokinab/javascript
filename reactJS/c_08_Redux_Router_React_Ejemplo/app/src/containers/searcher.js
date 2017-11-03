@@ -5,10 +5,17 @@ import { connect } from 'react-redux';
 import { filterTeachers } from './../actions/searcher';
 
 class Searcher extends Component {
+  componentDidMount () {
+    if (this.props.filter) {
+      this.props.onFilter({
+        text: this.props.filter
+      });
+    }
+  }
   render () {
     return (
       <div className="App">
-        <SearchFilter onFilter={this.props.onFilter}/>
+        <SearchFilter onFilter={this.props.onFilter} filter={this.props.filter}/>
         <TeacherList teachers={this.props.teachers} />
       </div>
     );
@@ -25,8 +32,9 @@ Proptypes.Searcher = {
   }))
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
+    ...ownProps.match.params,
     ...state.searcher
   };
 };
