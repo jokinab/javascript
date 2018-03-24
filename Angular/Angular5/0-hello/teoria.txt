@@ -7,8 +7,10 @@ npm start
 Para crear un componente:
 ng g c "nombre_componente"
 
-Si estamos en el modulo de entrada de la app y queremos que salga en el index.html de inicio, 
-debemos incluir el componente en el decorador del modulo, en el array de bootstrap.
+Si estamos en el modulo de entrada de la app y queremos que salga en el index.html (queremos que sea 
+llamado como componente de entrada) de inicio, 
+debemos incluir el componente en el decorador del modulo, en el array de bootstrap. Si no queremos que sea 
+llamado como componente de entrada de la app, no tenemos por que incluirlo en el array bootstrap.
 
 Ejemplo: 
 crear component: 
@@ -36,3 +38,30 @@ import { HeaderComponent } from './header/header.component';
 })   
 // En todos los componentes pertenecientes al modulo AppModule estara disponible el HeaderComponent
 
+Interpolacion: 
+
+home.component.ts 
+  export class HomeComponent implements OnInit {
+    interpolacion: String = 'Texto interpolado';
+    url: String = 'https://www.google.com';
+    activo: Boolean = false;
+  ...
+  }
+
+home.component.html 
+  <p>
+    {{interpolacion}}   // El valor entre {{}} sera el de una prop del componente
+  </p>
+  <a [href]="url">Curso Angular 5</a> // Si un atributo esta entre [], el valor sera una propiedad  
+                                      // del componente.
+  
+  // Propiedades y atributos de los componentes html no son lo mismo
+  // Un atributo son cualquier cosa que le indicas un valor.
+  // Una propiedad modifica las propiedades del objeto del DOM. Ejm: <button disabled="true"></button>
+
+  //Interpolacion
+  <button disabled="{{activo}}">Disabled</button> <!-- De esta forma en el html seria como poner disabled, no funcionaria correctamente -->
+  
+  //Property binding
+  <button [disabled]="!activo">Disabled</button>   <!-- De esta forma no apareceria disabled en caso de activo=false -->
+  <button [disabled]="activo">Enabled</button>  

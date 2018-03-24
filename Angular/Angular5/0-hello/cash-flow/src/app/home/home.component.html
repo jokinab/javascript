@@ -1,0 +1,16 @@
+<p>
+  {{interpolacion}}
+</p>
+
+<a [href]="url">Enlace tipo 1</a>
+<a href="{{url}}">Enlace tipo interpolacion</a>
+
+<!--
+// Propiedades y atributos de los componentes html no son lo mismo
+// Un atributo son cualquier cosa que le indicas un valor.
+// Una propiedad modifica las propiedades del objeto del DOM. Ejm: <button disabled="true"></button>
+-->
+
+<button disabled="{{activo}}">Disabled</button> <!-- De esta forma en el html seria como poner disabled, no funcionaria correctamente -->
+<button [disabled]="!activo">Disabled</button>   <!-- De esta forma no apareceria disabled en caso de activo=false -->
+<button [disabled]="activo">Enabled</button>
