@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InterruptorComponent implements OnInit {
 
+  activo = true;
+
+  intercambiar() {
+    this.activo = !this.activo;
+  }
+
   constructor() { }
 
   ngOnInit() {

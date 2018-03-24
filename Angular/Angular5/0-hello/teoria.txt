@@ -111,3 +111,34 @@ importarlo, en el decorador del modulo donde se va a usar
   export class AppModule { }
   
 
+// Directiva *ng-If. Quita o pone un elemento del DOM dependiendo del valor
+
+html:
+<div>
+  <button (click)="intercambiar()">Interruptor</button>
+  <p *ngIf="activo">Activo!</p>
+</div>
+
+ts:
+export class InterruptorComponent implements OnInit {
+
+  activo = true;
+
+  intercambiar() {
+    this.activo = !this.activo;
+  }
+
+  ...s
+}
+
+// Tiene la opcion de else
+
+html:
+<div>
+  <button (click)="intercambiar()">Interruptor</button>
+  <p *ngIf="activo; else inactivo">Activo!</p> // si activo==false, se mostrara el template inactivo
+  <ng-template #inactivo></ng-template> // template inactivo a mostrar
+</div>
+
+// La clase esactivo estara disponible cuando activo==true
+<div [class.esactivo]="activo"></div>
