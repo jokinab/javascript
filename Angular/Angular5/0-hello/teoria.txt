@@ -68,3 +68,46 @@ home.component.html
 
   // Event binding. Para bindear un evento, hay que meterlo entre parentesis
   <button (click)="interpolarOtraCosa()">Event Binding Click</button> // Cuando se hag click, llamara interpolarOtraCosa
+
+
+
+
+// Crear modulos 
+$ ng g m "nombre_nuevo_modulo"
+
+ejm: $ ng g m "utils"
+
+para usar el modulo en otros modulos, hay que exportarlo e importarlo
+
+exportarlo. en su decorador exportaremos los componentes que queramos del modulo:
+
+  @NgModule({
+    imports: [
+      CommonModule
+    ],
+    declarations: [InterruptorComponent],
+    exports: [InterruptorComponent] // aqui exportamos los componentes del modulo que queramos 
+  })
+  export class UtilsModule { }      //Aqui exportamos el propio modulo
+
+importarlo, en el decorador del modulo donde se va a usar 
+
+  import { UtilsModule } from './utils/utils.module';
+
+  @NgModule({
+    declarations: [
+      AppComponent,
+      HeaderComponent,
+      HomeComponent
+    ],
+    imports: [
+      BrowserModule,
+      AppRoutingModule,
+      UtilsModule       // Importamos el modulo aqui
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+  
+
