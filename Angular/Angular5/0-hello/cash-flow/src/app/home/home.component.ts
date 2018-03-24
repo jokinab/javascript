@@ -12,6 +12,14 @@ export class HomeComponent implements OnInit {
   url: String = 'https://www.google.com';
   activo: Boolean = false;
 
+  interpolarOtraCosa() {
+    this.interpolacion = 'Nuevo texto Interpolado';
+  }
+
+  intercambiar() {
+    this.activo = !this.activo;
+  }
+
   constructor() { }
 
   ngOnInit() {

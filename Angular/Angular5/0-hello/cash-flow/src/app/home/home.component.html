@@ -14,3 +14,11 @@
 <button disabled="{{activo}}">Disabled</button> <!-- De esta forma en el html seria como poner disabled, no funcionaria correctamente -->
 <button [disabled]="!activo">Disabled</button>   <!-- De esta forma no apareceria disabled en caso de activo=false -->
 <button [disabled]="activo">Enabled</button>
+
+
+<!--
+  // Para bindear un evento, hay que meterlo entre parentesis
+-->
+ <button (click)="interpolarOtraCosa()">Event Binding Click</button>
+
+ <button (click)="intercambiar()" [disabled]="activo">Intercambiar con Click</button>

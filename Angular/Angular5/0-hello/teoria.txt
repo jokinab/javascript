@@ -65,3 +65,6 @@ home.component.html
   //Property binding
   <button [disabled]="!activo">Disabled</button>   <!-- De esta forma no apareceria disabled en caso de activo=false -->
   <button [disabled]="activo">Enabled</button>  
+
+  // Event binding. Para bindear un evento, hay que meterlo entre parentesis
+  <button (click)="interpolarOtraCosa()">Event Binding Click</button> // Cuando se hag click, llamara interpolarOtraCosa
