@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TitleComponent } from './title.component';
 
 @Component({
   selector: 'cf-nav',

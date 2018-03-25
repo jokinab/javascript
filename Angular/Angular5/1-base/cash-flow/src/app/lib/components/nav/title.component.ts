@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TitleComponent implements OnInit {
 
+  title: String = 'Navegacion';
   constructor() { }
 
   ngOnInit() {
