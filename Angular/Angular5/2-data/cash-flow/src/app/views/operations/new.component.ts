@@ -12,6 +12,9 @@ export class NewComponent implements OnInit {
   public title: String = 'New Item on Cash Flow';
   public operation: Operation = new Operation();
 
+  public kindsOfOperations = ['Income', 'Expense'];
+
+
   constructor() { }
 
   ngOnInit() { }

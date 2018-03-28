@@ -17,7 +17,8 @@
   <label>Kind Of Operation</label>
   <select name="kind" [(ngModel)]="operation.kind">
     <option>Please Select Kind</option>
-
+    <option *ngFor="let kind of kindsOfOperations"
+        [value]="kind">{{kind}}</option>
   </select>
 
   <button (click)="saveOperation()">Save</button>
