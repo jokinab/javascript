@@ -5,7 +5,4 @@ export class Operation {
   public description: String;
   public kind: String;
 
-  constructor() {
-    this._id = new Date().getTime().toString();
-  }
 }

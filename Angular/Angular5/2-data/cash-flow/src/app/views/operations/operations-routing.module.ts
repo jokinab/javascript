@@ -3,11 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { OperationsComponent } from './operations.component';
 import { ItemComponent } from './item.component';
+import { NewComponent } from './new.component';
 
 const routes: Routes = [
   {
     path: '',
     component: OperationsComponent
+  },
+  {
+    path: 'new',
+    component: NewComponent
   },
   {
     path: ':id',
