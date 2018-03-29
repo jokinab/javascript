@@ -13,7 +13,7 @@ export class NewComponent implements OnInit {
   public operation: Operation = new Operation();
   public kindsOfOperations = ['Income', 'Expense'];
 
-  public operations: Operation[] = [];  
+  public operations: Operation[] = [];
   public numberOfOperation: Number = 0;
 
   constructor() { }
@@ -21,17 +21,17 @@ export class NewComponent implements OnInit {
   ngOnInit() { }
 
   saveOperation() {
-    
+
     const clonedOperation: Operation = this.cloneOperation(this.operation);
     clonedOperation._id = new Date().getTime().toString();
     this.operations.push(clonedOperation);
-    
+
     this.numberOfOperation = this.operations.length;
 
     this.operation = new Operation();
 
     console.log('Current List: ', this.operations);
-  
+
   }
 
   deleteOperation(operation: Operation) {
@@ -43,6 +43,6 @@ export class NewComponent implements OnInit {
   cloneOperation(operation: Operation): Operation {
     const targetOperation: Operation = Object.assign ({}, operation);
     return targetOperation;
-  }  
-  
+  }
+
 }
