@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Route } from '@angular/router';
+
 import { HomeComponent } from './views/home/home.component';
 import { ContactoComponent } from './views/contacto/contacto.component';
+import { Error404Component } from './views/error404/error404.component';
 
-const routes: Routes = [
+const routes: Route[] = [
   {
     path: '',
     component: HomeComponent
@@ -15,6 +17,22 @@ const routes: Routes = [
   {
     path: 'sobre-nosotros',
     loadChildren: './views/sobre-nosotros/sobre-nosotros.module#SobreNosotrosModule'
+  },
+  {
+    path: 'mapa',
+    loadChildren: './views/mapa/mapa.module#MapaModule'
+  },
+  {
+    path: 'productos',
+    loadChildren: './views/productos/productos.module#ProductosModule'
+  },
+  {
+    path: '404',
+    component: Error404Component
+  },
+  {
+    path: '**',
+    redirectTo: '/404'
   }
 ];
 
