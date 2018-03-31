@@ -1,0 +1,11 @@
+<h2>Operations</h2>
+<cf-new
+  [kindsOfOperations]="kindsOfOperations",
+  [numberOfOperations]="numberOfOperations"
+  (save)="saveOperation($event)">
+</cf-new>
+<cf-list
+  [numberOfOperations]="numberOfOperations"
+  [operations]="operations"
+  (delete)="deleteOperation($event)" >
+</cf-list>
