@@ -3,7 +3,7 @@
 <cf-new
   [kindsOfOperations]="kindsOfOperations"
   [numberOfOperations]="numberOfOperations"
- (save)="saveOperation($event)">
+  (save)="saveOperation($event)">
 </cf-new>
 
 <cf-list
@@ -11,3 +11,9 @@
   [operations]="operations"
   (delete)="deleteOperation($event)" >
 </cf-list>
+
+<blockquote>
+  <em><h5>Message: {{ message }}</h5></em>
+  <br />
+  <em><h5>{{ fullError }}</h5></em>
+</blockquote>
