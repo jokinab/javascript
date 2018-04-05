@@ -9,8 +9,8 @@ import { ComponentsModule } from './lib/components/components.module';
 import { HomeModule } from './views/home/home.module';
 import { NotFoundModule } from './views/not-found/not-found.module';
 
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { HttpClient } from "@angular/common/http/src/client";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http/src/client';
 import { CatchInterceptorService } from './lib/catch-interceptor.service';
 
 @NgModule({

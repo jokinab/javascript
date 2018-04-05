@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpEvent,
@@ -6,14 +6,18 @@ import {
   HttpRequest,
   HttpResponse,
   HttpErrorResponse
-} from "@angular/common/http";
-import { Observable } from "rxjs/Observable";
-import { tap } from "rxjs/operators";
+} from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class CatchInterceptorService implements HttpInterceptor {
 
   private started;
+
+  constructor() {
+    console.log('kuyfkuy');
+  }
 
   public intercept(
     req: HttpRequest<any>,
@@ -27,13 +31,14 @@ export class CatchInterceptorService implements HttpInterceptor {
     );
     this.started = Date.now();
     const handledRequest = next.handle(req);
+
     return handledRequest.pipe(interceptionOperator);
   }
 
   private interceptResponse(event: HttpEvent<any>) {
     if (event instanceof HttpResponse) {
       const elapsed_ms = Date.now() - this.started;
-      console.debug(`Request for ${event.url} took ${elapsed_ms} ms.`);
+      console.log(`Request for ${event.url} took ${elapsed_ms} ms.`);
     }
   }
 
@@ -47,7 +52,7 @@ export class CatchInterceptorService implements HttpInterceptor {
 
   private catchHttpError(err: HttpErrorResponse) {
     if (err.status === 401) {
-      console.log("Not authorized");
+      console.log('Not authorized');
     } else {
       console.warn(err.statusText);
     }
