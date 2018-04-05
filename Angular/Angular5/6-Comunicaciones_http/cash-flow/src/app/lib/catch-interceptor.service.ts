@@ -11,20 +11,22 @@ import { Observable } from "rxjs/Observable";
 import { tap } from "rxjs/operators";
 
 @Injectable()
-export class CatchInterceptorService {
+export class CatchInterceptorService implements HttpInterceptor {
 
   private started;
 
-  public intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
-
-
+  public intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     const successCallback = this.interceptResponse.bind(this);
     const errorCallback = this.catchError.bind(this);
-    const interceptionOperator = tap<HttpEvent<any>>( successCallback, errorCallback );
-    
+    const interceptionOperator = tap<HttpEvent<any>>(
+      successCallback,
+      errorCallback
+    );
     this.started = Date.now();
     const handledRequest = next.handle(req);
-    console.log('entra');
     return handledRequest.pipe(interceptionOperator);
   }
 
