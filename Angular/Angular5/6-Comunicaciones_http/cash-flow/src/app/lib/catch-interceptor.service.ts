@@ -15,10 +15,6 @@ export class CatchInterceptorService implements HttpInterceptor {
 
   private started;
 
-  constructor() {
-    console.log('kuyfkuy');
-  }
-
   public intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -31,7 +27,7 @@ export class CatchInterceptorService implements HttpInterceptor {
     );
     this.started = Date.now();
     const handledRequest = next.handle(req);
-
+    
     return handledRequest.pipe(interceptionOperator);
   }
 
