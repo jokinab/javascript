@@ -1,13 +1,13 @@
 // Pasos a seguir para instalar Babel
 /*
-1.- Crear un fichero package.json
+1.- Crear un fichero package.json (Se puede generar con npm init -y )
     {
         "name": "entorno prueba react",
         "version": "1.0.0",
         "main": "index.js",
         "scripts": {
             "start-1": "babel FICHERO_ENTRADA.js --out-file FICHERO_SALIDA.js",
-            "start-2": "babel src CARPETA_ORIGEN --out-dir CARPETA_SALIDA"
+            "start-2": "babel CARPETA_ORIGEN --out-dir CARPETA_SALIDA"
         },
         "keywords": [],
         "author": "Jokin",
@@ -17,19 +17,62 @@
         }
     }
 2.- Instalar Babel CLI 
+
     npm i --save-dev babel-cli 
 
-    Instalar el conjunto de plugins y presets . Crear un fichero .babelrc
+    Instalar el conjunto de plugins y presets 
     Instalar el preset para instalar todas las funcionalidades de es5:
         npm i -D babel-preset-es2015
 
+    Crear un fichero .babelrc y configurarlo con lso plugins y presets a usar
     Presets: conjunto de plugins que definen un entorno de funcionalidades. 
     {
         "presets": [ "es2015" ],
         "plugins": []
     }
+
 3.- Para ejecutarlo:
     npm run start-1 
     ( start es el script configurado en el package.json )
 
 */    
+
+
+// Pasos a seguir para instalar Webpack
+
+1.- Instalar Webpack
+    npm i webpack --save-dev
+
+    Instalar Interprete de comandos de Webpack
+    npm i webpack-cli --save-dev
+    
+2.- Crear un archivo de configuracion:      
+    touch webpack.config.js
+
+    >>  var webpack = require("webpack");
+        var path = require('path')
+
+        module.exports = {
+            entry:  path.resolve(__dirname + '/src'),
+            output: {
+                path:  path.resolve(__dirname + '/dist'),
+                filename: 'bundle.js'
+            },
+            module: {
+                loaders: [{
+                    test: /\.js$/,  /* Le decimos que pille es los archivos .js */
+                    loaders: ['babel'], /* Que use babel */
+                    exclude: /node_modules/ //
+                }]
+            },
+            resolveLoader: {
+                moduleExtensions: ['-loader']
+            }
+        };
+
+    Nota: Webpack mira en el punto de entrada src un index.js como punto de entrada y crea un bundle.js en dist/
+
+3.- Instalamos el babel loader (es como una interfaz para que webpack sepa como usar el babel instalado)
+    npm i --save-dev babel-loader
+    
+4.- Ejecutamos con "npm run build"
