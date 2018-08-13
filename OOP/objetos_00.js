@@ -90,9 +90,10 @@ var edad3 = new Number('20');
 var edad4 = edad3;
 var edad5 = new Number(edad1);
 
+
 console.log( edad1 == edad3); // true
 console.log( edad1 === edad3); // false
-console.log( typeof edad5); // false
+console.log( typeof edad5); // object
 
 
 // Cuando se compara objetos con '===' es una comparación de referncia, es decir, se compara si es el mismo objeto en memoria. 
