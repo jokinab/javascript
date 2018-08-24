@@ -74,5 +74,5 @@
 
 3.- Instalamos el babel loader (es como una interfaz para que webpack sepa como usar el babel instalado)
     npm i --save-dev babel-loader
-    
+
 4.- Ejecutamos con "npm run build"

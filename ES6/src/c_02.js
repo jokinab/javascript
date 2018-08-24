@@ -36,6 +36,22 @@ const NAME = 'Dani';
 
 tag `Hola ${NAME}`;
 
+// Ejemplo MDN: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/template_strings
+
+var a = 5;
+var b = 10;
+
+function tagFunction(strings, ...values) {
+  console.log(strings[0]); // "Hola "
+  console.log(strings[1]); // " mundo "
+  console.log(values[0]);  // 15
+  console.log(values[1]);  // 50
+
+  return "Bazinga!";
+}
+
+tagFunction`Hola ${ a + b } mundo ${ a * b}`;
+// "Bazinga!"
 
 
 
@@ -43,8 +59,9 @@ tag `Hola ${NAME}`;
 /****     Propiedad raw     ****/
 /*******************************/
 
-// raw lo que hace es devolver un string sin escapar
-/* La propiedad especial raw, disponible en el primer argumento de las plantillas de cadenas de texto postprocesadas, nos permite acceder a las cadenas de texto tal como fueron ingresadas.
+//  raw lo que hace es devolver un string sin escapar
+/*  La propiedad especial raw, disponible en el primer argumento de las plantillas de cadenas de texto postprocesadas, 
+    nos permite acceder a las cadenas de texto tal como fueron ingresadas.
 
 function tag(strings, ...values) {
   console.log(strings.raw[0]); 
@@ -54,7 +71,7 @@ function tag(strings, ...values) {
 tag`línea 1 de cadena de texto \n línea 2 de cadena de texto`;
  */
 
- console.log(`Hello \n`.raw[0]);
+console.log(`Hello \n`.raw[0]);
 
 let newRaw = function(strings, args) {
     console.log( typeof strings );
@@ -65,11 +82,6 @@ let prueba_var = `popo \n`.raw;
 
 console.log(newRaw`Hello \n`);
 console.log(`next line`);
-
-// Tambien se puede usar como metodo de String
-String.raw`Hola\n${2+3}!`; // "Hola\\n5!"
-
-
 
 
 
@@ -83,6 +95,19 @@ console.log(raw`Hello!\n`); // Si ponemos strings.raw[0], lo que nos devolvera s
                             // log - `Hello!\n`                            
 
 
+
+// Ejemplo MDN: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/template_strings
+
+function tag(strings, ...values) {
+    console.log(strings.raw[0]); 
+    // "linea 1 de cadena de texto \\n línea 2 de cadena de texto"
+    }
+    
+    tag`línea 1 de cadena de texto \n línea 2 de cadena de texto`;
+
+
+// Tambien se puede usar como metodo de String
+String.raw`Hola\n${2+3}!`; // "Hola\\n5!"
 
 
 
@@ -98,7 +123,8 @@ console.log(raw`Hello!\n`); // Si ponemos strings.raw[0], lo que nos devolvera s
 // map() y split()
 
 var str = "How are you doing today?";
-var res = str.split(" "); // resultado es un array con los valores separados por el parametor pasado " " ['How','are','you','doing','today?']
+var res = str.split(" "); 
+// resultado es un array con los valores separados por el parametor pasado " " ['How','are','you','doing','today?']
 console.log(res);
 
 
@@ -109,6 +135,49 @@ function doble(e) {
 var arreglo = [1, 2, 3, 4, 5];
 var resultado = arreglo.map(doble);
 console.log(resultado); // [2, 4, 6, 8, 10];
+
+
+
+// El método map() crea un nuevo array con los resultados de la llamada a la función indicada aplicados a cada uno de sus elementos.
+// https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/map
+
+var numbers = [1, 5, 10, 15];
+var doubles = numbers.map(function(x) {
+   return x * 2;
+});
+// doubles is now [2, 10, 20, 30]
+// numbers is still [1, 5, 10, 15]
+
+var numbers = [1, 4, 9];
+var roots = numbers.map(Math.sqrt);
+// roots is now [1, 2, 3]
+// numbers is still [1, 4, 9]
+
+
+// El método filter() crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.
+var words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
+
+const result = words.filter(word => word.length > 6);
+
+console.log(result);
+// expected output: Array ["exuberant", "destruction", "present"]
+
+
+// El método reduce() aplica una función a un acumulador y a cada valor de un array (de izquierda a derecha) para reducirlo a un único valor.
+// https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/reduce
+// var resultado = arr.reduce(funcion[, valorInicial]);
+
+// El método split() divide un objeto de tipo String en un array (vector) de cadenas mediante la separación de la cadena en subcadenas.
+// https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/String/split
+// cadena.split([separador][,limite])
+
+let cadena = "Poner punto detras de cada palabra";
+
+cadena.split(" ").reduce( ( x, y ) => `${x}.${y}`); // "Poner.punto.detras.de.cada.palabra"
+
+
+
+
 
 
 
@@ -153,6 +222,25 @@ currentLanguage = 'en';
 console.log(i18n`${numeroDeDias} days ago`);
 
 
+// El método trim( ) elimina los espacios en blanco en ambos extremos del string. Los espacios en blanco en este contexto, 
+// son todos los caracteres sin contenido (espacio, tabulación, etc.) y todos los caracteres de nuevas lineas (LF,CR,etc.).
+var orig = '   foo  ';
+console.log(orig.trim()); // 'foo'
+
+// Otro ejemplo de .trim() eliminando el espacio en blanco sólo de un lado.
+
+var orig = 'foo    ';
+console.log(orig.trim()); // 'foo'
+
+// El método join() une todos los elementos de una matriz (o un objeto similar a una matriz) en una cadena y devuelve esta cadena.
+var elements = ['Fire', 'Wind', 'Rain'];
+
+console.log(elements.join());       // expected output: Fire,Wind,Rain
+console.log(elements.join(''));     // expected output: FireWindRain
+console.log(elements.join('-'));    // expected output: Fire-Wind-Rain
+
+
+
 
 
 
@@ -176,6 +264,8 @@ console.log(example);
 /*******************************/
 /******** Destructering ********/
 /*******************************/ 
+
+
 
 // Podemos pillar array/objetos y crear variables por cada una de sus propiedades, es decir:
 // Teniendo un array 
@@ -257,14 +347,13 @@ let {nombre:name, apellidos:surname} = persona;
 console.log(name,surname);
 
 
+
+
 /******************************/
 /*** Parametros por defecto ***/
 /******************************/ 
 
-function sayHello({
-        name = 'Joan',
-        surname = 'Leon'
-    } = {}) {
+function sayHello({ name = 'Joan', surname = 'Leon' } = {}) {
     console.log('Hello',name,surname)    
 };
 
@@ -343,7 +432,7 @@ function fspread(...args){
     return args.length;
 }
 
-console.log('with spreading', fspread(1,2,3));
+console.log('with spreading', fspread(1,2,3));  // with spreading 3
 
 
 
@@ -359,6 +448,8 @@ function spreadSuma(x, y, z){
 console.log(spreadSuma(...[1,2,3]));
 
 
+
+// Vale para hacer extends de objetos
 
 let worker = {
     id: 1337,

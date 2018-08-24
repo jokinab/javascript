@@ -105,12 +105,22 @@ Car.prototype = new Vehicle('red','Ford');
 Car.prototype.honk = function() {return 'meeeeck!'; };
 
 var ford = new Car();
-console.log(ford.honk());
-console.log(ford.go());
+console.log(ford.honk());               // meeeeck!
+console.log(ford.go());                 // brooooom
 console.log(ford instanceof Car);       //true
 console.log(ford instanceof Vehicle);   //true
 
-
+//
+//  ford sera:
+//      Car {}
+//          __proto__: {
+//              color: "red",
+//              model: "Ford",
+//              honk: ƒ (),            
+//              __proto__: {
+//                  go: ƒ go(),
+//                  whoami: ƒ whoami()
+//
 
 
 /*********************************/
@@ -161,7 +171,7 @@ console.log(typeof Point);                      // function. Point es la funcion
 
 // Metodos estaticos 
 
-//console.log( Point( 25, 26) );                //Error porke no se puede usar la funcion constructora Point coo una funcion normal
+//console.log( Point( 25, 26) );                //Error porke no se puede usar la funcion constructora Point como una funcion normal
 
 
 class Sample {
@@ -177,17 +187,18 @@ class Sample {
 }   
 
 let ejemplo = new Sample(123); 
-console.log(ejemplo);
+console.log(ejemplo);                           // Sample {value: 123}
 
-console.log(Sample.staticMethod());
-//console.log(Sample.prototypeMethod());        // TypeError: Sample.prototypeMethod is not a function
-                                                // Todas las instancias pueden acceder al metodo de protoptipo, pero no son accesibles fuera de la instancia
-console.log(ejemplo.prototypeMethod());
-//console.log(ejemplo.staticMethod());          // TypeError: ejemplo.staticMethod is not a function
-                                                // Puedes llamar al metodo sin instanciar la clase pero no puedes llamarlo por medio de las instancias de la clase
+console.log(Sample.staticMethod());             // Puedes llamar al metodo sin instanciar la clase
+console.log(ejemplo.staticMethod());            // Uncaught TypeError: ejemplo.staticMethod is not a function
+
+console.log(ejemplo.prototypeMethod());         // Solo puedes llamar al metodo de protoptipo mediante una instancia de la clase
+console.log(Sample.prototypeMethod());          // Uncaught TypeError: Sample.prototypeMethod is not a function
 
 console.log(Sample.prototype.prototypeMethod);  // [Function: prototypeMethod] --> El metodo prototype esta dentro del prtotipo de la clase
 console.log(Sample.prototype.staticMethod);     // undefined --> El metodo statico no esta dentro del prototipo de las clase  
+
+
 
 
 // Subclases
