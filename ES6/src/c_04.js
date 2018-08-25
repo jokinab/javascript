@@ -54,11 +54,11 @@ console.log(objectES6.greeting());
 
 
 /* Iteradores */
-
+// https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Iterators_and_Generators
 
 var colors = [ 'red', 'green', 'blue' ];
 
-// En ES6 se ha propuesto solucion a tener que recorrer los objetos de fora ordenada
+// En ES6 se ha propuesto solucion a tener que recorrer los objetos de forma ordenada
 
 let numbers = [1,2,3,4];
 
@@ -81,7 +81,7 @@ console.log(numberIterator.next());     // { value: undefined, done: true }
 */
 /* 
     Con el fin de ser iterable, un objeto debe implementar el método @@iterator, lo que significa que 
-    el objeto  (or one of the objects up its prototype chain) debe tener una propiedad con la clave Symbol.iterator:
+    el objeto (or one of the objects up its prototype chain) debe tener una propiedad con la clave Symbol.iterator:
 */
 
 
@@ -303,10 +303,12 @@ delay(1000)
     }); 
 
 
+
+
 // generar tiempos aleatorios 
 function getRandomTimeout() {
     return Math.floot(Math.random() * (1 - 5) + 5) * 1000;
-};
+}
 
 
 function animation(position) {
@@ -327,15 +329,14 @@ Promise.all([
     animation(7),
     animation(8)
 ]).then(function() {
-    animation(9)
-})
+    animation(9);
+});
+
+
 
 
 
 // Export e import
-
-
-
 
 const square = (n) => n*n;
 console.log(square(3));
@@ -390,6 +391,8 @@ let miOtraMasCalculadora = new miAliasCalculadora('Alias');
     https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Sentencias/export
     https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Sentencias/import
 */
+
+
 
 
 /*****************************/
@@ -568,3 +571,455 @@ for ( let item of mySet ) {
 } 
 
 // min 40
+
+// Article interesnte sobre set en: http://www.etnassoft.com/2016/09/13/el-objeto-set-en-javascript-los-nuevos-arrays-en-es6-teoria-ejemplos-y-rendimiento-comparado/
+
+// Para declarar una nueva instancia del objeto Set, utilizamos el opeador new. Por el momento, no tenemos una notación literal o abreviada.
+
+var fooSet = new Set( [iterable] );
+
+// Como parámetro, el constructor solo acepta un objeto de tipo iterable: Array, Map, String, arguments… El propio objeto Set, al ser un iterable, puede utilizarse como argumento en el momento de crear uno nuevo.
+
+var str = 'Hello World',
+    arr = [ 'foo', 'bar' ],
+    map = new Map();
+ 
+var set1 = new Set( str );
+var set2 = new Set( arr );
+var set3 = new Set( map );
+var set4 = new Set( set1 );
+ 
+console.info( set1, set2, set3, set4 );
+// Set {} Set {} Set {} Set {}
+// Métodos básicos
+// Para poder trabajar de forma efectiva con una colección, necesitaremos métodos que permitan acceder a sus elementos. Estos serían los básicos:
+
+// add: añade un elemento al Set
+// delete: elimina un elemento del Set
+// forEach: permite aplicar una función sobre cada elemento del Set (según su orden de insercción)
+
+// Add
+// Para añadir un elemento a nuestro Set, utilizamos el método add:
+
+var mySet = new Set();
+ 
+mySet.add( 1 );
+mySet.add( 'foo' );
+
+
+// Además de valores, podemos añadir expresiones a nuestro Set para que sean evaluadas en tiempo de ejecución:
+
+mySet.add( 4 * 2 ); // 8
+ 
+var fn = () => 'Hello World';
+ 
+mySet.add( fn() ); // Hello World
+
+// También podemos encadenar los métodos consiguiendo un flujo más funcional:
+
+var mySet = new Set().add( 'foo' ).add( 'bar' );
+ 
+console.info( mySet.size ); // 2
+
+// Si añadimos un valor dos veces, éste se ignora:
+
+var mySet = new Set( [ 'foo', 'foo', 'bar' ] );
+console.info( mySet.size ); // 2
+
+
+// La igualdad de valores se realiza mediante una comparación interna de tipo estricto (===), lo que significa que ésta no aplica a objetos (los cuales, por definición, son siempre diferentes en Javascript):
+
+var objA = {},
+    objB = {};
+ 
+console.info( objA === objB ); // false
+ 
+var mySet = new Set( [ objA, objB ] );
+console.info( mySet.size ); // 2
+
+// Delete
+// Para borrar un elemento, utilizamos el método delete. Javascript devuelve un Boolean indicando el resultado de la operación:
+
+mySet.delete( 'foo' ); // true
+mySet.delete( 'foobar' ); // false
+ 
+var result = mySet.delete( 'bar' );
+ 
+console.info( result ); // false
+console.info( typeof result ); // boolean
+
+
+// Igual que en el caso anterior, también podemos operar con expresiones:
+
+var fn = ( x ) => Math.pow( x, 2 );
+ 
+mySet.delete( fn( 12 ) ); // false (144)
+
+
+// Esta sí resulta una novedad con respecto al objeto Array el cual, como bien sabemos, no incorpora un método nativo para eliminar un elemento.
+
+// forEach
+// Al igual que el objeto Array y otros iterables, el objeto Set permite recorrer sus elementos para aplicar una función (callback) sobre cada valor. El orden utilizado es estrictamente el de inserción:
+
+var mySet = new Set();
+ 
+mySet.add( 1 );
+mySet.add( 'foo' );
+ 
+mySet.forEach( ( ele ) => console.info( ele ) );
+// 1
+// foo
+
+
+// El callback del forEach recoge hasta tres valores: los dos primeros (idénticos) son el elemento sobre el que se itera mientras que el tercero apunta al propio objeto Set:
+
+mySet.forEach( ( ele, n, obj ) => console.info( ele ) );
+// 1 1 Set {}
+// foo foo Set {}
+// NOTA: Desconozco porque los dos primeros argumentos referencian al mismo valor. Ya en la especificación, se establece de dicho modo: “the first two arguments are a value contained in the Set. The same value is passed for both arguments.”
+
+// La propiedad size
+// La propiedad size, tal y como su nombre sugiere, permite obtener el número de elementos que componen un conjunto dado. El valor devuelto se corresponde con el instante en que se realiza la consulta:
+
+var mySet = new Set();
+ 
+mySet.add( 1 );
+mySet.add( 'foo' );
+mySet.add( 'foobar' );
+ 
+console.info( mySet.size ); // 3
+ 
+mySet.delete( 'foo' );
+console.info( mySet.size ); // 2
+
+
+// Iteración
+// Al estar trabajando con objetos iterables, podemos recorrer su contenido utilizando un bucle de tipo for…of:
+
+var mySet = new Set().add( 'foo' ).add( 'bar' ).add( 'foobar' );
+ 
+for ( let ele of mySet ) {
+    console.info( ele );
+}
+ 
+// foo
+// bar
+// foobar
+
+
+// Otros métodos
+// Completando la API de este nuevo objeto tenemos los siguientes métodos:
+
+// clear: elimina todos los elementos de un conjunto.
+// has: comprueba que un valor, o el resultado de una expresión, se encuentra en el Set. Devuelve un valor true o false.
+// entries: devuelve un objeto de tipo iterable que contiene a su vez un array con los valores de cada elemento del Set.
+// values: devuelve un objeto de tipo iterable con el valor de cada uno de los elementos del Set.
+// keys: idéntico al método values.
+// var mySet = new Set( [ 'foo', 'bar', 'foobar' ] );
+ 
+// has
+console.info( mySet.has( 'bar' ) ); // true
+console.info( mySet.has( 'xxx' ) ); // false
+ 
+// entries
+for ( let value of mySet.entries() ) {
+    console.info( value );
+}
+ 
+// values
+for ( let value of mySet.values() ) {
+    console.info( value );
+}
+ 
+// keys
+for ( let value of mySet.keys() ) {
+    console.info( value );
+}
+ 
+// Clearing
+mySet.clear();
+console.info( mySet.size ); // 0
+
+
+// Límite de elementos
+// Tal y como ocurre con el objeto Array, el límite de elementos de un conjunto de tipo Set se define en gran medida por el escenario sobre el que se ejecuta el código.
+
+// Según la especificación, este límite se corresponde con el máximo valor de un entero en 32 bits, lo que evivale a un 2 elevado a la 32 potencia. Esto se comprueba utilizando la operación abstracta interna ToInt32, quedando como valor máximo posible el 4.294.967.295.
+
+// Conversiones
+// Como se ha comentado más arriba, un array puede convertirse en un objeto Set con tan solo referenciarlo en su constructor:
+
+var myArr = [ 'foo', 'bar', 'foobar' ],
+    mySet = new Set( myArr );
+ 
+console.info( mySet.size ); // 3
+ 
+mySet.forEach( x => console.info( x ) );
+// foo
+// bar
+// foobar
+// Si añadimos el array a un Set ya declarado utilizando el método add, lo que se añade es la referencia al array como objeto, no a sus valores independientes:
+
+var myArr = [ 'foo', 'bar', 'foobar' ],
+    mySet = new Set();
+ 
+mySet.add( myArr );
+ 
+console.info( mySet.size ); // 1
+mySet.forEach( x => console.info( x ) );
+// ["foo", "bar", "foobar"]
+
+
+// Para añadir cada uno de los elementos de un array a un Set ya declarado, se pueden utilizar los métodos nativos de Array como por ejemplo map:
+
+var myArr = [ 'foo', 'bar', 'foobar' ],
+    mySet = new Set();
+ 
+myArr.map( i => mySet.add( i ) );
+ 
+console.info( mySet.size ); // 3
+
+
+// La acción contraria, convertir un Set en un array, puede conseguirse de varias formas. Tomemos un Set de ejemplo:
+
+var mySet = new Set();
+ 
+mySet.add( 'foo' );
+mySet.add( 'bar' );
+mySet.add( 'foobar' );
+
+
+// Y apliquemos distintos métodos de conversión:
+
+// Operador de propagation
+var myArr = [ ...mySet ];
+ 
+console.info( myArr );
+// ["foo", "bar", "foobar"]
+ 
+console.info( myArr instanceof Array ); // true
+
+// Método Array.from
+var myArr = Array.from( mySet );
+ 
+console.info( myArr );
+// ["foo", "bar", "foobar"]
+ 
+console.info( myArr instanceof Array ); // true
+
+
+// Filtrado y mapeado
+// A diferencia del objeto Array, Set no dispone de los métodos filter() y map(). Para conseguir esta funcionalidad, debemos realizar una conversión previa, operar, y después reconvertir de nuevo nuestro conjunto:
+
+var mySet = new Set().add( 'foo' ).add( 'bar' ).add( 'foobar' );
+ 
+mySet = new Set( [ ...mySet ].map( ele => ele.toUpperCase() ) );
+ 
+mySet.forEach( ele => console.info( ele ) );
+// FOO
+// BAR
+// FOOBAR
+ 
+mySet = new Set( [ ...mySet ].filter( ele => ele.length < 4 ) );
+mySet.forEach( ele => console.info( ele ) );
+// FOO
+// BAR
+
+
+// Operando entre conjuntos: intersección y diferencia
+// Las operaciones básicas entre conjuntos (intersección y diferencia) se consiguen a través del anteriormente mencionado método filter. Para ello, debemos realizar esa conversión previa mencionada más arriba:
+
+// Intersección
+// Para obtener los elementos del conjunto A repetidos en el conjunto B:
+
+var setA = new Set( [ 'Monday', 'Tuesday', 'Friday', 'Saturday' ] ),
+    setB = new Set( [ 'Tuesday', 'Sunday', 'Wednesday', 'Thursday' ] );
+ 
+var setC = new Set( [ ...setA ].filter( x => setB.has( x ) ) );
+console.info( setC.size ); // 1
+ 
+setC.forEach( x => console.info( x ) ); // Tuesday
+
+
+// Diferencia
+// Para obtener los elementos del conjunto A no presentes en el conjunto B:
+
+var setC = new Set( [ ...setA ].filter( x => ! setB.has( x ) ) );
+ 
+console.info( setC.size ); // 3
+ 
+setC.forEach( x => console.info( x ) );
+// Monday
+// Friday
+// Saturday
+
+
+// Unión
+// Dado que un objeto Set es un conjunto de valores únicos, la suma de un conjunto A y B resulta de la agregación natural de ambos:
+
+var setC = new Set( [ ...setA, ...setB ] );
+ 
+console.info( setC.size ); // 7
+ 
+setC.forEach( x => console.info( x ) );
+// Monday
+// Tuesday
+// Friday
+// Saturday
+// Sunday
+// Wednesday
+// Thursday
+
+
+// A esto se le llama Strong Set. Se le llama strong porque permite almacenar una referencia a un objeto a pesar de que este deje de exsitir, es decir:
+
+let set = new Set();
+let key = {};
+set.add(key);
+console.log(set.size);      // 1
+
+key = null;
+console.log(set.size);      //1
+key [...set][0];
+console.log(key);           // [object Object] { ... }
+
+
+
+// Para no almacenar referencias a objetos que ya no existen, se han creado los WeakSet:
+
+let weakSet = new WeakSet();
+let weakKey = {};
+
+set.add(weakKey);
+console.log(weakSet.has(weakKey));      // true
+
+weakKey = null;
+console.log([...weakSet]);              // [] Da como resultado un array vacio
+
+
+
+
+
+
+
+/*************************/
+/*** ------ Map ------ ***/
+/*************************/
+
+// Un Map es como un set pero con clave: valor
+
+let course = new Map();
+course.set('title', 'Aprende ES6');
+course.set('sessions', 6);
+
+console.log(course.get('title'));
+console.log(course.get('sessions'));
+
+let map = new map(), 
+    key1 = {},          // Se pueden crear key con objetos, al almacenarse la direccion del puntero
+    key2 = {};
+    
+map.set(key1, 5);
+map.set(key2, 42);
+
+console.log(map.get(key1));
+console.log(map.get(key2));
+
+
+// De la misma forma que antes, existen los WeakMaps
+
+let map = new WeakMap();
+let element = {};
+
+map.st(element, 'Original');
+
+let value = map.get(element);
+console.log(value);                 // Original
+
+element = null;
+
+console.log(map.get(element));      // undefined
+
+
+
+
+
+
+/******************************/
+/*** ------ Symbols ------ ***/
+/******************************/
+
+// LSymbol es un tipo de datos cuyos valores son únicos e immutables. Dichos valores pueden ser utilizados como identificadores (claves) de las 
+// propiedades de los objetos.  Cada valor del tipo Symbol tiene asociado un valor del tipo String o Undefined que sirve únicamente como descripción del símbolo.
+
+// La función Symbol primitive data type es el constructor de valores del tipo Symbol. Cuando Symbol es llamado como función nos devuelve una nuevo valor del tipo Symbol. 
+// El constructor Symbol no debe ser usado con el operador new. Tampoco debe ser extendido mediante clases.
+
+// Sintaxis --- Symbol([description])
+
+let mySymbol = new Symbol('mySymol');
+
+
+// Imaginemos
+
+var COLOR_RED       = 'Red';
+var COLOR_ORANGE    = 'Orange';
+var COLOR_YELLOW    = 'Yellow';
+
+var COLOR_RED_DARK  = 'Red';
+
+
+function printColor ( color ) {
+    
+    switch ( color ) {
+        case COLOR_RED:
+            console.log('Rojo');
+            break;
+        case COLOR_RED_DARK:
+            console.log('Rojo Oscuro');
+            break;
+        case COLOR_ORANGE:
+            console.log('Naranja');
+            break;
+        case COLOR_YELLOW:
+            console.log('Amarillo');
+            break;
+    }
+
+}
+
+printColor(COLOR_RED);           // Rojo
+printColor(COLOR_RED_DARK);      // Rojo, Como se esta evaluando el valor 'Red' y tanto COLOR_RED como COLOR_RED_DARK tienen ese vlor, el switch suelta el primero que pilla.
+
+
+var COLOR_RED       = Symbol();
+var COLOR_ORANGE    = Symbol();
+var COLOR_YELLOW    = Symbol();
+
+var COLOR_RED_DARK  = Symbol();
+
+
+function printColor ( color ) {
+    
+    switch ( color ) {
+        case COLOR_RED:
+            console.log('Rojo');
+            break;
+        case COLOR_RED_DARK:
+            console.log('Rojo Oscuro');
+            break;
+        case COLOR_ORANGE:
+            console.log('Naranja');
+            break;
+        case COLOR_YELLOW:
+            console.log('Amarillo');
+            break;
+    }
+
+}
+
+printColor(COLOR_RED);           // Rojo
+printColor(COLOR_RED_DARK);      // Rojo Oscuro
+
+
+// min 1:07:00

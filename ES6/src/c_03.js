@@ -123,6 +123,8 @@ console.log(ford instanceof Vehicle);   //true
 //
 
 
+
+
 /*********************************/
 // Clonado o funcion de factoria //
 /*********************************/
