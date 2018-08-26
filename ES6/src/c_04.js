@@ -362,6 +362,7 @@ let miOtraCalculadora = new lib.Calculator('Otra');
 // Se puede importar el módulo dándole un alias
 // import { member1 , member2 as alias2 , [...] } from "module-name";
 import { Calculator as miAliasCalculadora  } from './modules/calculator';
+import { getMaxListeners } from "cluster";
 
 
 let miOtraMasCalculadora = new miAliasCalculadora('Alias');
@@ -1023,3 +1024,207 @@ printColor(COLOR_RED_DARK);      // Rojo Oscuro
 
 
 // min 1:07:00
+
+console.log(Symbol('foo'));             // [object Symol] { ... }
+console.log(Symbol('foo').toString());  // "Symbol(foo)"
+
+// Son utiles commo claves de objetos ya que en ES6 las claves de los objetos pueden ser computadas.
+
+var myObj = {};
+var fooSym = Symbol('foo');
+var otherSym = Symbol('bar');
+
+myObj['foo'] = 'bar';
+myObj[fooSym] = 'baz';
+myObj[otherSym] = 'bing';
+
+console.log(myObj.foo === 'bar');           // true
+console.log(myObj[fooSym] === 'baz');       // true
+console.log(myObj[otherSym] === 'bing');    // true
+
+// Los Symbols no aparecen enumerados como propiedades del objeto.
+console.log(Object.keys(myObj));            // ["foo"]
+
+console.log(Object.getOwnPropertySymbols(myObj));                   // [[object Symbol] { ... }, [object Symbol] { ... }]
+console.log(Object.getOwnPropertySymbols(myObj)[0] === fooSym );    // true
+
+
+// Diferencia ntre symbol y valores constantes 
+
+const hola = 'hola';
+const adios = 'hola';
+console.log(hola === adios); // true
+
+
+const hola = Symbol('hola');
+const adios = Symbol('hola');
+console.log(hola === adios); // false. Pero el valor de hola y adios no es accesible. El Symbol no tiene una valor en si. 'hola' es solamente descriptivo en el symbol
+
+
+
+
+/*****************************/
+/*** ------ Proxies ------ ***/
+/*****************************/
+
+// https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Proxy
+// min 1:26
+
+// El objeto Proxy se usa para definir un comportamiento personalizado para operaciones fundamentales (por ejemplo, para observar propiedades, cuando se asignan, 
+// enumeración, invocación de funciones, etc).
+
+// Terminología
+
+// * handler
+//    Objeto que gestiona las intercepciones a las propiedades del objeto proxy.
+// * traps
+//    Son los métodos interceptores que proveen acceso a las propiedades. Es análogo al concepto de traps en los sistemas operativos.
+// * target
+//    El objeto que virtualiza este objeto. Suele usarse como backend de almacenamiento del proxy. Invariantes (semántica que no acepta cambios) respecto a la no  
+//    extensibilidad del objeto o propiedades no configurables se verifican contra este target.
+
+// Sintaxis
+// var p = new Proxy(target, handler);
+// target
+//  Un objeto target (puede ser cualquier órden de objetos, incluyendo un array nativa, funcion o incluso otro proxy) o función que contenga el Proxy
+// handler
+//  Un objeto cuyas propiedades son funciones que definen el comportamiento del proxy cuando una operación es realizada en él.
+
+const target = {};
+const handler = {
+    get(target, propKey, receiver) {
+        console.log(`get ${propKey}`);
+        return 'hello';
+    }
+}
+
+const proxy = new Proxy(target, handler);
+console.log(proxy.foo); // get foo
+                        // hello
+
+// Es muy experimental, no se puede usar con polyfills de babel. solo soportado en las ultimas versiones de Chrome. Package npm harmony-reflect
+
+
+// Ejemplo:
+
+var validator = {
+    set: function(obj, prop, value){
+        if (prop === 'yearOfBirth') {
+            if (!Number.isInteger(value)){
+                throw new TypeError('yearOfBirth no es un nu entero');
+            }
+            if (value > 3000) {
+                throw new RangeError('yearOfBirth no parece valido');
+            }
+        }
+
+        // operacion original para guardar el valor en la propiedad
+        obj[prop] = value;
+    }
+};
+
+var person = new Proxy({}, validator);
+
+person.yearOfbirth = 1986;
+console.log(person.yearOfbirth);    // 1986
+person.yearOfbirth = 'eighties';    // lanza una excepcion
+person.yearOfBirth = 3030;          // lanza una excepcion
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler
+
+
+
+
+
+
+/********************************/
+/*** ------ Reflection ------ ***/
+/********************************/
+
+// Reflect  es un objecto incorporado que proporciona metodos para interceptar operaciones de javascript. Los métodos son los mismos que los de proxy handlers. 
+// Reflect no es un objeto de funciones y por lo tanto no es constructible.
+
+// Descripción
+
+// A diferencia de la mayoria de los objetos globales, Reflect no es un constructor.  No puede ser instanciado con un operador new o invocando el objecto  
+// Reflect como una función. Todas las propiedades y métodos de Reflect son estáticos (igual que los del objeto Math).
+
+Reflect.apply(target, thisArguments, argumentsList);
+
+// ES5
+Function.prototype.apply.call(Math.floor, undefined, [1.75]);
+
+// ES2015
+Reflect.apply(Math.floor, undefined, [1.75]);   // 1
+
+// https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Reflect
+// https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Object/defineProperty
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
+
+
+
+
+/*********************************/
+/*** ------ Decoradores ------ ***/
+/*********************************/
+
+// Es una expresion que evalua una funcion
+// Toma el target, name y el descriptor del decorador como argumentos
+// Opcionalmente retorn un descriptor de decorador para instalar en el objeto target
+
+// Parametros de un decorador
+// Target: El objeto al que queremos modificar su definicion de propiedades
+// Name: El nombre de la propiedad a modificar
+// Descriptor: La descripcion de la propiedad del objetom que a su vez es:
+//     - configurable: indica si se puede modificar
+//     - enumerable: si es iterable    
+//     - value: valor asociado a la propiedad
+//     - writable: indica si la propiedad puede ser cambiada con una asignacion
+//     - get: indica si la propiedad es un getter 
+//     - set: indica si la propiedad es un setter 
+
+class Person {
+    @readonly
+    name() {
+        return `${this.first} ${this.last}`;
+    }
+};
+
+const readonly = (target, name, descriptor) => {
+    descriptor.writable = false;
+    return descriptor;
+};
+
+
+// Ejm:
+
+// Tenemos el decorador
+const readonly = (target, name, descriptor) => {
+    descriptor.writable = false;
+    return descriptor;
+}
+
+
+class Person {
+    
+    constructor({first, last}){
+        this.first = first;
+        this.last = last;
+    }
+
+    @readonly
+    name() {
+        return `${this.first} ${this.last}`;
+    }
+
+}
+
+const person = new Person({
+    first: 'Jok',
+    last: 'Arn'
+});
+
+console.log( person.name() );   // Jok Arn
+person.name = () => { return `${this.first}`; };    // Esto petaria porque no se name no es writable
+
+// Preset de Babel a usar babel-plugin-transform-decoratos-legacy
