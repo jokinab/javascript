@@ -19,10 +19,15 @@ export default class LyfeCicleDemo extends Component {
 
   componentDidMount () {
     console.log('<LifeCycleDemo> componentDidMount')
+    this.interval = setInterval(() => {
+      console.log('Go!')
+    }, 1000)
   }
 
   shouldComponentUpdate (nextProps) {
     console.log('<LifeCycleDemo> shouldComponentUpdate')
+    console.log('Props actuales: ', JSON.stringify(this.props))
+    console.log('Props proximas: ', JSON.stringify(nextProps))
     return this.props.sizeMessage !== nextProps.sizeMessage
   }
 
@@ -40,6 +45,7 @@ export default class LyfeCicleDemo extends Component {
 
   componentWillUnmount () {
     console.log('<LifeCycleDemo> componentWillUnmount')
+    clearInterval(this.interval)
   }
 
   changeState () {

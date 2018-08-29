@@ -4,17 +4,33 @@ import './App.css';
 import LyfeCicleDemo from './LyfeCicleDemo/LyfeCicleDemo';
 
 class App extends Component {
-  render() {
+  constructor (...args) {
+    super(...args)
+
+    this.state = {
+      sizeMessage: 0
+    }
+
+    this.incrementSizeMessage = this.incrementSizeMessage.bind(this)
+  }
+
+  incrementSizeMessage () {
+    let newSizeMessage = this.state.sizeMessage + 1
+    this.setState({sizeMessage: newSizeMessage})
+  }
+
+  render () {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <LyfeCicleDemo sizeMessage="12" />
+        <button onClick={this.incrementSizeMessage}>Click to increase sizeMessage</button>
+        <LyfeCicleDemo sizeMessage={this.state.sizeMessage} />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
