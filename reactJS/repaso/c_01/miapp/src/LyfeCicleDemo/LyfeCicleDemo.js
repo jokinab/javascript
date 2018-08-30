@@ -1,63 +1,32 @@
 import React, { Component } from 'react'
+import LyfeCicleDemoChild from './LyfeCicleDemoChild'
 
 export default class LyfeCicleDemo extends Component {  
 
   constructor (...args) {
     super(...args)
 
-    this.changeState = this.changeState.bind(this)
-
     this.state = {
-      mensaje: 'Mensaje Inicial'
+      sizeMessage: 0
     }
-    console.log('<LifeCycleDemo> constructor')
+    this.incrementSizeMessage = this.incrementSizeMessage.bind(this)
   }
 
-  componentWillMount () {
-    console.log('<LifeCycleDemo> componentWillMount')
-  }
-
-  componentDidMount () {
-    console.log('<LifeCycleDemo> componentDidMount')
-    this.interval = setInterval(() => {
-      console.log('Go!')
-    }, 1000)
-  }
-
-  shouldComponentUpdate (nextProps) {
-    console.log('<LifeCycleDemo> shouldComponentUpdate')
-    console.log('Props actuales: ', JSON.stringify(this.props))
-    console.log('Props proximas: ', JSON.stringify(nextProps))
-    return this.props.sizeMessage !== nextProps.sizeMessage
-  }
-
-  componentWillReceiveProps (nextProps) {
-    console.log('<LifeCycleDemo> componentWillReceiveProps', nextProps)
-  }
-
-  componentWillUpdate () {
-    console.log('<LifeCycleDemo> componentWillUpdate')
-  }
-
-  componentDidUpdate () {
-    console.log('<LifeCycleDemo> componentDidUpdate')
-  }
-
-  componentWillUnmount () {
-    console.log('<LifeCycleDemo> componentWillUnmount')
-    clearInterval(this.interval)
+  incrementSizeMessage () {
+    let newSizeMessage = this.state.sizeMessage + 1
+    this.setState({sizeMessage: newSizeMessage})
   }
 
   changeState () {
     this.setState({mensaje: 'Mensaje Actualizado!'})
   }
+
   render () {
     console.log('<LifeCycleDemo> render')
     return (
       <div className="lyfecicledemo">
-        <p><strong>Props: </strong>{ JSON.stringify(this.props) }</p>
-        <p><strong>State: </strong>{ JSON.stringify(this.state) }</p>
-        <button onClick={this.changeState}>Change State!</button>
+        <LyfeCicleDemoChild sizeMessage={this.state.sizeMessage} />
+        <button onClick={this.incrementSizeMessage}>Click to increase sizeMessage</button>
       </div>
     )
   }
