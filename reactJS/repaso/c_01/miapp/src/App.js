@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import logo from './logo.svg'
-import './App.css'
-import LyfeCicleDemo from './LyfeCicleDemo/LyfeCicleDemo'
-
-import DinamicChildrenDemo from './DinamicChildrenDemo/DinamicChildrenDemo'
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import LyfeCicleDemo from './LyfeCicleDemo/LyfeCicleDemo';
+import DinamicChildrenDemo from './DinamicChildrenDemo/DinamicChildrenDemo';
+import NestingViewsDemo from './NestingViewsDemo/NestingViewsDemo';
+import LibraryEncapsulationDemo from './LibraryEncapsulationDemo/LibraryEncapsulationDemo';
 
 class App extends Component {
   constructor (...args) {
@@ -37,9 +38,18 @@ class App extends Component {
         <button
           className={this.state.demoToLoad === 'DinamicChildrenDemo' ? 'active' : '' }
           onClick={ () => this.demoToLoad('DinamicChildrenDemo') }>DinamicChildrenDemo</button>
+        <button
+          className={this.state.demoToLoad === 'NestingViewsDemo' ? 'active' : '' }
+          onClick={ () => this.demoToLoad('NestingViewsDemo') }>NestingViewsDemo</button>
+        <button
+          className={this.state.demoToLoad === 'LibraryEncapsulationDemo' ? 'active' : '' }
+          onClick={ () => this.demoToLoad('LibraryEncapsulationDemo') }>LibraryEncapsulationDemo</button>
     
         { (demoSelected === 'LyfeCicleDemo') && <LyfeCicleDemo /> }
         { (demoSelected === 'DinamicChildrenDemo') && <DinamicChildrenDemo initialshow='false'/> }
+        { (demoSelected === 'NestingViewsDemo') && <NestingViewsDemo /> }
+        { (demoSelected === 'LibraryEncapsulationDemo') && <LibraryEncapsulationDemo /> }
+        
       </div>
     )
   }
