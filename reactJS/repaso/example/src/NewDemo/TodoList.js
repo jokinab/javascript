@@ -14,8 +14,13 @@ const ListTodo = (props) => {
 }
 
 const ListItem = (props) => {
+  console.log(props)
   return (
-    <li>{props}</li>
+    <li className={props.elemValue.highlight === true ? 'highlighted' : ''}>
+      <h3>Name: {props.elemValue.name}</h3>
+      <h4>Lang: {props.elemValue.selectedLang}</h4>
+      <p>Note: {props.elemValue.note}</p>
+    </li>
   )
 }
 
@@ -38,13 +43,18 @@ export default class TodoList extends Component {
   render () {
     console.log('filter: ', this.state.filter);
     const filtrado = this.props.messagesList.filter((elem) => elem.name.includes(this.state.filter));
-    console.log(filtrado);
+   
     
     return (
       <div className='todo-wrap'>
         <InputFilter onChange={this.handleFilterChange} textFilter={this.state.filter} />
         <ListTodo>
-          { filtrado.map((elem, index) => <ListItem key='index' />) }
+          { 
+            
+            filtrado.map((elem, index) => {  
+              return (<ListItem key={index} elemValue={elem}/>);
+            })
+          }
         </ListTodo>
       </div>
     )
