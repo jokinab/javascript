@@ -78,6 +78,7 @@ export default class FormList extends Component {
     this.handleLangChange = this.handleLangChange.bind(this);
     this.handleHighlight = this.handleHighlight.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.handleButClick = this.handleButClick.bind(this);
   }
 
   handleNameChange (e) {
@@ -96,6 +97,16 @@ export default class FormList extends Component {
     this.setState({note: e.target.value});
   }
 
+  handleButClick () {
+    const newMensaje = {
+      name: this.state.name,
+      selectedLang: this.state.selectedLang,
+      highlight: this.state.highlight,
+      note: this.state.note
+    }
+    this.props.onFormSubmit(newMensaje);
+  }
+
   render () {
     return (
       <div className="newdemo">
@@ -108,6 +119,7 @@ export default class FormList extends Component {
         </SelectLang>
         <CheckHighLight onClick={this.handleHighlight} currentValue={this.state.highlight} />
         <MessageInput note={this.state.note} onChange={this.handleMessageChange}/>
+        <button onClick={this.handleButClick}>Add Mensaje!</button> 
       </div>
     )
   }

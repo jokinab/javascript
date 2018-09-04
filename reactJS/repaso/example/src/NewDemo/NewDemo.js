@@ -11,7 +11,8 @@ export default class NewDemo extends Component {
       pushed: false,
       message: []
     }
-    this.onCLickButton = this.onCLickButton.bind(this)
+    this.onCLickButton = this.onCLickButton.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   onCLickButton (e) {
@@ -24,12 +25,19 @@ export default class NewDemo extends Component {
 
     this.setState({messageList: newMessageList})
   }
+
+  handleFormSubmit (newMessagge) {
+    const currentMenssages = this.state.message;
+    currentMenssages.push(newMessagge);
+    this.setState({message: currentMenssages});
+  }
+
   render () {
     return (
       <div className="newdemo">
         <Title name='HelloDemo!' />
         <Button onClick={this.onCLickButton} />
-        <FormList onClick={this.addNewMessage} />
+        <FormList onClick={this.addNewMessage} onFormSubmit={this.handleFormSubmit}/>
       </div>
     )
   }
