@@ -36,20 +36,17 @@ export default class TodoList extends Component {
   }
   
   render () {
-    console.log('filter: ', this.state.filter)
+    console.log('filter: ', this.state.filter);
+    const filtrado = this.props.messagesList.filter((elem) => elem.name.includes(this.state.filter));
+    console.log(filtrado);
+    
     return (
       <div className='todo-wrap'>
         <InputFilter onChange={this.handleFilterChange} textFilter={this.state.filter} />
         <ListTodo>
-          { this.props.messagesList.filter((elem) => elem.name.includes(this.state.filterText)
-          ).map((elem, index) => <ListItem key={index} elementValues={elem} />
-          )}
+          { filtrado.map((elem, index) => <ListItem key='index' />) }
         </ListTodo>
       </div>
     )
   }
-}
-
-TodoList.propTypes = {
-  messagesList: PropTypes.Array
 }
