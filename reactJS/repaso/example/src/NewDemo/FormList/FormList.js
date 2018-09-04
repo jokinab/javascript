@@ -104,6 +104,7 @@ export default class FormList extends Component {
       highlight: this.state.highlight,
       note: this.state.note
     }
+    this.setState({name: '', selectedLang: '', highlight: false, note: ''});
     this.props.onFormSubmit(newMensaje);
   }
 
