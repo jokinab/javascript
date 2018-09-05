@@ -7,10 +7,19 @@ const InputFilter = (props) => {
   )
 }
 
+InputFilter.propTypes = {
+  onChange: PropTypes.func,
+  textFilter: PropTypes.string
+}
+
 const ListTodo = (props) => {
   return (
     <ul>{props.children}</ul>
   )
+}
+
+ListTodo.propTypes = {
+  children: PropTypes.array
 }
 
 const ListItem = (props) => {
@@ -24,7 +33,9 @@ const ListItem = (props) => {
   )
 }
 
-
+ListItem.propTypes = {
+  elemValue: PropTypes.object
+}
 
 export default class TodoList extends Component {
   constructor (...args) {
@@ -34,24 +45,19 @@ export default class TodoList extends Component {
     };
     this.handleFilterChange = this.handleFilterChange.bind(this);
   }
-  
+
   handleFilterChange (e) {
-    let filterText = e.target.value;
-    this.setState({filter: filterText});
+    this.setState({filter: e.target.value});
   }
-  
+
   render () {
-    console.log('filter: ', this.state.filter);
-    const filtrado = this.props.messagesList.filter((elem) => elem.name.includes(this.state.filter));
-   
-    
     return (
       <div className='todo-wrap'>
         <InputFilter onChange={this.handleFilterChange} textFilter={this.state.filter} />
         <ListTodo>
-          { 
-            
-            filtrado.map((elem, index) => {  
+          { this.props.messagesList
+            .filter((elem) => elem.name.includes(this.state.filter))
+            .map((elem, index) => {
               return (<ListItem key={index} elemValue={elem}/>);
             })
           }
@@ -59,4 +65,8 @@ export default class TodoList extends Component {
       </div>
     )
   }
+}
+
+TodoList.propTypes = {
+  messagesList: PropTypes.array
 }

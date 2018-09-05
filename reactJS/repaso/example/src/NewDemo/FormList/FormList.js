@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const NameInput = (props) => {
-  console.log('value: ', typeof props.name)
   return (
     <div>
       <label>Name: </label>
@@ -10,6 +9,7 @@ const NameInput = (props) => {
     </div>
   )
 }
+
 NameInput.propTypes = {
   onChange: PropTypes.func.isRequired
 }
@@ -124,4 +124,9 @@ export default class FormList extends Component {
       </div>
     )
   }
+}
+
+FormList.propTypes = {
+  onClick: PropTypes.func,
+  onFormSubmit: PropTypes.func
 }

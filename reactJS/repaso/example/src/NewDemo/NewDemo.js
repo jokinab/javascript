@@ -14,7 +14,7 @@ export default class NewDemo extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.addNewMessage = this.addNewMessage.bind(this);
   }
-  
+
   addNewMessage () {
     let newMessageList = this.state.message
 
