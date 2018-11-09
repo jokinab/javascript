@@ -17,25 +17,68 @@ export default class TodoContent extends Component {
     super(...args)
 
     this.state = {
-      title:  {  
+      text: {
+              TodoContentTitle:  {  
                 'es': 'Contenido de Todo',
                 'eus': 'Todoaren edukia',
                 'en': 'Todo Content'
               },
+              NewTodoTitle:  {  
+                'es': 'Nuevo Mensaje',
+                'eus': 'Mezu Berria',
+                'en': 'New Message'
+              },
+              FormLabelName: {
+                'es': 'Nombre: ',
+                'eus': 'Izena: ',
+                'en': 'Name: '
+              },
+              FormLabelSurname: {
+                'es': 'Apellidos: ',
+                'eus': 'Abizenak: ',
+                'en': 'Name: '
+              },
+              FormLabelLanguages: {
+                'es': 'Idiomas: ',
+                'eus': 'Hizkuntzak: ',
+                'en': 'Languages: '
+              }, 
+              FormLabelPokemon: {
+                'es': 'Pokemon: ',
+                'eus': 'Pokemon: ',
+                'en': 'Pokemon: '
+              }
+            },  
       selectedOption: 'NewTodo',
-      todoList: []            
+      todoList: [],
+      newMessage: {}            
     }
     this.changeOption = this.changeOption.bind(this);
+    this.handleNewMessage = this.handleNewMessage.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   changeOption (item) {
     this.setState({selectedOption: item});
   }
+
+  handleNewMessage (newMessage) {
+    const currentTodoList = this.state.todoList;
+    currentTodoList.push(newMessage);
+    this.setState({todoList: currentTodoList});
+  }
+
+  handleFormSubmit (message) {
+    const currentTodoList = this.state.todoList;
+    currentTodoList.push(message);
+    this.setState({todoList: currentTodoList});
+    console.log(message);
+  }
   
   render() {
     return (
       <div className="todocontent">
-        <h2>{ this.state.title[this.props.currentLanguage] }</h2>
+        <h2>{ this.state.text.TodoContentTitle[this.props.currentLanguage] }</h2>
         <header className="head-cnt">
           {TodoMenuOptions.map(
             (item, index) => (
@@ -50,7 +93,11 @@ export default class TodoContent extends Component {
         </header>
         <div className="option-wrap">
           { this.state.selectedOption === 'NewTodo' && 
-            <NewTodo />
+            <NewTodo title={this.state.text.NewTodoTitle[this.props.currentLanguage]}
+                     languages={this.props.languages} 
+                     currentLanguage={this.props.currentLanguage}
+                     onNeWMessage={this.handleNewMessage}
+                     handleFormSubmit = {this.handleFormSubmit} />
           }  
           { this.state.selectedOption === 'TodoList' && 
             <TodoList todoList={this.state.todoList}/>
@@ -62,5 +109,6 @@ export default class TodoContent extends Component {
 }
 
 TodoContent.propTypes = {
-  currentLanguage: PropTypes.string
+  currentLanguage: PropTypes.string,
+  languages: PropTypes.array
 }

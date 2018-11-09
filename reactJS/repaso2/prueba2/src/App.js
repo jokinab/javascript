@@ -21,7 +21,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header currentLanguage={this.state.currentLanguage} languages={this.state.languages} handleLangChange={this.handleLangChange}/>
-        <TodoContent currentLanguage={this.state.currentLanguage}/>
+        <TodoContent currentLanguage={this.state.currentLanguage} languages={this.state.languages} />
       </div>
     );
   }
