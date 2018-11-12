@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import MarvelSelectList from './../MarvelSelectList/MarvelSelectList';
 
 const InputName = (props) => {
   return (
     <div>
-      <label className="newLabel">Nombre: </label>
-      <input className="newInput" type="text" value={props.name} onChange={props.handleOnChangeName} />
+      <label className="newLabel" htmlFor="Name">Nombre: </label>
+      <input id="Name" className="newInput" type="text" value={props.name} onChange={props.handleOnChangeName} />
     </div>
   )
 }
@@ -18,8 +19,8 @@ InputName.propTypes = {
 const InputSurname = (props) => {
   return (
     <div>
-      <label className="newLabel">Apellidos: </label>
-      <input className="newInput" type="text" value={props.name} onChange={props.handleOnChangeSurname} />
+      <label className="newLabel" htmlFor="Surname">Apellidos: </label>
+      <input id="Surname" className="newInput" type="text" value={props.name} onChange={props.handleOnChangeSurname} />
     </div>
   )
 }
@@ -32,8 +33,8 @@ InputSurname.propTypes = {
 const InputMessage = (props) => {
   return (
     <div>
-      <label className="newLabel">Mensaje: </label>
-      <input className="newInput" type="textarea" value={props.name} onChange={props.handleChangeMessage} />
+      <label className="newLabel" htmlFor="Message">Mensaje: </label>
+      <input id="Message" className="newInput" type="textarea" value={props.name} onChange={props.handleChangeMessage} />
     </div>
   )
 }
@@ -44,14 +45,14 @@ InputMessage.propTypes = {
 }
 
 
-const SelectLang = (props) => {
+const SelectRate = (props) => {
   return (
     <div>
-      <label className="newLabel">Language: </label>
-      <select value={props.currentLanguage} className="lang-list" onChange={props.handleLangChange}>
-          {props.languages.map((langItem, index) => {
+      <label className="newLabel" htmlFor="Rate">Rate: </label>
+      <select id="Rate" value={props.rate} className="rate-list" onChange={props.handleRateChange}>
+          {props.rates.map((rateItem, index) => {
             return (
-              <option value={ langItem } key={index}>{langItem}</option>
+              <option value={ rateItem } key={index}>{rateItem}</option>
             );          
           } )}
         </select>
@@ -59,32 +60,34 @@ const SelectLang = (props) => {
   )
 }
 
-SelectLang.propTypes = {
+SelectRate.propTypes = {
   name: PropTypes.string,
-  currentLanguage: PropTypes.string,
-  handleLangChange: PropTypes.func
+  rate: PropTypes.string,
+  handleRateChange: PropTypes.func,
+  rates: PropTypes.array
 }
 
 export default class FormNewTodo extends Component {
   constructor (...args) {
     super (...args);
     this.state = {
+      id: '',
       name: '',
       surname: '',
       message: '',
+      rate: '5',
+      rates: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
       language: this.props.currentLanguage,
-      pokemon: {
-        id: '',
-        href: '',
-        img: '',
-        name: ''
-      }
+      marvelItem: ''     
     }
+
     this.handleOnChangeName = this.handleOnChangeName.bind(this);
     this.handleOnChangeSurname = this.handleOnChangeSurname.bind(this);
-    this.handleLangChange = this.handleLangChange.bind(this);
+    this.handleRateChange = this.handleRateChange.bind(this);
     this.handleChangeMessage = this.handleChangeMessage.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleMarvelSelect = this.handleMarvelSelect.bind(this);
+   
   }
 
   handleOnChangeName (event) {
@@ -95,8 +98,8 @@ export default class FormNewTodo extends Component {
     this.setState({surname: event.target.value});
   }
 
-  handleLangChange (event) {
-    this.setState({language: event.target.value});
+  handleRateChange (event) {
+    this.setState({rate: event.target.value});
   }
 
   handleChangeMessage (event) {
@@ -108,14 +111,22 @@ export default class FormNewTodo extends Component {
     event.preventDefault();
 
     const message = {
+      id: JSON.stringify( new Date() ),
       name: this.state.name,
       surname: this.state.surname,
-      language: this.state.language,
-      message: this.state.message
+      rate: this.state.rate,
+      message: this.state.message,
+      marvelItem: this.state.marvelItem
     };
 
     this.props.handleFormSubmit(message);
-  
+    this.setState({name:'' ,surname:'', rate:'5', message:''});
+
+  }
+
+  handleMarvelSelect (newMarvelItem) {
+    
+    this.setState({marvelItem: newMarvelItem});
   }
 
 
@@ -124,10 +135,10 @@ export default class FormNewTodo extends Component {
       <form className="formnewtodo">
         <InputName name={this.state.name} handleOnChangeName={this.handleOnChangeName} />
         <InputSurname name={this.state.surname} handleOnChangeSurname={this.handleOnChangeSurname} />
-        <SelectLang currentLanguage={this.state.language} 
-                    languages={this.props.languages} 
-                    handleLangChange={this.handleLangChange} />
-        <InputMessage name={this.state.message} handleChangeMessage={this.handleChangeMessage} />   
+        <SelectRate rates={this.state.rates} 
+                    handleRateChange={this.handleRateChange} />
+        <InputMessage name={this.state.message} handleChangeMessage={this.handleChangeMessage} />
+        <MarvelSelectList handleMarvelSelect={this.handleMarvelSelect} />   
         <button type='submit' onClick={this.handleFormSubmit}>Enviar</button>         
       </form>
     )

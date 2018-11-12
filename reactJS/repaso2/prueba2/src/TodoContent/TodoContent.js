@@ -9,8 +9,6 @@ const Button = (props) => (
   <button className={props.selected} key={props.index} onClick={props.onClick}>{props.text}</button>
 )
 
-
-
 export default class TodoContent extends Component {
   
   constructor (...args) {
@@ -47,6 +45,11 @@ export default class TodoContent extends Component {
                 'es': 'Pokemon: ',
                 'eus': 'Pokemon: ',
                 'en': 'Pokemon: '
+              },
+              ListEmpty: {
+                'es': 'Ups! La lista está vacia!',
+                'eus': 'Ups! Zerrenda hutsik dago!',
+                'en': 'Ups! List is empty!'
               }
             },  
       selectedOption: 'NewTodo',
@@ -100,7 +103,7 @@ export default class TodoContent extends Component {
                      handleFormSubmit = {this.handleFormSubmit} />
           }  
           { this.state.selectedOption === 'TodoList' && 
-            <TodoList todoList={this.state.todoList}/>
+            <TodoList todoList={this.state.todoList} messageEmpty={this.state.text.ListEmpty} currentLanguage={this.props.currentLanguage}/>
           }      
         </div>
       </div>
