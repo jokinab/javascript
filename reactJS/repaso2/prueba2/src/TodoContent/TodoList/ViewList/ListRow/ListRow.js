@@ -8,9 +8,6 @@ export default class ListRow extends Component {
     this.state = {
       itemContent: this.props.itemContent
     }
-
-    this.getMarvelItem = this.getMarvelItem.bind(this);
-   
   }
 
   render() {
