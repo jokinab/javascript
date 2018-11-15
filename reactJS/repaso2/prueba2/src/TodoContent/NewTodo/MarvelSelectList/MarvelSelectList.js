@@ -14,13 +14,16 @@ const LoadingMessage = () => {
 
 const SelectMarvel = (props) => {
   return (
-    <select onChange={props.handleMarvelSelection}>
-      {props.marvelItems.map( (marvelItem, index) => {
-        return (
-          <option value={marvelItem.id} key={index}>{marvelItem.name}</option>
-        )
-      })}
-    </select>
+    <div className="input-field">
+      <label className="newLabel" htmlFor="Rate">Select Marvel: </label>
+      <select onChange={props.handleMarvelSelection}>
+        {props.marvelItems.map( (marvelItem, index) => {
+          return (
+            <option value={marvelItem.id} key={index}>{marvelItem.name}</option>
+          )
+        })}
+      </select>
+    </div>  
   )
 }
 

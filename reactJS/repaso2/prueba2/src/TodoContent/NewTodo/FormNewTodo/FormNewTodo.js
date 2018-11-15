@@ -4,7 +4,7 @@ import MarvelSelectList from './../MarvelSelectList/MarvelSelectList';
 
 const InputName = (props) => {
   return (
-    <div>
+    <div className="input-field">
       <label className="newLabel" htmlFor="Name">Nombre: </label>
       <input id="Name" className="newInput" type="text" value={props.name} onChange={props.handleOnChangeName} />
     </div>
@@ -18,7 +18,7 @@ InputName.propTypes = {
 
 const InputSurname = (props) => {
   return (
-    <div>
+    <div className="input-field">
       <label className="newLabel" htmlFor="Surname">Apellidos: </label>
       <input id="Surname" className="newInput" type="text" value={props.name} onChange={props.handleOnChangeSurname} />
     </div>
@@ -32,7 +32,7 @@ InputSurname.propTypes = {
 
 const InputMessage = (props) => {
   return (
-    <div>
+    <div className="input-field">
       <label className="newLabel" htmlFor="Message">Mensaje: </label>
       <input id="Message" className="newInput" type="textarea" value={props.name} onChange={props.handleChangeMessage} />
     </div>
@@ -47,7 +47,7 @@ InputMessage.propTypes = {
 
 const SelectRate = (props) => {
   return (
-    <div>
+    <div className="input-field">
       <label className="newLabel" htmlFor="Rate">Rate: </label>
       <select id="Rate" value={props.rate} className="rate-list" onChange={props.handleRateChange}>
           {props.rates.map((rateItem, index) => {

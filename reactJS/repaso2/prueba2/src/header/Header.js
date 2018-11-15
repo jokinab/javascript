@@ -22,14 +22,16 @@ export default class Header extends Component {
   render() {
     return (
       <div className="header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <select value={this.props.currentLanguage} className="lang-list" onChange={this.handleChange}>
-          {this.props.languages.map((langItem, index) => {
-            return (
-              <option value={ langItem } key={index}>{langItem}</option>
-            );          
-          } )}
-        </select>
+        <div className="container-hdr">
+          <img src={logo} className="App-logo" alt="logo" />
+          <select value={this.props.currentLanguage} className="lang-list" onChange={this.handleChange}>
+            {this.props.languages.map((langItem, index) => {
+              return (
+                <option value={ langItem } key={index}>{langItem}</option>
+              );          
+            } )}
+          </select>
+        </div>  
       </div>
     )
   }

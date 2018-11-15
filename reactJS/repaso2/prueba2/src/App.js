@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './header/Header';
 import TodoContent from './TodoContent/TodoContent';
+import './App.css';
 
 class App extends Component {
   constructor (...args) {

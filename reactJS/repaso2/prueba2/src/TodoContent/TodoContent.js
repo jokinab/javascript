@@ -81,31 +81,33 @@ export default class TodoContent extends Component {
   render() {
     return (
       <div className="todocontent">
+        <div className="container-body">
         <h2>{ this.state.text.TodoContentTitle[this.props.currentLanguage] }</h2>
-        <header className="head-cnt">
-          {TodoMenuOptions.map(
-            (item, index) => (
-              <Button
-                key={index}
-                text={item}
-                selected={item === this.state.selectedOption ? 'active' : ''}
-                onClick={e => this.changeOption(item)}
-              />
-            )
-          )}
-        </header>
-        <div className="option-wrap">
-          { this.state.selectedOption === 'NewTodo' && 
-            <NewTodo title={this.state.text.NewTodoTitle[this.props.currentLanguage]}
-                     languages={this.props.languages} 
-                     currentLanguage={this.props.currentLanguage}
-                     onNeWMessage={this.handleNewMessage}
-                     handleFormSubmit = {this.handleFormSubmit} />
-          }  
-          { this.state.selectedOption === 'TodoList' && 
-            <TodoList todoList={this.state.todoList} messageEmpty={this.state.text.ListEmpty} currentLanguage={this.props.currentLanguage}/>
-          }      
-        </div>
+          <header className="head-cnt">
+            {TodoMenuOptions.map(
+              (item, index) => (
+                <Button
+                  key={index}
+                  text={item}
+                  selected={item === this.state.selectedOption ? 'active' : ''}
+                  onClick={e => this.changeOption(item)}
+                />
+              )
+            )}
+          </header>
+          <div className="option-wrap">
+            { this.state.selectedOption === 'NewTodo' && 
+              <NewTodo title={this.state.text.NewTodoTitle[this.props.currentLanguage]}
+                      languages={this.props.languages} 
+                      currentLanguage={this.props.currentLanguage}
+                      onNeWMessage={this.handleNewMessage}
+                      handleFormSubmit = {this.handleFormSubmit} />
+            }  
+            { this.state.selectedOption === 'TodoList' && 
+              <TodoList todoList={this.state.todoList} messageEmpty={this.state.text.ListEmpty} currentLanguage={this.props.currentLanguage}/>
+            }      
+          </div>
+        </div>  
       </div>
     )
   }
