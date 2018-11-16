@@ -15,7 +15,7 @@ export default class TodoList extends Component {
     return (
       <div className="todolist">
         { this.props.todoList.length === 0 && <DisplayListEmpty messageEmpty={this.props.messageEmpty} currentLanguage={this.props.currentLanguage} /> }
-        { this.props.todoList.length > 0 && <ViewList todoListItems={this.props.todoList} /> }
+        { this.props.todoList.length > 0 && <ViewList todoListItems={this.props.todoList} currentLanguage={this.props.currentLanguage} /> }
       </div>
     )
   }

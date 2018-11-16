@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MarvelSelectList from './../MarvelSelectList/MarvelSelectList';
+import {LangsString} from '../../../lang/Lang';
 
 const InputName = (props) => {
   return (
     <div className="input-field">
-      <label className="newLabel" htmlFor="Name">Nombre: </label>
+      <label className="newLabel" htmlFor="Name">{ LangsString.LabelName[props.currentLanguage] }</label>
       <input id="Name" className="newInput" type="text" value={props.name} onChange={props.handleOnChangeName} />
     </div>
   )
@@ -19,7 +20,7 @@ InputName.propTypes = {
 const InputSurname = (props) => {
   return (
     <div className="input-field">
-      <label className="newLabel" htmlFor="Surname">Apellidos: </label>
+      <label className="newLabel" htmlFor="Surname">{ LangsString.LabelSurname[props.currentLanguage] }</label>
       <input id="Surname" className="newInput" type="text" value={props.name} onChange={props.handleOnChangeSurname} />
     </div>
   )
@@ -33,7 +34,7 @@ InputSurname.propTypes = {
 const InputMessage = (props) => {
   return (
     <div className="input-field">
-      <label className="newLabel" htmlFor="Message">Mensaje: </label>
+      <label className="newLabel" htmlFor="Message">{ LangsString.LabelMessage[props.currentLanguage] }</label>
       <input id="Message" className="newInput" type="textarea" value={props.name} onChange={props.handleChangeMessage} />
     </div>
   )
@@ -48,7 +49,7 @@ InputMessage.propTypes = {
 const SelectRate = (props) => {
   return (
     <div className="input-field">
-      <label className="newLabel" htmlFor="Rate">Rate: </label>
+      <label className="newLabel" htmlFor="Rate">{ LangsString.LabelRate[props.currentLanguage] }</label>
       <select id="Rate" value={props.rate} className="rate-list" onChange={props.handleRateChange}>
           {props.rates.map((rateItem, index) => {
             return (
@@ -77,7 +78,6 @@ export default class FormNewTodo extends Component {
       message: '',
       rate: '5',
       rates: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-      language: this.props.currentLanguage,
       marvelItem: ''     
     }
 
@@ -133,12 +133,13 @@ export default class FormNewTodo extends Component {
   render() {
     return (
       <form className="formnewtodo">
-        <InputName name={this.state.name} handleOnChangeName={this.handleOnChangeName} />
-        <InputSurname name={this.state.surname} handleOnChangeSurname={this.handleOnChangeSurname} />
+        <InputName name={this.state.name} handleOnChangeName={this.handleOnChangeName} currentLanguage={this.props.currentLanguage} />
+        <InputSurname name={this.state.surname} handleOnChangeSurname={this.handleOnChangeSurname} currentLanguage={this.props.currentLanguage} />
         <SelectRate rates={this.state.rates} 
-                    handleRateChange={this.handleRateChange} />
-        <InputMessage name={this.state.message} handleChangeMessage={this.handleChangeMessage} />
-        <MarvelSelectList handleMarvelSelect={this.handleMarvelSelect} />   
+                    handleRateChange={this.handleRateChange} 
+                    currentLanguage={this.props.currentLanguage} />
+        <InputMessage name={this.state.message} handleChangeMessage={this.handleChangeMessage} currentLanguage={this.props.currentLanguage} />
+        <MarvelSelectList handleMarvelSelect={this.handleMarvelSelect} currentLanguage={this.props.currentLanguage} />   
         <button type='submit' onClick={this.handleFormSubmit}>Enviar</button>         
       </form>
     )

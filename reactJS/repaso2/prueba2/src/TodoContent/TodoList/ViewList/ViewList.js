@@ -47,5 +47,6 @@ export default class ViewList extends Component {
 }
 
 ViewList.propTypes = {
-  todoListItems: PropTypes.array
+  todoListItems: PropTypes.array,
+  currentLanguage: PropTypes.string
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TodoList from './TodoList/TodoList';
 import NewTodo from './NewTodo/NewTodo';
+import {LangsString} from '../lang/Lang';
 
 const TodoMenuOptions = ['NewTodo', 'TodoList'];
 
@@ -82,7 +83,7 @@ export default class TodoContent extends Component {
     return (
       <div className="todocontent">
         <div className="container-body">
-        <h2>{ this.state.text.TodoContentTitle[this.props.currentLanguage] }</h2>
+        <h2>{ LangsString.TodoContentTitle[this.props.currentLanguage] }</h2>
           <header className="head-cnt">
             {TodoMenuOptions.map(
               (item, index) => (
@@ -97,8 +98,7 @@ export default class TodoContent extends Component {
           </header>
           <div className="option-wrap">
             { this.state.selectedOption === 'NewTodo' && 
-              <NewTodo title={this.state.text.NewTodoTitle[this.props.currentLanguage]}
-                      languages={this.props.languages} 
+              <NewTodo languages={this.props.languages} 
                       currentLanguage={this.props.currentLanguage}
                       onNeWMessage={this.handleNewMessage}
                       handleFormSubmit = {this.handleFormSubmit} />

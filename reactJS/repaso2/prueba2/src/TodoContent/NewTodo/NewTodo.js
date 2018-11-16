@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormNewTodo from './FormNewTodo/FormNewTodo';
+import { LangsString } from '../../lang/Lang';
 
 export default class NewTodo extends Component {
-
-  constructor (...args) {
-    super (...args);
-
-    this.state = {
-      currentLanguage: this.props.currentLanguage
-    }
-  }  
 
   render() {
     return (
       <div className="newtodo">
-        <h3 className="new-title">{ this.props.title }</h3>
+        <h3 className="new-title">{ LangsString.NewTodoTitle[this.props.currentLanguage] }</h3>
         <FormNewTodo languages={this.props.languages} 
-              currentLanguage={this.state.currentLanguage} 
+              currentLanguage={this.props.currentLanguage} 
               handleFormSubmit={this.props.handleFormSubmit} />
       </div>
     )
@@ -26,7 +19,6 @@ export default class NewTodo extends Component {
 
 NewTodo.propTypes = {
   onNeWMessage: PropTypes.func,
-  title: PropTypes.string,
   languages: PropTypes.array,
   currentLanguage: PropTypes.string,
   handleFormSubmit: PropTypes.func
