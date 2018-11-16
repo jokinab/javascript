@@ -19,13 +19,13 @@ export default class ViewList extends Component {
   render() {
     return (
       <div className="viewlist">
-        <table>
-          <thead>
-            <tr>
+        <table className="table-marvel">
+          <thead className="table-head">
+            <tr className="head-row">
               {
                 Object.keys(this.props.todoListItems[0]).map( (headKey, index) => {
                   return (
-                    <th key={index}><button value={headKey} onClick={ e => this.handleButtonClick(e) }>{headKey}</button></th>
+                    <th className="head-cell" key={index}><button className="head-button" value={headKey} onClick={ e => this.handleButtonClick(e) }>{headKey}</button></th>
                   )
                 })
               }

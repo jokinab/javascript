@@ -138,3 +138,20 @@ button:hover{
   text-indent: 10px;
 }
 
+.table-marvel{
+  width:100%;
+}
+
+.head-cell{    
+  background: #6d6a6a;
+  padding: 5px;
+  text-align: center;
+}
+
+.head-button{
+  background:transparent;
+  border:0;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+}
