@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import logo from './../logo.svg';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Menu from './Menu/Menu';
 
 export default class Header extends Component {
 
@@ -23,7 +24,8 @@ export default class Header extends Component {
     return (
       <div className="header">
         <div className="container-hdr">
-          <img src={logo} className="App-logo" alt="logo" />
+          <FontAwesomeIcon icon="mask" size="4x" />
+          <Menu />
           <select value={this.props.currentLanguage} className="lang-list" onChange={this.handleChange}>
             {this.props.languages.map((langItem, index) => {
               return (

@@ -4,6 +4,13 @@ import Header from './header/Header';
 import MarvelContent from './MarvelContent/MarvelContent';
 import './App.css';
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faMask } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faMask);
+
 class App extends Component {
   constructor (...args) {
     super(...args)

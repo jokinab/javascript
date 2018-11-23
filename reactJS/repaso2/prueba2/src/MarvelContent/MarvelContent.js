@@ -4,7 +4,7 @@ import MarvelList from './MarvelList/MarvelList';
 import NewMarvel from './NewMarvel/NewMarvel';
 import {LangsString} from './../lang/Lang';
 
-const TodoMenuOptions = ['NewTodo', 'TodoList'];
+const TodoMenuOptions = Object.keys(LangsString.MarvelContentMenuOptions);
 
 const Button = (props) => (
   <button className={props.selected} key={props.index} onClick={props.onClick}>{props.text}</button>
@@ -16,7 +16,7 @@ export default class MarvelContent extends Component {
     super(...args)
 
     this.state = {
-      selectedOption: 'NewTodo',
+      selectedOption: TodoMenuOptions[0],
       todoList: [],
       newMessage: {}            
     }
@@ -52,7 +52,7 @@ export default class MarvelContent extends Component {
               (item, index) => (
                 <Button
                   key={index}
-                  text={item}
+                  text={LangsString.MarvelContentMenuOptions[item][this.props.currentLanguage]}
                   selected={item === this.state.selectedOption ? 'active' : ''}
                   onClick={e => this.changeOption(item)}
                 />
@@ -60,13 +60,13 @@ export default class MarvelContent extends Component {
             )}
           </header>
           <div className="option-wrap">
-            { this.state.selectedOption === 'NewTodo' && 
+            { this.state.selectedOption === 'NewMarvel' && 
               <NewMarvel languages={this.props.languages} 
                       currentLanguage={this.props.currentLanguage}
                       onNeWMessage={this.handleNewMessage}
                       handleFormSubmit = {this.handleFormSubmit} />
             }  
-            { this.state.selectedOption === 'TodoList' && 
+            { this.state.selectedOption === 'MarvelList' && 
               <MarvelList todoList={this.state.todoList} messageEmpty={LangsString.ListEmpty[this.props.currentLanguage]} currentLanguage={this.props.currentLanguage}/>
             }      
           </div>

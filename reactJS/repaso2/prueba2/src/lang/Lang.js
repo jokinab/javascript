@@ -1,6 +1,17 @@
 export const LangsString = {
-
-  TodoContentTitle:  {  
+    MarvelContentMenuOptions: {
+      'NewMarvel': {
+        'es': 'Nuevo Marvel',
+        'eus': 'Marvel Berria',
+        'en': 'New Marvel'
+      },      
+      'MarvelList': {
+        'es': 'Lista Marvel',
+        'eus': 'Marvel Zerrenda',
+        'en': 'Marvel List'
+      }
+    },  
+    TodoContentTitle:  {  
       'es': 'Contenido de App',
       'eus': 'Apparen edukia',
       'en': 'App Content'
