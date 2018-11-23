@@ -1,9 +1,9 @@
 export const LangsString = {
 
   TodoContentTitle:  {  
-      'es': 'Contenido de Todo',
-      'eus': 'Todoaren edukia',
-      'en': 'Todo Content'
+      'es': 'Contenido de App',
+      'eus': 'Apparen edukia',
+      'en': 'App Content'
     },
     NewTodoTitle:  {  
       'es': 'Nuevo Mensaje',

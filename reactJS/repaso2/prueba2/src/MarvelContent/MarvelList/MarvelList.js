@@ -5,12 +5,12 @@ import ViewList from './ViewList/ViewList';
 const DisplayListEmpty = (props) => {
   return (
     <h3>
-      <strong>{ props.messageEmpty[props.currentLanguage]}</strong>
+      <strong>{ props.messageEmpty}</strong>
     </h3>
   )
 }
 
-export default class TodoList extends Component {
+export default class MarvelList extends Component {
   render() {
     return (
       <div className="todolist">
@@ -21,8 +21,8 @@ export default class TodoList extends Component {
   }
 }
 
-TodoList.propTypes = {
+MarvelList.propTypes = {
   todoList: PropTypes.array,
-  messageEmpty: PropTypes.object,
+  messageEmpty: PropTypes.string,
   currentLanguage: PropTypes.string
 }

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import FormNewTodo from './FormNewTodo/FormNewTodo';
+import FormNewMarvel from './FormNewMarvel/FormNewMarvel';
 import { LangsString } from '../../lang/Lang';
 
-export default class NewTodo extends Component {
+export default class NewMarvel extends Component {
 
   render() {
     return (
       <div className="newtodo">
         <h3 className="new-title">{ LangsString.NewTodoTitle[this.props.currentLanguage] }</h3>
-        <FormNewTodo languages={this.props.languages} 
+        <FormNewMarvel languages={this.props.languages} 
               currentLanguage={this.props.currentLanguage} 
               handleFormSubmit={this.props.handleFormSubmit} />
       </div>
@@ -17,7 +17,7 @@ export default class NewTodo extends Component {
   }
 }
 
-NewTodo.propTypes = {
+NewMarvel.propTypes = {
   onNeWMessage: PropTypes.func,
   languages: PropTypes.array,
   currentLanguage: PropTypes.string,

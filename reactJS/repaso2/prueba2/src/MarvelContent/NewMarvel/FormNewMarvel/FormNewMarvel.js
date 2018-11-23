@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MarvelSelectList from './../MarvelSelectList/MarvelSelectList';
+import MarvelSelectList from '../MarvelSelectList/MarvelSelectList';
 import {LangsString} from '../../../lang/Lang';
 
 const InputName = (props) => {
@@ -68,7 +68,7 @@ SelectRate.propTypes = {
   rates: PropTypes.array
 }
 
-export default class FormNewTodo extends Component {
+export default class FormNewMarvel extends Component {
   constructor (...args) {
     super (...args);
     this.state = {
@@ -132,7 +132,7 @@ export default class FormNewTodo extends Component {
 
   render() {
     return (
-      <form className="formnewtodo">
+      <form className="formnewmarvel">
         <InputName name={this.state.name} handleOnChangeName={this.handleOnChangeName} currentLanguage={this.props.currentLanguage} />
         <InputSurname name={this.state.surname} handleOnChangeSurname={this.handleOnChangeSurname} currentLanguage={this.props.currentLanguage} />
         <SelectRate rates={this.state.rates} 
@@ -146,7 +146,7 @@ export default class FormNewTodo extends Component {
   }
 }
 
-FormNewTodo.propTypes = {
+FormNewMarvel.propTypes = {
   languages: PropTypes.array,
   currentLanguage: PropTypes.string,
   handleFormSubmit: PropTypes.func

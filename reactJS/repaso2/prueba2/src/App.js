@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './header/Header';
-import TodoContent from './TodoContent/TodoContent';
+import MarvelContent from './MarvelContent/MarvelContent';
 import './App.css';
 
 class App extends Component {
@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header currentLanguage={this.state.currentLanguage} languages={this.state.languages} handleLangChange={this.handleLangChange}/>
-        <TodoContent currentLanguage={this.state.currentLanguage} languages={this.state.languages} />
+        <MarvelContent currentLanguage={this.state.currentLanguage} languages={this.state.languages} />
       </div>
     );
   }

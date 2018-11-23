@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TodoList from './TodoList/TodoList';
-import NewTodo from './NewTodo/NewTodo';
-import {LangsString} from '../lang/Lang';
+import MarvelList from './MarvelList/MarvelList';
+import NewMarvel from './NewMarvel/NewMarvel';
+import {LangsString} from './../lang/Lang';
 
 const TodoMenuOptions = ['NewTodo', 'TodoList'];
 
@@ -10,49 +10,12 @@ const Button = (props) => (
   <button className={props.selected} key={props.index} onClick={props.onClick}>{props.text}</button>
 )
 
-export default class TodoContent extends Component {
+export default class MarvelContent extends Component {
   
   constructor (...args) {
     super(...args)
 
     this.state = {
-      text: {
-              TodoContentTitle:  {  
-                'es': 'Contenido de Todo',
-                'eus': 'Todoaren edukia',
-                'en': 'Todo Content'
-              },
-              NewTodoTitle:  {  
-                'es': 'Nuevo Mensaje',
-                'eus': 'Mezu Berria',
-                'en': 'New Message'
-              },
-              FormLabelName: {
-                'es': 'Nombre: ',
-                'eus': 'Izena: ',
-                'en': 'Name: '
-              },
-              FormLabelSurname: {
-                'es': 'Apellidos: ',
-                'eus': 'Abizenak: ',
-                'en': 'Name: '
-              },
-              FormLabelLanguages: {
-                'es': 'Idiomas: ',
-                'eus': 'Hizkuntzak: ',
-                'en': 'Languages: '
-              }, 
-              FormLabelPokemon: {
-                'es': 'Pokemon: ',
-                'eus': 'Pokemon: ',
-                'en': 'Pokemon: '
-              },
-              ListEmpty: {
-                'es': 'Ups! La lista está vacia!',
-                'eus': 'Ups! Zerrenda hutsik dago!',
-                'en': 'Ups! List is empty!'
-              }
-            },  
       selectedOption: 'NewTodo',
       todoList: [],
       newMessage: {}            
@@ -98,13 +61,13 @@ export default class TodoContent extends Component {
           </header>
           <div className="option-wrap">
             { this.state.selectedOption === 'NewTodo' && 
-              <NewTodo languages={this.props.languages} 
+              <NewMarvel languages={this.props.languages} 
                       currentLanguage={this.props.currentLanguage}
                       onNeWMessage={this.handleNewMessage}
                       handleFormSubmit = {this.handleFormSubmit} />
             }  
             { this.state.selectedOption === 'TodoList' && 
-              <TodoList todoList={this.state.todoList} messageEmpty={this.state.text.ListEmpty} currentLanguage={this.props.currentLanguage}/>
+              <MarvelList todoList={this.state.todoList} messageEmpty={LangsString.ListEmpty[this.props.currentLanguage]} currentLanguage={this.props.currentLanguage}/>
             }      
           </div>
         </div>  
@@ -113,7 +76,7 @@ export default class TodoContent extends Component {
   }
 }
 
-TodoContent.propTypes = {
+MarvelContent.propTypes = {
   currentLanguage: PropTypes.string,
   languages: PropTypes.array
 }
