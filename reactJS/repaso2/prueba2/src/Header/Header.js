@@ -4,11 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Menu from './Menu/Menu';
 
 export default class Header extends Component {
-
   constructor (...args) {
     super(...args)
     this.state = {
-      
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -22,9 +20,9 @@ export default class Header extends Component {
 
   render() {
     return (
-      <div className="header">
+      <header className="header">
         <div className="container-hdr">
-          <FontAwesomeIcon icon="mask" size="4x" />
+          <FontAwesomeIcon icon="spider" size="4x" />
           <Menu />
           <select value={this.props.currentLanguage} className="lang-list" onChange={this.handleChange}>
             {this.props.languages.map((langItem, index) => {
@@ -34,7 +32,7 @@ export default class Header extends Component {
             } )}
           </select>
         </div>  
-      </div>
+      </header>
     )
   }
 }

@@ -20,6 +20,30 @@
   color: white;
 }
 
+.menu{
+  display: flex;
+}
+
+.menu-list{
+  display: flex;
+  list-style: none;
+  color: white;
+  padding-left: 0;
+}
+
+.menu-list a{
+  color: black;
+  padding: 10px 16px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.menu-list a:hover{
+  text-decoration: underline;
+}
+
+
+
 .App-link {
   color: #61dafb;
 }
@@ -41,7 +65,7 @@
   padding: 0px;
   top: 0;
   left: 0;
-  background: #c1c1c1;
+  background: #4e8faf;
 }
 
 .container-hdr{
@@ -69,7 +93,7 @@ h2{
 
 
 .head-cnt{
-  background: #c1c1c1;
+  background: #3973a5;
   padding: 20px;
   border-radius: 10px 10px 1px 1px;
   display: flex;
@@ -144,7 +168,7 @@ button:hover{
 }
 
 .head-cell{    
-  background: #6d6a6a;
+  background: #1f527d;
   padding: 5px;
   text-align: center;
 }

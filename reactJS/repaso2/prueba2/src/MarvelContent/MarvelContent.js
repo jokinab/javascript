@@ -78,5 +78,8 @@ export default class MarvelContent extends Component {
 
 MarvelContent.propTypes = {
   currentLanguage: PropTypes.string,
-  languages: PropTypes.array
+  languages: PropTypes.array,
+  location: PropTypes.object,
+  history: PropTypes.object,
+  match: PropTypes.object,
 }

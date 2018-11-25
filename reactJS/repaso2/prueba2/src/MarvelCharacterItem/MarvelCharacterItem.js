@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const IsLoadingMarvel = () => {
   return (
@@ -60,4 +61,12 @@ export default class MarvelCharacterItem extends Component {
       </div>
     )
   }
+}
+
+MarvelCharacterItem.propTypes = {
+  currentLanguage: PropTypes.string,
+  languages: PropTypes.array,
+  location: PropTypes.object,
+  history: PropTypes.object,
+  match: PropTypes.object
 }

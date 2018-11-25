@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {LangsString} from './../lang/Lang';
 
 export default class MarvelCharacters extends Component {
@@ -18,4 +19,12 @@ export default class MarvelCharacters extends Component {
       </div>  
     )
   }
+}
+
+MarvelCharacters.propTypes = {
+  currentLanguage: PropTypes.string,
+  languages: PropTypes.array,
+  location: PropTypes.object,
+  history: PropTypes.object,
+  match: PropTypes.object
 }
