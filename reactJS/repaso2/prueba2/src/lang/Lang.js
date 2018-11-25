@@ -70,6 +70,11 @@ export const LangsString = {
       'es': 'Id',
       'eus': 'Id',
       'en': 'Id'
+    },
+    MarvelCharactersList: {
+      'es': 'Lista de los Characters',
+      'eus': 'Charctersen Zerrenda',
+      'en': 'Characters List'
     }
 
   
