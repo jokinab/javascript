@@ -40,10 +40,11 @@ export default class MarvelCharacterItem extends Component {
     fetch(FETCH_URL)
       .then(res => res.json())
       .then(res => {
-        if ( res.code === '200' ) {
-          this.setState({ characterExist: true, isLoading: false, marvelResult: res });
+        console.log(res);
+        if ( res.status === 'Ok' ) {
+          this.setState({ characterExist: true, isLoading: false, marvelResult: res.data });
         }else{
-          this.setState({ characterExist: false, isLoading: false, marvelResult: res });
+          this.setState({ characterExist: false, isLoading: false, marvelResult: res.data });
         }
       })
       .catch( err => {

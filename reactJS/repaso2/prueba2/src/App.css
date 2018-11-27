@@ -180,3 +180,20 @@ button:hover{
   font-size:18px;
   font-weight:bold;
 }
+
+.marvel-list-item{
+  margin-bottom:30px;
+  display:flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.marvel-item-img{
+  max-width:150px;
+  margin:0 20px 20px 0;
+}
+
+.marvel-item-cnt{
+  width:100%;
+  text-align: left;
+}

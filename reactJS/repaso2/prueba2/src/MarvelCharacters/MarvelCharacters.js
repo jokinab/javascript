@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {LangsString} from './../lang/Lang';
+import { Switch, Route } from "react-router-dom";
+import MarvelList from './MarvelList/MarvelList';
 
 export default class MarvelCharacters extends Component {
-  constructor (...args) {
-    super(...args);
-    this.state = {
-      pageApi: this.props.match.params.MarvelPage 
-    };
-  }
-  
   render() {
     return (
-      <div>
-        <h1>{ LangsString.MarvelCharactersList[this.props.currentLanguage]}</h1>
-        <h2>{this.state.pageApi}</h2>
-        
-      </div>  
+      <Switch>
+        <Route exact path={`${this.props.match.path}`} component={(props)=> <MarvelList currentLanguage={this.props.currentLanguage} languages={this.props.languages} {...props} /> }/>
+        <Route path={`${this.props.match.path}/:PageMarvel`} component={(props)=> <MarvelList currentLanguage={this.props.currentLanguage} languages={this.props.languages} {...props}/> }/>
+      </Switch>  
     )
   }
 }
