@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MarvelListItem from './../MarvelListItem/MarvelListItem';
-
+import MarvelListPagination from './../MarvelListPagination/MarvelListPagination';
 const IsLoadingMarvel = () => {
   return (
     <h3 className="marvel-loading">Loading...</h3>
@@ -62,6 +62,9 @@ export default class MarvelList extends Component {
           { this.state.isLoading && <IsLoadingMarvel />}
           { !this.state.isLoading && !this.state.ApiError && this.state.marvelResult.results.map((item, index) => <MarvelListItem key={index} marvelItem={item} /> ) }
           { !this.state.isLoading && this.state.ApiError && <ApiErrorNotExist /> }
+        </div>
+        <div className="container-footer">
+          { !this.state.isLoading && !this.state.ApiError && <MarvelListPagination currentPage={this.state.PageMarvel} /> }
         </div>
       </div>
     )
