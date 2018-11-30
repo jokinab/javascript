@@ -2,35 +2,109 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 
+import './MarvelListPagination.css';
+
 const LinkToPage = (props) => {
   return ( 
-    <div>
-      <Link to={`/characters/${props.linkPage}`}>{props.linkPageTxt}</Link>
+    <div className="pag-item-cnt">
+      { props.linkPage !== 'none' && <Link to={`/characters/${props.linkPage}`} className="pag-link">{props.linkPageTxt}</Link> }
+      { props.linkPage === 'none' && <span className="pag-current">{props.linkPageTxt}</span>}
     </div> 
   )
 }
+
 
 export default class MarvelListPagination extends Component {
   constructor(...args){
     super(...args);
     this.state = {
       currentPage: this.props.currentPage,
-      hasGoToFirst: parseInt(this.props.currentPage) - 2  > 0 ? true : false 
+      totalPages: Math.floor( this.props.totalCharacters / 20),
+      pageLinks: []    
     }
+    this.getPageLinks = this.getPageLinks.bind(this);
+    this.getPrevLinks = this.getPrevLinks.bind(this);
+    this.getNextLinks = this.getNextLinks.bind(this);
   }
+
+  getPrevLinks(page) {
+    
+    let numPage = page;
+    let manyLinks = 0;
+    let prevLinks = [];
+    
+    while ( ( numPage > 1 ) && ( manyLinks < 3 ) ){
+      numPage--;
+      prevLinks.unshift( Object.assign( {}, { link: numPage, label: numPage} ) );
+      manyLinks++;
+    }
+
+    switch ( numPage ) {
+      case 0: break;
+      case 1: break;
+      case 2: 
+          prevLinks.unshift( Object.assign( {}, { link: numPage - 1, label: '<<'} ) ); break;
+      default: 
+          prevLinks.unshift(Object.assign( {}, { link: numPage - 1, label: '<<'} ));  
+          prevLinks.unshift(Object.assign( {}, { link: 1, label: '<'} ));
+          break;
+    } 
+    return prevLinks;
+  }
+  
+  getNextLinks(page, totalPages) {
+
+    let numPage = page;
+    let manyLinks = 0;
+    let nextLinks = [];
+    
+    while ( ( numPage < totalPages ) && ( manyLinks < 3 ) ){
+      numPage++;
+      nextLinks.push( Object.assign( {}, { link: numPage, label: numPage} ) );
+      manyLinks++;
+    }  
+    
+    switch ( numPage ) {
+      case totalPages: break;
+      case totalPages - 1: 
+          nextLinks.push( Object.assign( {}, { link: numPage + 1, label: '>>'} ) ); break;
+      default: 
+          nextLinks.push( Object.assign( {}, { link: numPage + 1, label: '>>'} ) );  
+          nextLinks.push( Object.assign( {}, { link: totalPages, label: '>'} ) );
+          break;
+    } 
+
+    return nextLinks;
+  }
+
+  getPageLinks(page, totalPages) {
+
+    const prevLinks = ( page > 1 ) ? this.getPrevLinks(page, totalPages) : [];
+    const nextLinks = ( page < totalPages ) ? this.getNextLinks(page, totalPages) : [];
+
+    return [...prevLinks, { link: 'none', label: this.state.currentPage}, ...nextLinks];
+  }  
+
+  componentDidMount(){
+    this.setState({ pageLinks: this.getPageLinks(this.props.currentPage, this.state.totalPages) });
+  }
+
   render() {
     return (
-      <div className="marvellistpagination">
-        { this.state.hasGoToFirst && <LinkToPage linkPage={1} linkPageTxt='<' /> }
-        { <LinkToPage linkPage={ parseInt(this.props.currentPage) - 1 }  linkPageTxt={ parseInt(this.props.currentPage) - 1 } /> }
-        { <LinkToPage linkPage={ parseInt(this.props.currentPage) } linkPageTxt={ parseInt(this.props.currentPage) } /> }
-        { <LinkToPage linkPage={ parseInt(this.props.currentPage) + 1 }  linkPageTxt={ parseInt(this.props.currentPage) + 1} /> }
-      </div>
+      <ul className="list-pagination">
+        { this.state.pageLinks.map( 
+            (itemLink, index) =>  <li key={index} className="pag-item">
+                                    <LinkToPage linkPage={ itemLink.link } linkPageTxt={ itemLink.label } />
+                                  </li> 
+          )
+        }
+      </ul>
     )
   }
 }
 
 
 MarvelListPagination.propTypes = {
-  currentPage: PropTypes.string
+  currentPage: PropTypes.string,
+  totalCharacters: PropTypes.number
 }

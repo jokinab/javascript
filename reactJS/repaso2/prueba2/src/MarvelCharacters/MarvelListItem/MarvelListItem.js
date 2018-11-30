@@ -5,7 +5,6 @@ export default class MarvelListItem extends Component {
   render() {
     return (
       <article className="marvel-list-item">
-        {console.log(this.props)}
         <img src={`${this.props.marvelItem.thumbnail.path}.${this.props.marvelItem.thumbnail.extension}`} 
             alt={this.props.marvelItem.name} 
             className="marvel-item-img" />

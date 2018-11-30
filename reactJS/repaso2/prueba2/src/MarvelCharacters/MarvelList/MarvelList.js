@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MarvelListItem from './../MarvelListItem/MarvelListItem';
 import MarvelListPagination from './../MarvelListPagination/MarvelListPagination';
+
 const IsLoadingMarvel = () => {
   return (
     <h3 className="marvel-loading">Loading...</h3>
@@ -26,7 +27,9 @@ export default class MarvelList extends Component {
       PageMarvel: this.props.match.params.hasOwnProperty('PageMarvel') ? this.props.match.params.PageMarvel : '1',
       isLoading: true,
       marvelResult: '',
-      ApiError: false
+      ApiError: false,
+      totalCharacters: 0,
+      isValidPage: false
       
     };
   }
@@ -40,11 +43,26 @@ export default class MarvelList extends Component {
     fetch(FETCH_URL)
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         if ( res.status === 'Ok' ) {
-          
-          console.log(res);
-          this.setState({ ApiError: false, isLoading: false, marvelResult: res.data });
+          if ( Number.isInteger(parseInt(this.state.PageMarvel)) ) {
+            this.setState(
+              { ApiError: false, 
+                isLoading: false, 
+                marvelResult: res.data, 
+                totalCharacters: parseInt(res.data.total), 
+                isValidPage: true
+              }
+            );
+          }else{
+            this.setState(
+              { ApiError: false, 
+                isLoading: false, 
+                marvelResult: res.data, 
+                totalCharacters: 1, 
+                isValidPage: false
+              }
+            );
+          }  
         }else{
           this.setState({ ApiError: true, isLoading: false, marvelResult: res.data });
         }
@@ -60,12 +78,14 @@ export default class MarvelList extends Component {
       <div className="todocontent">
         <div className="container-body">
           { this.state.isLoading && <IsLoadingMarvel />}
-          { !this.state.isLoading && !this.state.ApiError && this.state.marvelResult.results.map((item, index) => <MarvelListItem key={index} marvelItem={item} /> ) }
+          { !this.state.isLoading && !this.state.ApiError && this.state.isValidPage && this.state.marvelResult.results.map((item, index) => <MarvelListItem key={index} marvelItem={item} /> ) }
           { !this.state.isLoading && this.state.ApiError && <ApiErrorNotExist /> }
-        </div>
-        <div className="container-footer">
-          { !this.state.isLoading && !this.state.ApiError && <MarvelListPagination currentPage={this.state.PageMarvel} /> }
-        </div>
+          { !this.state.isLoading && !this.state.ApiError && !this.state.isValidPage && <ApiErrorNotExist /> }
+          <div className="container-pagination">
+            { ( !this.state.isLoading && !this.state.ApiError ) && this.state.isValidPage &&
+                <MarvelListPagination currentPage={this.state.PageMarvel} totalCharacters={parseInt(this.state.totalCharacters)}/> }
+          </div>
+        </div>        
       </div>
     )
   }
