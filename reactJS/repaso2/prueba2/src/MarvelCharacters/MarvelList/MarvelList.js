@@ -69,20 +69,22 @@ export default class MarvelList extends Component {
     return (
       <div className="todocontent">
         <div className="container-body">
-        
-          { !this.state.isValidPage &&  <Redirect to="/characters/1"/>}
-          { this.state.isLoading && <IsLoadingMarvel />}
-        
-          { !this.state.isLoading && !this.state.ApiError && this.state.isValidPage 
-            && this.state.marvelResult.results.map((item, index) => <MarvelListItem key={index} marvelItem={item} /> ) }
-          { !this.state.isLoading && this.state.ApiError && <ApiErrorNotExist /> }
+          <div className="cards-list">
           
+            { !this.state.isValidPage &&  <Redirect to="/characters/1"/>}
+            { this.state.isLoading && <IsLoadingMarvel />}
+            { !this.state.isLoading && this.state.ApiError && <ApiErrorNotExist /> }
+
+            { !this.state.isLoading && !this.state.ApiError && this.state.isValidPage && 
+                this.state.marvelResult.results.map(
+                  (item, index) => <MarvelListItem key={index} marvelItem={item} /> 
+                ) }
+          </div>
           <div className="container-pagination">
             { ( !this.state.isLoading && !this.state.ApiError ) && this.state.isValidPage &&
                 <MarvelListPagination currentPage={this.state.PageMarvel} totalPages={this.state.totalPages} /> }
-          </div>
-        
-        </div>        
+          </div>    
+        </div>
       </div>
     )
   }
