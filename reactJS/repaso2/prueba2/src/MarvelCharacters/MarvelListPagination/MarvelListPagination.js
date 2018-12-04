@@ -4,22 +4,12 @@ import PropTypes from 'prop-types';
 
 import './MarvelListPagination.css';
 
-const LinkToPage = (props) => {
-  return ( 
-    <div className="pag-item-cnt">
-      { props.linkPage !== 'none' && <Link to={`/characters/${props.linkPage}`} className="pag-link">{props.linkPageTxt}</Link> }
-      { props.linkPage === 'none' && <span className="pag-current">{props.linkPageTxt}</span>}
-    </div> 
-  )
-}
-
-
 export default class MarvelListPagination extends Component {
   constructor(...args){
     super(...args);
     this.state = {
       currentPage: this.props.currentPage,
-      totalPages: Math.floor( this.props.totalCharacters / 20),
+      totalPages: this.props.totalPages,
       pageLinks: []    
     }
     this.getPageLinks = this.getPageLinks.bind(this);
@@ -93,9 +83,11 @@ export default class MarvelListPagination extends Component {
     return (
       <ul className="list-pagination">
         { this.state.pageLinks.map( 
-            (itemLink, index) =>  <li key={index} className="pag-item">
-                                    <LinkToPage linkPage={ itemLink.link } linkPageTxt={ itemLink.label } />
-                                  </li> 
+            (itemLink, index) =>  
+                <li key={index} className="pag-item">
+                  { itemLink.link !== 'none' && <Link to={`/characters/${itemLink.link}`} className="pag-link">{itemLink.label}</Link> }
+                  { itemLink.link === 'none' && <span className="pag-current">{itemLink.label}</span> }
+                </li> 
           )
         }
       </ul>
@@ -103,8 +95,7 @@ export default class MarvelListPagination extends Component {
   }
 }
 
-
 MarvelListPagination.propTypes = {
   currentPage: PropTypes.string,
-  totalCharacters: PropTypes.number
+  totalPages: PropTypes.number
 }

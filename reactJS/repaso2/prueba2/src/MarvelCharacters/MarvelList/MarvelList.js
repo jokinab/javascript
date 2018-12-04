@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MarvelListItem from './../MarvelListItem/MarvelListItem';
 import MarvelListPagination from './../MarvelListPagination/MarvelListPagination';
-
+import { Redirect } from "react-router-dom";
 const IsLoadingMarvel = () => {
   return (
     <h3 className="marvel-loading">Loading...</h3>
@@ -24,45 +24,37 @@ export default class MarvelList extends Component {
   constructor(...args){
     super(...args);
     this.state={
-      PageMarvel: this.props.match.params.hasOwnProperty('PageMarvel') ? this.props.match.params.PageMarvel : '1',
+      PageMarvel: this.props.match.params.hasOwnProperty('PageMarvel') && Number.isInteger(parseInt(this.props.match.params.PageMarvel)) ? this.props.match.params.PageMarvel : '1',
       isLoading: true,
       marvelResult: '',
       ApiError: false,
       totalCharacters: 0,
-      isValidPage: false
-      
+      totalPages: 0,
+      isValidPage: this.props.match.params.hasOwnProperty('PageMarvel') && Number.isInteger(parseInt(this.props.match.params.PageMarvel)) ? true : false       
     };
   }
 
   componentDidMount () {
-    const page = parseInt(this.state.PageMarvel) !== 'NaN' ? parseInt(this.state.PageMarvel) : '1'
-    const offset =  (page-1)*20;
+    
+    if ( !this.state.isValidPage ) return;
 
+    const offset =  (this.state.PageMarvel-1)*20;
     const FETCH_URL = `${API_URL}/characters?offset=${offset}&${APIKEY_QUERYSTRING}`;
     
     fetch(FETCH_URL)
       .then(res => res.json())
       .then(res => {
         if ( res.status === 'Ok' ) {
-          if ( Number.isInteger(parseInt(this.state.PageMarvel)) ) {
             this.setState(
-              { ApiError: false, 
+              { 
+                ApiError: false, 
                 isLoading: false, 
                 marvelResult: res.data, 
-                totalCharacters: parseInt(res.data.total), 
+                totalCharacters: parseInt(res.data.total),
+                totalPages: Math.floor( parseInt(res.data.total) / 20) ,
                 isValidPage: true
               }
             );
-          }else{
-            this.setState(
-              { ApiError: false, 
-                isLoading: false, 
-                marvelResult: res.data, 
-                totalCharacters: 1, 
-                isValidPage: false
-              }
-            );
-          }  
         }else{
           this.setState({ ApiError: true, isLoading: false, marvelResult: res.data });
         }
@@ -77,14 +69,19 @@ export default class MarvelList extends Component {
     return (
       <div className="todocontent">
         <div className="container-body">
+        
+          { !this.state.isValidPage &&  <Redirect to="/characters/1"/>}
           { this.state.isLoading && <IsLoadingMarvel />}
-          { !this.state.isLoading && !this.state.ApiError && this.state.isValidPage && this.state.marvelResult.results.map((item, index) => <MarvelListItem key={index} marvelItem={item} /> ) }
+        
+          { !this.state.isLoading && !this.state.ApiError && this.state.isValidPage 
+            && this.state.marvelResult.results.map((item, index) => <MarvelListItem key={index} marvelItem={item} /> ) }
           { !this.state.isLoading && this.state.ApiError && <ApiErrorNotExist /> }
-          { !this.state.isLoading && !this.state.ApiError && !this.state.isValidPage && <ApiErrorNotExist /> }
+          
           <div className="container-pagination">
             { ( !this.state.isLoading && !this.state.ApiError ) && this.state.isValidPage &&
-                <MarvelListPagination currentPage={this.state.PageMarvel} totalCharacters={parseInt(this.state.totalCharacters)}/> }
+                <MarvelListPagination currentPage={this.state.PageMarvel} totalPages={this.state.totalPages} /> }
           </div>
+        
         </div>        
       </div>
     )
