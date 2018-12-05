@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class MarvelListItem extends Component {
   render() {
@@ -12,8 +13,8 @@ export default class MarvelListItem extends Component {
           <h2 className="marvel-item-name"><Link to={`/character/${this.props.marvelItem.id}`}>{this.props.marvelItem.name}</Link></h2>
           <p className="marvel-item-desc">{this.props.marvelItem.description}</p>
           <p className="actions-item">
-            <span className="rate-item">Rate this Marvel Item</span>
-            <span className="rate-item">Add Marvel Item to your Favorites</span>
+            <span className="rate-item"><FontAwesomeIcon icon="star" size="2x" /></span>
+            <span className="fav-item"><FontAwesomeIcon icon="comment" size="2x" /></span>
           </p>
         </div>
       </article>

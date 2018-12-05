@@ -197,3 +197,8 @@ button:hover{
   width:100%;
   text-align: left;
 }
+.actions-item{
+  display:flex;
+  justify-content: flex-end;
+  color:yellow;
+}

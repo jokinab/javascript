@@ -11,9 +11,9 @@ import './App.css';
 import { Switch, Route } from "react-router-dom";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSpider } from '@fortawesome/free-solid-svg-icons';
+import { faSpider, faStar, faComment } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faSpider);
+library.add(faSpider, faStar, faComment);
 
 class App extends Component {
   constructor (...args) {
