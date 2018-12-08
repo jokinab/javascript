@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 
-import './MarvelListPagination.css';
+import './ListPagination.css';
 
-export default class MarvelListPagination extends Component {
+export default class ListPagination extends Component {
   constructor(...args){
     super(...args);
     this.state = {
-      currentPage: this.props.currentPage,
-      totalPages: this.props.totalPages,
       pageLinks: []    
     }
     this.getPageLinks = this.getPageLinks.bind(this);
@@ -72,11 +70,11 @@ export default class MarvelListPagination extends Component {
     const prevLinks = ( page > 1 ) ? this.getPrevLinks(page, totalPages) : [];
     const nextLinks = ( page < totalPages ) ? this.getNextLinks(page, totalPages) : [];
 
-    return [...prevLinks, { link: 'none', label: this.state.currentPage}, ...nextLinks];
+    return [...prevLinks, { link: 'none', label: this.props.currentPage}, ...nextLinks];
   }  
 
   componentDidMount(){
-    this.setState({ pageLinks: this.getPageLinks(this.props.currentPage, this.state.totalPages) });
+    this.setState({ pageLinks: this.getPageLinks(this.props.currentPage, this.props.totalPages) });
   }
 
   render() {
@@ -85,7 +83,7 @@ export default class MarvelListPagination extends Component {
         { this.state.pageLinks.map( 
             (itemLink, index) =>  
                 <li key={index} className="pag-item">
-                  { itemLink.link !== 'none' && <Link to={`/characters/${itemLink.link}`} className="pag-link">{itemLink.label}</Link> }
+                  { itemLink.link !== 'none' && <Link to={`${this.props.baseLink}${itemLink.link}`} className="pag-link">{itemLink.label}</Link> }
                   { itemLink.link === 'none' && <span className="pag-current">{itemLink.label}</span> }
                 </li> 
           )
@@ -95,7 +93,8 @@ export default class MarvelListPagination extends Component {
   }
 }
 
-MarvelListPagination.propTypes = {
+ListPagination.propTypes = {
   currentPage: PropTypes.string,
-  totalPages: PropTypes.number
+  totalPages: PropTypes.number,
+  baseLink: PropTypes.string
 }

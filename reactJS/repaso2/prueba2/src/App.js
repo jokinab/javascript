@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from './Header/Header';
 import MarvelContent from './MarvelContent/MarvelContent';
-import MarvelCharacters from './MarvelCharacters/MarvelCharacters';
+
+import MarvelList from './MarvelList/MarvelList';
+
 import MarvelCharacterItem from './MarvelCharacterItem/MarvelCharacterItem';
 
 import About from './About/About';
 import './App.css';
 
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSpider, faStar, faComment } from '@fortawesome/free-solid-svg-icons';
@@ -38,7 +40,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={ (props) => <MarvelContent currentLanguage={this.state.currentLanguage} languages={this.state.languages} {...props}/> } /> } />
             <Route exact path="/about" component={ (props) => <About currentLanguage={this.state.currentLanguage} languages={this.state.languages} {...props}/> } /> }/>
-            <Route path="/characters" component={ (props) => <MarvelCharacters currentLanguage={this.state.currentLanguage} languages={this.state.languages} {...props}/> } />
+            <Redirect exact path="/characters/" to="/characters/1" />
+            <Route path="/characters/:PageMarvel" component={ (props) => <MarvelList currentLanguage={this.state.currentLanguage} languages={this.state.languages} {...props}/> } />
             <Route path="/character/:MarvelItem" component={ (props) => <MarvelCharacterItem currentLanguage={this.state.currentLanguage} languages={this.state.languages} {...props}/> } />                                           
           </Switch>
         </main>
