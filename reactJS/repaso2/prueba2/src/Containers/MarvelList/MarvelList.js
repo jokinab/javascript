@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
-import ApiMarvel from './../ApiMarvel/ApiMarvel';
+import ApiMarvel from './../../ApiMarvel/ApiMarvel';
 
-import MarvelCard from './../Components/MarvelCard/MarvelCard';
+import MarvelCard from './../../Components/MarvelCard/MarvelCard';
 
-import ListPagination from './../Components/ListPagination/ListPagination';
-import { IsLoading } from './../Components/IsLoading/IsLoading';
+import ListPagination from './../../Components/ListPagination/ListPagination';
+import { IsLoading } from './../../Components/IsLoading/IsLoading';
 
 
 export default class MarvelList extends Component {
