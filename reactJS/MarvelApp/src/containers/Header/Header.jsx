@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { changeLanguage } from './../../actions/header'
 import PropTypes from 'prop-types';
 
-import Menu from './Menu/Menu';
+import Menu from './../../components/Menu/Menu';
 
 const languages = ['es', 'eus', 'en'];
 
