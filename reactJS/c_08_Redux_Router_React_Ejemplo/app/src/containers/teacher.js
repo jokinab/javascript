@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 import Proptypes from 'prop-types';
 import { TeacherTitle, TeacherDescription } from './../components';
 import { connect } from 'react-redux';
@@ -27,7 +27,7 @@ Teacher.Proptypes = {
 
 // ownProps es un nuevo parametro que espera recibir la funcion que le pasamos al parametro
 // Con esto y sabiendo que react Router guarda los parametros de la URL en una propiedad params, podemos construir la nueva forma de las propiedades
-// que le vamos a pasar a nuestro componente. 
+// que le vamos a pasar a nuestro componente.
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -37,7 +37,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-// Mapeamos las acciones a realizar. Recibira un id 
+// Mapeamos las acciones a realizar. Recibira un id
 const mapDispatchToProps = (dispatch) => {
   return {
     onRequestTeacher: (id) => dispatch(requestTeacher(id))
