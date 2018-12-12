@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { createStore } from 'redux';
 import rootReducer from './reducers/root';
 import { Provider } from 'react-redux';
 
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Switch, Route } from "react-router-dom";
 
 import './App.css';
@@ -22,13 +24,17 @@ console.log(store.getState());
 
 const App = () => (
     <Provider store={store}>
-      <Header />
-      <main className="main-content">
-        <Switch>
-          <Route path="/characters/:PageMarvel" component={ (props) => <MarvelList currentLanguage={this.state.currentLanguage} languages={this.state.languages} {...props}/> } />
-          <Route path="/character/:MarvelItem" component={ (props) => <MarvelCharacterItem currentLanguage={this.state.currentLanguage} languages={this.state.languages} {...props}/> } />
-        </Switch>
-      </main>
+      <Router>
+        <div>
+          <Header />
+          <main className="main-content">
+            <Switch>
+              <Route path="/characters/:PageMarvel?" component={MarvelList} />
+              <Route path="/character/:MarvelItem" component={MarvelCharacterItem} />
+            </Switch>
+          </main>
+        </div>
+      </Router>
     </Provider>
 );
 

@@ -39,9 +39,6 @@ export default class MarvelList extends Component {
         <div className="container-body">
           <div className="cards-list">
 
-            { ! ( this.props.match.params.hasOwnProperty('PageMarvel') && Number.isInteger( parseInt(this.props.match.params.PageMarvel) ) )
-                && <Redirect to="/characters/1"/> }
-
             { this.state.isLoading && <IsLoading /> }
 
             { ! this.state.isLoading && this.state.marvelResult.status === 'Ok'
