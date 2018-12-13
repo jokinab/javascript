@@ -33,15 +33,15 @@ class MarvelListComponent extends Component {
           <div className="cards-list">
             { this.props.isFetching && <IsLoading /> }
 
-            { ! this.props.isFetching && this.props.marvelItems.length > 0 &&
-                this.props.marvelItems.map( (item, index) => <MarvelCard key={index} marvelItem={item} /> )
+            { ! this.props.isFetching && this.props.marvelItems.length > 0
+                && this.props.marvelItems.map( (item, index) => <MarvelCard key={index} marvelItem={item} /> )
             }
-
           </div>
-
           <div className="container-pagination">
-            { ! this.props.isFetching && this.props.marvelItems.length > 0 &&
-                <ListPagination baseLink={'/characters/'} currentPage={this.props.match.params.PageMarvel} totalPages={Math.floor( parseInt(this.props.totalItems) / 20)} /> }
+            { ! this.props.isFetching && this.props.marvelItems.length > 0
+              && <ListPagination baseLink={'/characters/'}
+                                 currentPage={this.props.match.params.PageMarvel}
+                                 totalPages={Math.floor( parseInt(this.props.totalItems) / 20)} /> }
           </div>
 
         </div>
