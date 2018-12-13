@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware  } from 'redux';
+import thunkMiddleware from 'redux-thunk'
 import rootReducer from './reducers/root';
 import { Provider } from 'react-redux';
 
@@ -18,7 +19,13 @@ import { faSpider, faStar, faComment } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faSpider, faStar, faComment);
 
-let store = createStore(rootReducer); // Creamos nuestro store en el punto de entrada de la app pasandole el reducer
+// Creamos nuestro store en el punto de entrada de la app pasandole el reducer
+const store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware // nos permite despachar funciones
+  )
+)
 
 console.log(store.getState());
 
