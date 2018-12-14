@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom";
 
 import { connect } from 'react-redux';
 import { fetchMarvelItems } from './../../actions/marvelList';
@@ -7,25 +6,49 @@ import { fetchMarvelItems } from './../../actions/marvelList';
 
 import PropTypes from 'prop-types';
 
-import ApiMarvel from './../../apiMarvel/ApiMarvel';
-
 import MarvelCard from './../../components/MarvelCard/MarvelCard';
 import ListPagination from './../../components/ListPagination/ListPagination';
 import { IsLoading } from './../../components/IsLoading/IsLoading';
 
 
 class MarvelListComponent extends Component {
-
-  componentDidMount() {
-
-    if ( !(this.props.match.params.hasOwnProperty('PageMarvel') && Number.isInteger(parseInt(this.props.match.params.PageMarvel))) ) return;
-
-    this.props.onFetchMarvelItems(this.props.match.params.PageMarvel);
+  constructor(...args){
+    super(...args);
+    this.state = {
+      PageMarvel: this.props.match.params.PageMarvel,
+    }
 
   }
 
+  static getDerivedStateFromProps(props, state){
+
+    if ( props.PageMarvel !== state.PageMarvel ) {
+
+      props.onFetchMarvelItems(props.PageMarvel);
+
+      return {
+        PageMarvel: props.PageMarvel
+      }
+    }else{
+      return null;
+    }
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
+    if(prevProps.PageMarvel !== this.props.PageMarvel){
+      //Perform some operation here
+      this.setState({PageMarvel: this.props.PageMarvel});
+    }
+
+  }
+
+  componentDidMount() {
+    this.props.onFetchMarvelItems(this.props.match.params.PageMarvel);
+  }
+
   render() {
-    { console.log(this.props.marvelItems); }
     return (
       <div className="todocontent">
         <div className="container-body">
@@ -51,10 +74,6 @@ class MarvelListComponent extends Component {
 
 
 }
-
-//
-//
-//
 
 // Hacemos el tipado de las propiedades del Compnonente.
 MarvelListComponent.propTypes = {

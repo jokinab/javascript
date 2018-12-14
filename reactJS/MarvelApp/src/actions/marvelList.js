@@ -3,12 +3,12 @@ import * as types from './actionTypes';
 import ApiMarvel from './../apiMarvel/ApiMarvel';
 
 
-export const fetchMarvelList = (bool) => {
+export const fetchMarvelList = (bool, error) => {
     return {
         type: types.FETCH_MARVEL_LIST,
         payload:{
           isFetching: true,
-          isFetchErr: bool,
+          isFetchErr: error,
           marvelItems: []
         }
     };
@@ -42,11 +42,11 @@ export const fetchMarvelSuccess = (items) => {
 export const fetchMarvelItems = (page) => {
     return (dispatch) => {
         ( async function(){
-          dispatch(fetchMarvelList(true));
+          dispatch(fetchMarvelList(true, false));
           try {
             const charactersMarvel = await ApiMarvel.getMarvelCharactersPage( page );
             const response = await charactersMarvel.json();
-            if (response.status != 'Ok') {
+            if (response.status !== 'Ok') {
               dispatch(fetchMarvelErr(true))
             }else{
               dispatch(fetchMarvelSuccess(response));

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { createStore, applyMiddleware  } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk'
 import rootReducer from './reducers/root';
 import { Provider } from 'react-redux';
@@ -21,13 +22,12 @@ library.add(faSpider, faStar, faComment);
 
 // Creamos nuestro store en el punto de entrada de la app pasandole el reducer
 const store = createStore(
-  rootReducer,
+  rootReducer,composeWithDevTools(
   applyMiddleware(
     thunkMiddleware // nos permite despachar funciones
   )
-)
+))
 
-console.log(store.getState());
 
 const App = () => (
     <Provider store={store}>
