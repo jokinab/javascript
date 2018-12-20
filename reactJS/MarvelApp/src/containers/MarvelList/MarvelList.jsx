@@ -1,44 +1,39 @@
-import React, { Component } from 'react';
-
-import { connect } from 'react-redux';
-import { fetchMarvelItems } from './../../actions/marvelList';
-
-import PropTypes from 'prop-types';
-
-import MarvelCard from './../../components/MarvelCard/MarvelCard';
-import ListPagination from './../../components/ListPagination/ListPagination';
-import { IsLoading } from './../../components/IsLoading/IsLoading';
-
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { fetchMarvelItems } from './../../actions/marvelList'
+import PropTypes from 'prop-types'
+import MarvelCard from './../../components/MarvelCard/MarvelCard'
+import ListPagination from './../../components/ListPagination/ListPagination'
+import { IsLoading } from './../../components/IsLoading/IsLoading'
 
 class MarvelListComponent extends Component {
-
-  componentDidMount() {
-    this.props.onFetchMarvelItems(this.props.match.params.PageMarvel);
+  componentDidMount () {
+    this.props.onFetchMarvelItems(this.props.match.params.PageMarvel)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if ( this.props.PageMarvel !== prevProps.PageMarvel ) {
-        this.props.onFetchMarvelItems(this.props.PageMarvel);
+  componentDidUpdate (prevProps, prevState) {
+    if (this.props.PageMarvel !== prevProps.PageMarvel) {
+      this.props.onFetchMarvelItems(this.props.PageMarvel)
     }
   }
 
-  render() {
+  render () {
     return (
       <div className="todocontent">
         <div className="container-body">
 
           <div className="container-pagination">
-            { ! this.props.isFetching && this.props.marvelItems.length > 0
-              && <ListPagination baseLink={'/characters/'}
-                                 currentPage={this.props.match.params.PageMarvel}
-                                 totalPages={Math.floor( parseInt(this.props.totalItems) / 20)} /> }
+            { !this.props.isFetching && this.props.marvelItems.length > 0 &&
+              <ListPagination baseLink={'/characters/'}
+                currentPage={this.props.match.params.PageMarvel}
+                totalPages={Math.floor(parseInt(this.props.totalItems) / 20)} /> }
           </div>
 
           <div className="cards-list">
             { this.props.isFetching && <IsLoading /> }
 
-            { ! this.props.isFetching && this.props.marvelItems.length > 0
-                && this.props.marvelItems.map( (item, index) => <MarvelCard key={index} marvelItem={item} /> )
+            { !this.props.isFetching && this.props.marvelItems.length > 0 &&
+              this.props.marvelItems.map((item, index) => <MarvelCard key={index} marvelItem={item} />)
             }
           </div>
 
@@ -46,8 +41,6 @@ class MarvelListComponent extends Component {
       </div>
     )
   }
-
-
 }
 
 // Hacemos el tipado de las propiedades del Compnonente.
@@ -59,14 +52,13 @@ MarvelListComponent.propTypes = {
   onFetchMarvelItems: PropTypes.func
 }
 
-
 // Mapeamos el estado a las propiedades.
 const mapStateToProps = (state, ownProps) => {
   return {
     ...state.fetchMarvelItems,
     ...ownProps.match.params
-  };
-};
+  }
+}
 
 // Mapeamos las acciones a las propiedades.
 const mapDispatchToProps = (dispatch) => {
@@ -76,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 // Conectamos el Componente al storage
-const MarvelList = connect(mapStateToProps, mapDispatchToProps)(MarvelListComponent);
+const MarvelList = connect(mapStateToProps, mapDispatchToProps)(MarvelListComponent)
 
 // Exportamos el Container
-export default MarvelList;
+export default MarvelList
