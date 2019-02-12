@@ -1,6 +1,6 @@
 'use strict'
 
-/** 
+/**
  * Modulo de logica intermedia
  * @module middleware
 */
@@ -15,7 +15,7 @@ var path = require('path')
 module.exports.useMiddleware = (app, express) => {
   // body-parser es un modulo de express que parsea todos los parametros de las llamadas GET, POST, PUT y DELETE
   const bodyParser = require('body-parser')
-  const seguridad = require('./seguridad')
+  //const seguridad = require('./seguridad')
   const options = {
     extensions: ['html', 'htm'],
     maxAge: '1d',
@@ -30,7 +30,7 @@ module.exports.useMiddleware = (app, express) => {
   })
   // Un uso muy frecuente es reservar una serie de rutas para derivarlas al disco
   // Tendremos asi un directorio para contenido estatico
-  app.use(express.static(path.join(__dirname,'static'), options))
+  app.use(express.static(path.join(__dirname, 'static'), options))
 
   // Permite recuperar como objetos JS el contenido emitido por el cliente
   // tanto en parametros

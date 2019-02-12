@@ -2,10 +2,10 @@
 
 const seguridad = require('./seguridad.js')
 
-module.exports =  (app, ruta) => {
+module.exports = (app, ruta) => {
   // Gestion de sesiones: lisado y login
   app.route(ruta)
-    .post( (req, res) => {
+    .post((req, res) => {
       let usuario = req.body
       if (seguridad.existeUsuario(usuario)) {
         console.log(`email ya registrado: ${usuario.email}`)
@@ -17,4 +17,4 @@ module.exports =  (app, ruta) => {
         res.status(201).json(nuevoSessionId)
       }
     })
-} 
+}
