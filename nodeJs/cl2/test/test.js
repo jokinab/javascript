@@ -9,3 +9,4 @@ require('./maestros').test(request)
 
 // llamadas de autenticacion
 require('./usuarios').test(request)
+require('./sesiones').test(request)

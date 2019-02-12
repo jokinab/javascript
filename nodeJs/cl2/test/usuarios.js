@@ -3,7 +3,7 @@
 const url = '/api/pub/usuarios'
 
 module.exports.test = (req) => {
-  describe('/api/pub/usuarios', () => {
+  describe(url, () => {
     it('GET respond with 404 not found', 
       (done) => {
         req
