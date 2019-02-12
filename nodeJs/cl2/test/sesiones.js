@@ -10,7 +10,7 @@ module.exports.test = (req) => {
       (done) => {
         req
           .get(url)
-          .expect(404, done) 
+          .expect(404, done)
       })
     // eslint-disable-next-line no-undef
     it('POST respond with 201 created to a new session',

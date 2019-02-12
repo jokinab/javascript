@@ -15,13 +15,13 @@ var path = require('path')
 module.exports.useMiddleware = (app, express) => {
   // body-parser es un modulo de express que parsea todos los parametros de las llamadas GET, POST, PUT y DELETE
   const bodyParser = require('body-parser')
-  //const seguridad = require('./seguridad')
+  // const seguridad = require('./seguridad')
   const options = {
     extensions: ['html', 'htm'],
     maxAge: '1d',
     setHeaders: res => res.set('x-timestamp', Date.now())
   }
-  
+
   // Otr uso comun es la monitorizacion de la app. Interceptar llamadas
   app.use((req, res, next) => {
     console.log(`Peticion recibida: ${req.url}`)
@@ -42,5 +42,5 @@ module.exports.useMiddleware = (app, express) => {
 
   // Este middleware se encaragara de vigilar la entrada
   // Para las rutas que cumplan on el esquema '/api/priv/' se usara el metodo usarSeguridad del modulo seguridad
-  //seguridad.usarSeguridad(app, '/api/priv/')
+  // seguridad.usarSeguridad(app, '/api/priv/')
 }
