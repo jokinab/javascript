@@ -29,7 +29,7 @@ module.exports.test = (req) => {
       req
         .get(url)
         .set('sessionId', sessionId)
-        .expect(401, done)
+        .expect(204, done)
     })
   })
 }
