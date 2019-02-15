@@ -8,7 +8,6 @@ module.exports = (app, ruta) => {
     .post((req, res) => {
       let sesion = req.body
       if (seguridad.esUsuarioValido(sesion)) {
-        console.log(`aceptado: ${sesion.email}`)
         let nuevoSessionId = seguridad.nuevaSesion(sesion.email)
         res.status(201).json(nuevoSessionId)
       } else {

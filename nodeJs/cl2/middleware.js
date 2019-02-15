@@ -24,7 +24,7 @@ module.exports.useMiddleware = (app, express) => {
 
   // Otr uso comun es la monitorizacion de la app. Interceptar llamadas
   app.use((req, res, next) => {
-    console.log(`Peticion recibida: ${req.url}`)
+    // console.log(`Peticion recibida: ${req.url}`)
     // Imoortante continuar e flujo hacia l siguiente funcion. Si no, se colgaria la llamada
     next()
   })
@@ -35,7 +35,7 @@ module.exports.useMiddleware = (app, express) => {
   // Permite recuperar como objetos JS el contenido emitido por el cliente
   // tanto en parametros
   app.use(bodyParser.urlencoded({
-    exended: true
+    extended: true
   }))
   // como en el body
   app.use(bodyParser.json())
