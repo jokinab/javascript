@@ -11,4 +11,6 @@ require('./maestros').test(request)
 require('./usuarios').test(request)
 require('./sesiones').test(request)
 
+// llamadas privadas
 require('./movimientos').test(request)
+require('./saldos').test(request)

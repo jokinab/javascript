@@ -1,6 +1,6 @@
 'use strict'
-
-let movimientos = []
+const mongodb = require('./mongodb')
+const colName = 'movimientos'
 
 module.exports = (app, rutaMovimientos, rutaSaldos) => {
   // Temdremos dos mega-rutas por recurso
@@ -8,84 +8,67 @@ module.exports = (app, rutaMovimientos, rutaSaldos) => {
   // una para ir a la coleccion
   app.route(rutaMovimientos)
     .get((req, res) => {
-      // filtro para el usuario actual
-      let movimientosUsuario = movimientos.filter(m => m.usuario == req.usuario)
-      // console.log(`Situacion movimientos: ${JSON.stringify(movimientosUsuario)}`)
-      if (movimientosUsuario && movimientosUsuario.length > 0) {
-        res.json(movimientosUsuario)
-      } else {
-        res.status(204).send()
-      }
+      mongodb.finding(colName, { usuario: req.usuario })
+        .then(result => result.length > 0 ? res.json(result) : res.status(204).send())
+        .catch(err => resError(err))
     })
     .post((req, res) => {
       let nuevoMovimiento = req.body
-      nuevoMovimiento.id = movimientos.length
-      // firma del movimiento en el servidor
       nuevoMovimiento.usuario = req.usuario
-      movimientos.push(nuevoMovimiento)
-      res.status(201).json(nuevoMovimiento)
-      // console.log(`Movimientos actuales: ${JSON.stringify(movimientos)}`)
+      mongodb.inserting(colName, nuevoMovimiento)
+        .then(result => res.status(201).json(result.ops[0]))
+        .catch(err => resError(err, res))
     })
 
   // otra a nivel de movimiento
   // api/priv/movimientos/159
   app.route(`${rutaMovimientos}/:id`)
     .get((req, res) => {
-      let movimientosUsuario = getMovimientoUsuario(req.params.id, req.usuario)
-      if (movimientosUsuario && movimientosUsuario.length > 0) {
-        res.json(movimientosUsuario[0])
-      } else {
-        res.status(404).send()
-      }
+      mongodb.finding(colName, { usuario: req.usuario }, req.params.id)
+        .then(result => result.length > 0 ? res.json(result) : res.status(404).send())
+        .catch(err => resError(err, res))
     })
     .put((req, res) => {
-      let movimientosUsuario = getMovimientoUsuario(req.params.id, req.usuario)
-      if (movimientosUsuario && movimientosUsuario.length > 0) {
-        movimientosUsuario[0] = req.body
-        res.json(movimientosUsuario[0])
-      } else {
-        res.status(404).send()
-      }
+      mongodb.updating(colName, { usuario: req.usuario }, req.params.id)
+        .then(result => res.status(204).json(result))
+        .catch(err => resError(err, res))
     })
     .delete((req, res) => {
-      let movimientosUsuario = getMovimientoUsuario(req.params.id, req.usuario)
-      if (movimientosUsuario && movimientosUsuario.length > 0) {
-        movimientos.splice(req.params.id, 1)
-        res.status(204).send()
-      } else {
-        res.status(404).send()
-      }
+      mongodb.deleting(colName, { usuario: req.usuario }, req.params.id)
+        .then(result => res.status(204).json(result))
+        .catch(err => resError(err, res))
     })
 
   // si la ruta es simple, se puede manterner el verbo original
   // Manteniendo la Precedencia
   // api/priv.saldos
   app.get(rutaSaldos, (req, res) => {
-    let totales = {
-      ingresos: 0,
-      gastos: 0,
-      balance: 0
-    }
-    if (movimientos && movimientos.length > 0) {
-      movimientos.forEach((movimiento) => {
-        if (movimiento.usuario == req.usuario) {
-          if (movimiento.esIngreso) {
-            totales.ingresos += movimiento.importe
-          } else {
-            totales.gastos += movimiento.importe
+    // Las consultas mas complejas se resuelven con el framework de agregacion
+    let query = [
+      {
+        $match: {
+          usuario: req.usuario
+        }
+      },
+      {
+        $group: {
+          _id: {
+            esIngreso: '$esIngreso'
+          },
+          total: {
+            $sum: '$importe'
           }
         }
-      })
-      totales.balance = totales.ingresos - totales.gastos
-      res.json(totales)
-    } else {
-      res.status(200).json({
-        ingresos: 0,
-        gastos: 0,
-        balance: 0
-      })
-    }
+      }
+    ]
+    mongodb.aggregating(colName, query)
+      .then(result => result.length > 0 ? res.json(result) : res.status(204).send())
+      .catch(err => resError(err, res))
   })
 }
 
-const getMovimientoUsuario = (id, usuario) => movimientos.filter(m => m.usuario == usuario && m.id == id)
+/** Respuesta comun a errores **/
+const resError = (err, res) => {
+  console.error(err)
+  res.status(500).send(err)
+}

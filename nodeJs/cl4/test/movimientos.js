@@ -3,6 +3,7 @@
 const url = '/api/priv/movimientos'
 const urlSesiones = '/api/pub/sesiones'
 let sessionId
+let movimientoId
 
 module.exports.test = (req) => {
   // eslint-disable-next-line no-undef
@@ -37,7 +38,12 @@ module.exports.test = (req) => {
         .post(url)
         .send({ esIngreso: 1, importe: 199, fecha: new Date() })
         .set('sessionId', sessionId)
-        .expect(201, done)
+        .expect(201)
+        .end((err, res) => {
+          if (err) return done(err)
+          movimientoId = res.body._id
+          done()
+        })
     })
     // eslint-disable-next-line no-undef
     it('GET respond with 200 ok to a pos-write user', (done) => {
@@ -49,21 +55,21 @@ module.exports.test = (req) => {
     // eslint-disable-next-line no-undef
     it('GET respond with 200 ok to a real movimiento id', (done) => {
       req
-        .get(`${url}/0`)
+        .get(`${url}/${movimientoId}`)
         .set('sessionId', sessionId)
         .expect(200, done)
     })
     // eslint-disable-next-line no-undef
     it('GET respond with 404 not found to a non real movimiento id', (done) => {
       req
-        .get(`${url}/999`)
+        .get(`${url}/570d2aac95a9fa1a142b2480`)
         .set('sessionId', sessionId)
         .expect(404, done)
     })
     // eslint-disable-next-line no-undef
     it('PUT respond with 200 ok to a modification on movimiento by authenticated user', (done) => {
       req
-        .put(`${url}/0`)
+        .put(`${url}/${movimientoId}`)
         .send({ esIngreso: 1, importe: 299, fecha: new Date() })
         .set('sessionId', sessionId)
         .expect(200, done)
@@ -71,7 +77,7 @@ module.exports.test = (req) => {
     // eslint-disable-next-line no-undef
     it('PUT respond with 404 not found to a modification on movimiento a movimiento not found', (done) => {
       req
-        .put(`${url}/999`)
+        .put(`${url}/570d2aac95a9fa1a142b2480`)
         .send({ esIngreso: 1, importe: 299, fecha: new Date() })
         .set('sessionId', sessionId)
         .expect(404, done)
@@ -79,14 +85,14 @@ module.exports.test = (req) => {
     // eslint-disable-next-line no-undef
     it('DELETE respond with 204 no content to a deletion on movimiento by authenticated user', (done) => {
       req
-        .delete(`${url}/0`)
+        .delete(`${url}/${movimientoId}`)
         .set('sessionId', sessionId)
         .expect(204, done)
     })
     // eslint-disable-next-line no-undef
     it('DELETE respond with 404 not found to a deletion on movimiento not found', (done) => {
       req
-        .delete(`${url}/999`)
+        .delete(`${url}/570d2aac95a9fa1a142b2480`)
         .set('sessionId', sessionId)
         .expect(404, done)
     })
