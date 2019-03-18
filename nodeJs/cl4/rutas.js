@@ -1,5 +1,4 @@
 'use strict'
-
 const usuarios = require('./usuarios.js')
 const sesiones = require('./sesiones.js')
 const maestros = require('./maestros.js')

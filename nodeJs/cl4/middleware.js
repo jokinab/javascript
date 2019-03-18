@@ -28,6 +28,7 @@ module.exports.useMiddleware = (app, express) => {
     // Imoortante continuar e flujo hacia l siguiente funcion. Si no, se colgaria la llamada
     next()
   })
+
   // Un uso muy frecuente es reservar una serie de rutas para derivarlas al disco
   // Tendremos asi un directorio para contenido estatico
   app.use(express.static(path.join(__dirname, 'static'), options))
