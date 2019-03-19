@@ -5,7 +5,7 @@ const ObjectID = require('mongodb').ObjectID
 const url = 'mongodb://localhost:27017'
 const dbName = 'backedge'
 
-async function finding (colName, query, id) {
+const finding = async (colName, query, id) => {
   const client = new MongoClient(url, { useNewUrlParser: true })
   try {
     await client.connect()
@@ -22,7 +22,7 @@ async function finding (colName, query, id) {
   }
 }
 
-async function inserting (colName, document) {
+const inserting = async (colName, document) => {
   const client = new MongoClient(url, { useNewUrlParser: true })
   try {
     await client.connect()
@@ -37,7 +37,7 @@ async function inserting (colName, document) {
   }
 }
 
-async function updating (colName, query, id, document) {
+const updating = async (colName, query, id, document) => {
   const client = new MongoClient(url, { useNewUrlParser: true })
   try {
     await client.connect()
@@ -54,7 +54,7 @@ async function updating (colName, query, id, document) {
   }
 }
 
-async function deleting (colName, query, id) {
+const deleting = async (colName, query, id) => {
   const client = new MongoClient(url, { useNewUrlParser: true })
   try {
     await client.connect()
@@ -71,7 +71,7 @@ async function deleting (colName, query, id) {
   }
 }
 
-async function aggregating (colName, query) {
+const aggregating = async (colName, query) => {
   const client = new MongoClient(url, { useNewUrlParser: true })
   try {
     await client.connect()
