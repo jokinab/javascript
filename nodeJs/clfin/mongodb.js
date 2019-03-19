@@ -10,10 +10,10 @@ async function finding (colName, query, id) {
   try {
     await client.connect()
     const db = client.db(dbName)
-
+    if (id) query._id = new ObjectID(id)
     let result = await db.collection(colName).find(query).toArray()
     if (result) client.close()
-    console.log(`resultado busqueda ${JSON.stringify(result)}`)
+    // console.log(`resultado busqueda ${JSON.stringify(result)}`)
     return result
   } catch (err) {
     console.log(err.stack)
@@ -26,8 +26,7 @@ async function inserting (colName, document) {
   const client = new MongoClient(url, { useNewUrlParser: true })
   try {
     await client.connect()
-    console.log('Connected correctly to server')
-    console.log(`${JSON.stringify(document)} will be inserted`)
+    // console.log(`${JSON.stringify(document)} will be inserted`)
     const db = client.db(dbName)
     let result = await db.collection(colName).insertOne(document)
     if (result) client.close()
@@ -43,10 +42,10 @@ async function updating (colName, query, id, document) {
   try {
     await client.connect()
     if (id) query._id = new ObjectID(id)
-    console.log('Connected correctly to server')
-    console.log(`${JSON.stringify(document)} will be update`)
+    // console.log(`${JSON.stringify(query)} will update document ${JSON.stringify(document)}`)
     const db = client.db(dbName)
-    let result = await db.collection(colName).update(query, document)
+    let result = await db.collection(colName).updateOne(query, { $set: { document } })
+    // console.log(`Resultado del update ${result}`)
     if (result) client.close()
     return result
   } catch (err) {
@@ -60,10 +59,10 @@ async function deleting (colName, query, id) {
   try {
     await client.connect()
     if (id) query._id = new ObjectID(id)
-    console.log('Connected correctly to server')
     console.log(`${JSON.stringify(id)} will be delete`)
     const db = client.db(dbName)
     let result = await db.collection(colName).deleteOne(query)
+    console.log(`resultado del delete ${result}`)
     if (result) client.close()
     return result
   } catch (err) {
@@ -76,7 +75,6 @@ async function aggregating (colName, query) {
   const client = new MongoClient(url, { useNewUrlParser: true })
   try {
     await client.connect()
-    console.log('Connected correctly to server')
     console.log(`aggregating`)
     const db = client.db(dbName)
     let result = await db.collection(colName).aggregate(query).toArray()

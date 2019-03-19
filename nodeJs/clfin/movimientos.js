@@ -29,13 +29,13 @@ module.exports = (app, rutaMovimientos, rutaSaldos) => {
         .catch(err => resError(err, res))
     })
     .put((req, res) => {
-      mongodb.updating(colName, { usuario: req.usuario }, req.params.id)
-        .then(result => res.status(204).json(result))
+      mongodb.updating(colName, { usuario: req.usuario }, req.params.id, req.body)
+        .then(result => parseInt(result.result.n) > 0 ? res.status(200).json(result) : res.status(404).send())
         .catch(err => resError(err, res))
     })
     .delete((req, res) => {
       mongodb.deleting(colName, { usuario: req.usuario }, req.params.id)
-        .then(result => res.status(204).json(result))
+        .then(result => parseInt(result.result.n) > 0 ? res.status(204).json(result) : res.status(404).send())
         .catch(err => resError(err, res))
     })
 
