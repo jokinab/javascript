@@ -16,8 +16,14 @@ reactJS/repaso3/
 reactJS/repaso2/prueba2/package-lock.json
 nodeJs/cl1/.vscode/settings.json
 nodeJs/cl2/node_modules/
+<<<<<<< HEAD
 reactJS/MarvelApp/package-lock.json
 nodeJs/cl2/package-lock.json
 nodeJs/cl4/node_modules/
 nodeJs/cl4/package-lock.json
 reactJS/MarvelApp/package-lock.json
+=======
+nodeJs/cl4/node_modules/
+node_modules
+backEdge-master/
+>>>>>>> 71096d72655ce1e431a6972946100352b8ebf8a8
