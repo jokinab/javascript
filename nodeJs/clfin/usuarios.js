@@ -8,8 +8,8 @@ module.exports = (app, ruta) => {
     .post(async (req, res) => {
       let usuario = req.body
       try {
-        let result = await seguridad.existeUsuario(usuario)
-        if (result.length > 0) {
+        let searchUser = await seguridad.existeUsuario(usuario)
+        if (searchUser.length > 0) {
           // console.log(`email ya registrado: ${usuario.email}`)
           res.status(409).send(`email ${usuario.email} ya registrado`)
         } else {

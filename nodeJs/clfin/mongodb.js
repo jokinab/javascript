@@ -17,7 +17,7 @@ const finding = async (colName, query, id) => {
     return result
   } catch (err) {
     console.log(err.stack)
-    // client.close()
+    client.close()
     return err
   }
 }
@@ -32,7 +32,7 @@ const inserting = async (colName, document) => {
     if (result) client.close()
     return result
   } catch (err) {
-    // client.close()
+    client.close()
     console.log(err.stack)
   }
 }
@@ -49,7 +49,7 @@ const updating = async (colName, query, id, document) => {
     if (result) client.close()
     return result
   } catch (err) {
-    // client.close()
+    client.close()
     console.log(err.stack)
   }
 }
@@ -66,7 +66,7 @@ const deleting = async (colName, query, id) => {
     if (result) client.close()
     return result
   } catch (err) {
-    // client.close()
+    client.close()
     console.log(err.stack)
   }
 }
@@ -81,7 +81,7 @@ const aggregating = async (colName, query) => {
     if (result) client.close()
     return result
   } catch (err) {
-    // client.close()
+    client.close()
     console.log(err.stack)
   }
 }
