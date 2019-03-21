@@ -7,7 +7,7 @@ const movimientos = require('./movimientos.js')
 
 module.exports = (app) => {
   // Estas son las rutas publicas a usar. no requieren autenticacion por parte del usuario
-  usuarios(app, '/api/pub/usuarios')
+  usuarios(app, '/api/pub/usuarios', '/api/pub/login', '/api/pub/register')
   sesiones(app, '/api/pub/sesiones')
   maestros(app, '/api/pub/maestros')
   // Estas son las rutas privadas. Requieren autenticacion. En el midleware se requiere el modulo seguridad.js y se le llama
