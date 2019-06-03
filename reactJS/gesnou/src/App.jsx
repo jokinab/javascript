@@ -1,31 +1,21 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import Button from './Button.jsx'
 
 import './App.css'
 
-class App extends Component {
-  constructor(...args) {
-    super(...args)
-    this.state = {
-      counter: 0
-    } 
-    this.handleButtonClick = this.handleButtonClick.bind(this)
-  }
+const App = () => {
+  
+  const [count, setCount] = useState(0)
 
-  handleButtonClick (n) {
-    const newCounter = parseInt(n) + 1
-    this.setState( {counter: newCounter} )
-  }
+  const handleButtonClick = (n) => setCount(n+1)
 
+  return (
+    <div>
+      <Button clickButton={handleButtonClick} counter={count} />     
+    </div>
+  )
 
-  render() {
-    return (
-      <div>
-        <Button clickButton={this.handleButtonClick} counter={this.state.counter} />     
-      </div>
-    )
-  }
 }
 
 export default App
