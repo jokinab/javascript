@@ -19,8 +19,11 @@ module.exports.test = (req) => {
         })
     })
     // eslint-disable-next-line no-undef
-    it('GET respond with 401 unauthorized to non authenticated users',
-      (done) => req.get(url).expect(401, done))
+    it('GET respond with 401 unauthorized to non authenticated users', (done) => {
+      req
+        .get(url)
+        .expect(401, done)
+    })
     // eslint-disable-next-line no-undef
     it('GET respond with 204 ok to an authenticated user', (done) => {
       req
