@@ -19,17 +19,17 @@ class HeaderComponent extends Component {
     this.props.onLangChange(evt.target.value);
   }
 
-  render() {
+  render () {
     return (
       <header className="header">
         <div className="container-hdr">
           <Menu />
           <select value={this.props.currentLanguage} className="lang-list" onChange={this.handleChange}>
-              {languages.map((langItem, index) => {
-                return (
-                  <option value={ langItem } key={index}>{langItem}</option>
-                );
-              } )}
+            {languages.map((langItem, index) => {
+              return (
+                <option value={ langItem } key={index}>{langItem}</option>
+              )
+            })}
           </select>
         </div>
       </header>
