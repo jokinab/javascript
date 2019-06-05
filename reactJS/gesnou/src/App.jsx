@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+// Dependencias React
+import React, { useState } from 'react'
 
-import Button from './Button.jsx'
+// Dependencias Redux
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunkMiddleware from 'redux-thunk'
+
+// Reducers
+import rootReducer from './reducers/root.js';
+
+// Containers
+import ButtonContainer from './containers/ButtonContainer.jsx'
 
 import './App.css'
 
-const App = () => {
-  
-  const [count, setCount] = useState(0)
+// Creamos nuestro store en el punto de entrada de la app pasandole el reducer
+const store = createStore(
+  rootReducer,composeWithDevTools(
+  applyMiddleware(
+    thunkMiddleware // nos permite despachar funciones
+  )
+))
 
-  const handleButtonClick = (n) => setCount(n+1)
+
+const App = () => {
+  console.log('estado: ',store.getState())
 
   return (
-    <div>
-      <Button clickButton={handleButtonClick} counter={count} />     
-    </div>
+    <Provider store={store}>
+      <ButtonContainer />  
+    </Provider>
   )
-
 }
 
 export default App
