@@ -10,7 +10,7 @@ const counterApp = (state = initialState, action) => {
   switch (action.type) {
     case types.INCREMENT:
       return {
-        counter: state.counter + 1
+        Object.assign( {}, { counter: state.counter + 1} )
       };
     default:
       return state;

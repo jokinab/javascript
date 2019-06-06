@@ -8,35 +8,37 @@ import { increaseCounter } from './../actions/buttonCounter.js'
 
 import Button from './../components/Button.jsx'
 
-const ButtonComponent = (props) => {
+const ButtonComponent = ( {counter, color, onClickButton} ) => {
 
-  console.log('props en el container: ',props)
+  console.log('props en el container: ',counter)
   const handleButtonClick = () => {
-    props.onClickButton(props.counter)
+    console.log(counter)
+    onClickButton(counter)
     
   }
 
   return (
-    <Button clickButton={handleButtonClick} counter={props.counter} />
+    <Button clickButton={handleButtonClick} counter={counter} color={color} />
   )
 }
 
 ButtonComponent.propTypes = {
-  counter: PropTypes.string,
+  counter: PropTypes.number,
   onClickButton: PropTypes.func
 }
 
 // Mapeamos el estado a las propiedades.
 const mapStateToProps = (state) => {
   return {
-    ...state.counter
-  }
-}
+    counter: state.increaseCounter.counter,
+    color: state.headerReducer.color
+  }  
+}  
 
 // Mapeamos las acciones a las propiedades.
 const mapDispatchToProps = (dispatch) => {
   return {
-    onClickButton: (n) => dispatch(increaseCounter(n))
+    onClickButton: () => dispatch(increaseCounter())
   }
 }
 

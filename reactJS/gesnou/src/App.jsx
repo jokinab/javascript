@@ -12,6 +12,7 @@ import rootReducer from './reducers/root.js';
 
 // Containers
 import ButtonContainer from './containers/ButtonContainer.jsx'
+import HeaderContainer from './containers/HeaderContainer.jsx'
 
 import './App.css'
 
@@ -29,6 +30,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
+      <HeaderContainer />
       <ButtonContainer />  
     </Provider>
   )

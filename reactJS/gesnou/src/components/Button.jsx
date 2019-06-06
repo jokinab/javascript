@@ -1,9 +1,10 @@
 import React from 'react';
+import './button.css'
 
 const Button = (props) => {
   
   return (
-    <button onClick={()=>props.clickButton()} value={props.counter}>{props.counter} Clicks</button>
+    <button onClick={()=>props.clickButton()} value={props.counter} className={props.color}>{props.counter} Clicks</button>
   )
   
 }
