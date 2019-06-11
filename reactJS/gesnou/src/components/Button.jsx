@@ -4,7 +4,7 @@ import './button.css'
 const Button = (props) => {
   
   return (
-    <button onClick={()=>props.clickButton()} value={props.counter} className={props.color}>{props.sign}</button>
+    <button onClick={()=>props.clickButton()} value={props.counter} className={`button ${props.color}`}>{props.sign}</button>
   )
   
 }
