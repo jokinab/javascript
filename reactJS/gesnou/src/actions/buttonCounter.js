@@ -5,3 +5,9 @@ export const increaseCounter = () => {
     type: types.INCREASE_COUNTER,
   }
 }
+
+export const decrementCounter = () => {
+  return {
+    type: types.DECREMENT_COUNTER,
+  }
+}
