@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import EstacionItem from './EstacionItem';
 import { CSSTransition } from 'react-transition-group';
@@ -6,13 +6,12 @@ import { CSSTransition } from 'react-transition-group';
 
 const TiendasSelector = (props) => {
 
-  const [displaySelector, setdisplaySelector] = useState(false);  
   
   return (
     <div> 
-      <button value={displaySelector} onClick={() => setdisplaySelector(!displaySelector)}>{props.placeholder}</button>
+      <button value={props.displayEstaciones} onClick={props.handleEstacionTiendaselector}>{props.placeholder}</button>
       <CSSTransition
-        in={displaySelector}
+        in={props.displayEstaciones}
         timeout={100}
         classNames="slide"
         unmountOnExit>
@@ -41,6 +40,7 @@ TiendasSelector.propTypes = {
   estacionesList: PropTypes.array,
   handleEstacionClick: PropTypes.func,
   handleTiendaClick: PropTypes.func,
+  handleEstacionTiendaselector: PropTypes.func
 } 
 
 export default TiendasSelector;

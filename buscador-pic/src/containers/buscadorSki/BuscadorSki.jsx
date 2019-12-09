@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './BuscadorSki.css';
 
 import TiendasSelector from './../../components/tiendasSelector/TiendasSelector';
+import PicNegreDatePicker from './../../components/picNegreDatePicker/PicNegreDatePicker';
 
 const estacionesList = [
   {
@@ -67,7 +68,9 @@ const estacionesList = [
 const defautValues = {
   selectedTiendaa: {},
   selectedEstacionId: 0,
-  placeholder: 'Estaciones / Tiendas'
+  startDate: new Date(),
+  endDate: new Date(),
+  estacionesList: []
 }
 
 
@@ -75,16 +78,29 @@ class BuscadorSki extends Component{
   constructor(...args){
     super(...args);
     this.state = {
+      estacionesList: defautValues.estacionesList,
       selectedTienda: defautValues.selectedTienda,
       selectedEstacionId: defautValues.selectedEstacionId,
-      placeholder: defautValues.placeholder,
+      placeholder: 'Estaciones / Tiendas',
       displayTiendasFromEstacion: '-1', // Para mostrar u ocultar las tiendas dependiendo de la estacion (si esta seleccionada lo oculta, o si se ha seleccionado la otra estacion)
-      displayEstaciones: true, // Mostrar tiendas cuando se ha clickado en el boton inicial del buscador
-      displayTiendas: true // En agencia Ski o bicicleta no se muestran las tiendas en el buscador
+      displayEstaciones: false, // Mostrar tiendas cuando se ha clickado en el boton inicial del buscador
+      displayTiendas: true, // En agencia Ski o bicicleta no se muestran las tiendas en el buscador
+      startDate: defautValues.startDate,
+      placeHolderStartDate: 'Seleccione Fecha Inicio',
+      endDate: defautValues.endDate,
+      placeHolderEndDate: 'Seleccione Fecha Fin',
     }
+    this.handleEstacionTiendaselector = this.handleEstacionTiendaselector.bind(this);
     this.handleEstacionClick = this.handleEstacionClick.bind(this);
     this.handleTiendaClick = this.handleTiendaClick.bind(this);
-  
+    this.handleStartDateSelection = this.handleStartDateSelection.bind(this);
+  }
+
+  handleEstacionTiendaselector(e){
+    this.setState({ 
+      displayEstaciones: !this.state.displayEstaciones,
+      displayTiendasFromEstacion: '-1'
+    })
   }
     
   handleEstacionClick(e){
@@ -97,9 +113,28 @@ class BuscadorSki extends Component{
   handleTiendaClick(e){
     this.setState({ 
                     selectedTienda: JSON.parse(e.target.value),
-                    placeholder: JSON.parse(e.target.value).nombre
+                    placeholder: JSON.parse(e.target.value).nombre,
+                    displayEstaciones: !this.state.displayEstaciones
                   })
   }
+
+  handleStartDateSelection(date){
+    this.setState({startDate: date});
+  }
+
+  componentDidMount(){
+    fetch('https://testing.picnegre.com/alquiler/getAllEstacionesTiendas')
+      .then( (response) => {
+        return response.json();
+      })
+      .then( (myJson) => {
+        this.setState({ 
+          estacionesList: myJson
+        })
+        
+      });
+  }
+
 
   render(){
     return (
@@ -109,9 +144,15 @@ class BuscadorSki extends Component{
           displayTiendas={this.state.displayTiendas} 
           displayTiendasFromEstacion={this.state.displayTiendasFromEstacion}
           displayEstaciones={this.state.displayEstaciones}
-          estacionesList={estacionesList}
+          estacionesList={this.state.estacionesList}
           handleEstacionClick={this.handleEstacionClick} 
           handleTiendaClick={this.handleTiendaClick}
+          handleEstacionTiendaselector={this.handleEstacionTiendaselector}
+          />
+        <PicNegreDatePicker 
+          startDate={this.state.startDate.toLocaleDateString()} 
+          selectedDate={this.state.startDate}
+          handleStartDateSelection={this.handleStartDateSelection}
           />
       </div>
     )
