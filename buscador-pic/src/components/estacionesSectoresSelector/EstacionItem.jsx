@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TiendaItem from './TiendaItem';
+import SectorItem from './SectorItem';
 
 const EstacionItem = (props) => {
   return (
     <li style={ { backgroundImage:  `url(${props.estacion.imagen})` } }>
       <button onClick={props.handleEstacionClick} value={props.estacion.estacionId}>{props.estacion.nombre}</button>
-      { ( props.isNotAgencia && ( props.displayTiendasFromEstacion ===  props.estacion.estacionId.toString() ) ) &&
+      {console.log(props.displaySectoresFromEstacion, '-', props.estacion.estacionId.toString())}
+      { ( props.isNotAgencia && ( props.displaySectoresFromEstacion ===  props.estacion.estacionId.toString() ) ) &&
         <ul>
-          { props.estacion.tiendas.map( (tienda, index ) => 
-              <TiendaItem 
+          { props.estacion.sectores.map( (sector, index ) => 
+              <SectorItem 
                 key={`${props.estacion.estacionId}${index}`} 
-                tienda={tienda} handleTiendaClick={props.handleTiendaClick} />
+                sector={sector} handleSectorClick={props.handleSectorClick} />
           ) }
         </ul>
       }  
@@ -22,8 +23,8 @@ const EstacionItem = (props) => {
 EstacionItem.propTypes = {
   estacion: PropTypes.object,
   isNotAgencia: PropTypes.bool,
-  displayTiendasFromEstacion: PropTypes.string,
-  handleTiendaClick: PropTypes.func,
+  displaySectoresFromEstacion: PropTypes.string,
+  handleSectorClick: PropTypes.func,
   handleEstacionClick: PropTypes.func,
   index: PropTypes.number
 }

@@ -8,8 +8,8 @@ import "react-datepicker/dist/react-datepicker.css";
 const StartDatePicker = (props) => {
   return (
     <div className='buscador-item'>
-      { !props.isTiendaSectorSelected && <DatePickerPlaceHolder textPlace={props.textPlace} handlePlaceHolderClick={props.handlePlaceHolderClick} classPlace={props.classPlace} /> }
-      { props.isTiendaSectorSelected &&   
+      { !props.isSectorSelected && <DatePickerPlaceHolder textPlace={props.textPlace} handlePlaceHolderClick={props.handlePlaceHolderClick} classPlace={props.classPlace} /> }
+      { props.isSectorSelected &&   
         <DatePicker 
           dateFormat="dd-MM-yyyy"
           value={props.startDate} 
@@ -26,7 +26,7 @@ StartDatePicker.propTypes = {
   startDate: PropTypes.string,
   handleStartDateSelection: PropTypes.func,
   classPlace: PropTypes.string,
-  isTiendaSectorSelected: PropTypes.bool,
+  isSectorSelected: PropTypes.bool,
   textPlace: PropTypes.string,
   handlePlaceHolderClick: PropTypes.func
 }

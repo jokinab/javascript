@@ -4,7 +4,7 @@ import EstacionItem from './EstacionItem';
 import { CSSTransition } from 'react-transition-group';
 
 
-const TiendasSelector = (props) => {
+const EstacionesSectoresSelector = (props) => {
 
   const handleEstacionSelect = (e) => {
     props.handleEstacionClick(e.target);
@@ -12,7 +12,7 @@ const TiendasSelector = (props) => {
   
   return (
     <div className='buscador-item'> 
-      <button value={props.displayEstaciones} onClick={props.handleEstacionTiendaselector} className={props.classPlace}>{props.placeholder}</button>
+      <button value={props.displayEstaciones} onClick={props.handleEstacionSectorselector} className={props.classPlace}>{props.placeholder}</button>
       <CSSTransition
         in={props.displayEstaciones}
         timeout={100}
@@ -25,9 +25,9 @@ const TiendasSelector = (props) => {
                     key={index} 
                     estacion={estacion} 
                     isNotAgencia={props.isNotAgencia}
-                    displayTiendasFromEstacion={props.displayTiendasFromEstacion} 
+                    displaySectoresFromEstacion={props.displaySectoresFromEstacion} 
                     handleEstacionClick={(e)=>handleEstacionSelect(e)} 
-                    handleTiendaClick={props.handleTiendaClick} />
+                    handleSectorClick={props.handleSectorClick} />
                 
             ) }
           </ul>
@@ -36,15 +36,15 @@ const TiendasSelector = (props) => {
   )  
 }  
 
-TiendasSelector.propTypes = {
+EstacionesSectoresSelector.propTypes = {
   placeholder: PropTypes.string,
   isNotAgencia: PropTypes.bool,
   displayTiendasFromEstacion: PropTypes.string,
   estacionesList: PropTypes.array,
   handleEstacionClick: PropTypes.func,
   handleTiendaClick: PropTypes.func,
-  handleEstacionTiendaselector: PropTypes.func,
+  handleEstacionSectorselector: PropTypes.func,
   classPlace:PropTypes.string
 } 
 
-export default TiendasSelector;
+export default EstacionesSectoresSelector;
