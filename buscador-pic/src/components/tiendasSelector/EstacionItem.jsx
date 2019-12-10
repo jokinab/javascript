@@ -6,7 +6,7 @@ const EstacionItem = (props) => {
   return (
     <li style={ { backgroundImage:  `url(${props.estacion.imagen})` } }>
       <button onClick={props.handleEstacionClick} value={props.estacion.estacionId}>{props.estacion.nombre}</button>
-      { ( props.displayTiendas && ( props.displayTiendasFromEstacion ===  props.estacion.estacionId.toString() ) ) &&
+      { ( props.isNotAgencia && ( props.displayTiendasFromEstacion ===  props.estacion.estacionId.toString() ) ) &&
         <ul>
           { props.estacion.tiendas.map( (tienda, index ) => 
               <TiendaItem 
@@ -21,7 +21,7 @@ const EstacionItem = (props) => {
 
 EstacionItem.propTypes = {
   estacion: PropTypes.object,
-  displayTiendas: PropTypes.bool,
+  isNotAgencia: PropTypes.bool,
   displayTiendasFromEstacion: PropTypes.string,
   handleTiendaClick: PropTypes.func,
   handleEstacionClick: PropTypes.func,

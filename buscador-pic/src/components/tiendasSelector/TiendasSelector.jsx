@@ -6,10 +6,13 @@ import { CSSTransition } from 'react-transition-group';
 
 const TiendasSelector = (props) => {
 
+  const handleEstacionSelect = (e) => {
+    props.handleEstacionClick(e.target);
+  }
   
   return (
-    <div> 
-      <button value={props.displayEstaciones} onClick={props.handleEstacionTiendaselector}>{props.placeholder}</button>
+    <div className='buscador-item'> 
+      <button value={props.displayEstaciones} onClick={props.handleEstacionTiendaselector} className={props.classPlace}>{props.placeholder}</button>
       <CSSTransition
         in={props.displayEstaciones}
         timeout={100}
@@ -21,9 +24,9 @@ const TiendasSelector = (props) => {
                   <EstacionItem 
                     key={index} 
                     estacion={estacion} 
-                    displayTiendas={props.displayTiendas}
+                    isNotAgencia={props.isNotAgencia}
                     displayTiendasFromEstacion={props.displayTiendasFromEstacion} 
-                    handleEstacionClick={props.handleEstacionClick} 
+                    handleEstacionClick={(e)=>handleEstacionSelect(e)} 
                     handleTiendaClick={props.handleTiendaClick} />
                 
             ) }
@@ -35,12 +38,13 @@ const TiendasSelector = (props) => {
 
 TiendasSelector.propTypes = {
   placeholder: PropTypes.string,
-  displayTiendas: PropTypes.bool,
+  isNotAgencia: PropTypes.bool,
   displayTiendasFromEstacion: PropTypes.string,
   estacionesList: PropTypes.array,
   handleEstacionClick: PropTypes.func,
   handleTiendaClick: PropTypes.func,
-  handleEstacionTiendaselector: PropTypes.func
+  handleEstacionTiendaselector: PropTypes.func,
+  classPlace:PropTypes.string
 } 
 
 export default TiendasSelector;

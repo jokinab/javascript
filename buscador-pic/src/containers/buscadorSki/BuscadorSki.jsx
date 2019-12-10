@@ -2,68 +2,8 @@ import React, { Component } from 'react';
 import './BuscadorSki.css';
 
 import TiendasSelector from './../../components/tiendasSelector/TiendasSelector';
-import PicNegreDatePicker from './../../components/picNegreDatePicker/PicNegreDatePicker';
-
-const estacionesList = [
-  {
-    'nombre': 'Valdnord',
-    'imagen': 'https://www.picnegre.com/public/data/estaciones/vallnord-estacio.png', 
-    'estacionId': 2,
-    'tiendas': [
-      {
-        'nombre': 'Arinsal',
-        'sectorId': 2,
-        'tiendaId': 18,
-        'forfait': 1,
-        'max-dias-forfait': 10
-      },
-      {
-        'nombre': 'Pal-La Massana',
-        'sectorId': 9,
-        'tiendaId': 24,
-        'forfait': 1,
-        'max-dias-forfait': 10
-      },
-      {
-        'nombre': 'Ordino - Arcalis',
-        'sectorId': 19,
-        'tiendaId': 24,
-        'forfait': 0,
-        'max-dias-forfait': 0
-      }
-    ]
-    
-  },
-  {
-    'nombre': 'Grandvalira',
-    'imagen': 'https://www.picnegre.com/public/data/estaciones/grandvalira-estacio.png', 
-    'estacionId': 1,
-    'tiendas': [
-      {
-        'nombre': 'Encamp',
-        'sectorId': 11,
-        'tiendaId': 25,
-        'forfait': 0,
-        'max-dias-forfait': 0
-      },
-      {
-        'nombre': 'Canillo',
-        'sectorId': 12,
-        'tiendaId': 26,
-        'forfait': 0,
-        'max-dias-forfait': 0
-      },
-      {
-        'nombre': 'Pal-La Massana',
-        'sectorId': 13,
-        'tiendaId': 28,
-        'forfait': 0,
-        'max-dias-forfait': 0
-      }
-    ]
-    
-  }
-]
+import StartDatePicker from '../../components/startDatePicker/StartDatePicker';
+import DatePickerPlaceHolder from './../../components/datePickerPlaceHolder/DatePickerPlaceHolder';
 
 const defautValues = {
   selectedTiendaa: {},
@@ -73,6 +13,16 @@ const defautValues = {
   estacionesList: []
 }
 
+const configBuscadorSki = {
+  isNotAgencia: true,
+  inputClass: 'input-buscador'
+}
+
+const lang = {
+  placeholder: 'Estaciones / Tiendas',
+  placeHolderStartDate: 'Seleccione Fecha Inicio',
+  placeHolderEndDate: 'Seleccione Fecha Fin'
+}
 
 class BuscadorSki extends Component{
   constructor(...args){
@@ -81,19 +31,24 @@ class BuscadorSki extends Component{
       estacionesList: defautValues.estacionesList,
       selectedTienda: defautValues.selectedTienda,
       selectedEstacionId: defautValues.selectedEstacionId,
-      placeholder: 'Estaciones / Tiendas',
       displayTiendasFromEstacion: '-1', // Para mostrar u ocultar las tiendas dependiendo de la estacion (si esta seleccionada lo oculta, o si se ha seleccionado la otra estacion)
-      displayEstaciones: false, // Mostrar tiendas cuando se ha clickado en el boton inicial del buscador
-      displayTiendas: true, // En agencia Ski o bicicleta no se muestran las tiendas en el buscador
+      displayEstaciones: false, // Mostrar estaciones cuando se ha clickado en el boton inicial del buscador
+      isNotAgencia: configBuscadorSki.isNotAgencia,
       startDate: defautValues.startDate,
-      placeHolderStartDate: 'Seleccione Fecha Inicio',
       endDate: defautValues.endDate,
-      placeHolderEndDate: 'Seleccione Fecha Fin',
+      isTiendaSectorSelected: false,
+      showErrors: false,
+      showError1: false,
+      placeholder: lang.placeholder,
+      placeHolderStartDate: lang.placeHolderStartDate,
+      placeHolderEndDate: lang.placeHolderEndDate
     }
     this.handleEstacionTiendaselector = this.handleEstacionTiendaselector.bind(this);
     this.handleEstacionClick = this.handleEstacionClick.bind(this);
     this.handleTiendaClick = this.handleTiendaClick.bind(this);
     this.handleStartDateSelection = this.handleStartDateSelection.bind(this);
+    this.handlePlaceHolderStartDayClik = this.handlePlaceHolderStartDayClik.bind(this);
+    this.handlePlaceHolderEndDayClik = this.handlePlaceHolderEndDayClik.bind(this);
   }
 
   handleEstacionTiendaselector(e){
@@ -103,24 +58,55 @@ class BuscadorSki extends Component{
     })
   }
     
-  handleEstacionClick(e){
+  handleEstacionClick(target){
+    if (this.state.isNotAgencia) {
+      this.setState({
+                    selectedEstacionId: target.value,
+                    displayTiendasFromEstacion: target.value === this.state.displayTiendasFromEstacion ? '-1' : target.value
+                  });
+    } else {
+      let estacion = this.state.estacionesList.find(estacion => estacion.estacionId === target.value);
+      this.setState({
+        selectedEstacionId: target.value,
+        displayEstaciones: !this.state.displayEstaciones,
+        placeholder: estacion.nombre,
+        isTiendaSectorSelected: true
+      });
+    } 
+  }
+
+  hideErrors(){
     this.setState({
-                    selectedEstacionId: e.target.value,
-                    displayTiendasFromEstacion: e.target.value === this.state.displayTiendasFromEstacion ? '-1' : e.target.value
-                  })
+      showErrors: false,
+      showError1: false
+    });
   }
 
   handleTiendaClick(e){
+    this.hideErrors();
     this.setState({ 
                     selectedTienda: JSON.parse(e.target.value),
                     placeholder: JSON.parse(e.target.value).nombre,
-                    displayEstaciones: !this.state.displayEstaciones
+                    displayEstaciones: !this.state.displayEstaciones,
+                    isTiendaSectorSelected: true
                   })
+  }
+
+  handlePlaceHolderStartDayClik(){
+    this.setState({
+                    showErrors: true,
+                    showError1: true
+                  });
   }
 
   handleStartDateSelection(date){
     this.setState({startDate: date});
   }
+
+  handlePlaceHolderEndDayClik(){
+    
+  }  
+  
 
   componentDidMount(){
     fetch('https://testing.picnegre.com/alquiler/getAllEstacionesTiendas')
@@ -139,21 +125,40 @@ class BuscadorSki extends Component{
   render(){
     return (
       <div className="buscador-container">
-        <TiendasSelector 
-          placeholder={this.state.placeholder}
-          displayTiendas={this.state.displayTiendas} 
-          displayTiendasFromEstacion={this.state.displayTiendasFromEstacion}
-          displayEstaciones={this.state.displayEstaciones}
-          estacionesList={this.state.estacionesList}
-          handleEstacionClick={this.handleEstacionClick} 
-          handleTiendaClick={this.handleTiendaClick}
-          handleEstacionTiendaselector={this.handleEstacionTiendaselector}
-          />
-        <PicNegreDatePicker 
-          startDate={this.state.startDate.toLocaleDateString()} 
-          selectedDate={this.state.startDate}
-          handleStartDateSelection={this.handleStartDateSelection}
-          />
+        { this.state.estacionesList.length <= 0 && 
+          <div>Loading</div>
+        } 
+        { this.state.estacionesList.length > 0 && 
+          <div className="buscador-items">  
+            <TiendasSelector 
+              placeholder={this.state.placeholder}
+              isNotAgencia={this.state.isNotAgencia} 
+              displayTiendasFromEstacion={this.state.displayTiendasFromEstacion}
+              displayEstaciones={this.state.displayEstaciones}
+              estacionesList={this.state.estacionesList}
+              handleEstacionClick={this.handleEstacionClick} 
+              handleTiendaClick={this.handleTiendaClick}
+              handleEstacionTiendaselector={this.handleEstacionTiendaselector}
+              classPlace={configBuscadorSki.inputClass} />
+            
+            <StartDatePicker
+              isTiendaSectorSelected={this.state.isTiendaSectorSelected}
+              textPlace={this.state.placeHolderStartDate}
+              handlePlaceHolderClick={this.handlePlaceHolderStartDayClik}
+              startDate={this.state.startDate.toLocaleDateString()} 
+              selectedDate={this.state.startDate}
+              handleStartDateSelection={this.handleStartDateSelection}
+              classPlace={configBuscadorSki.inputClass} />
+            
+          </div>    
+        }
+        { this.state.showErrors && 
+          <div className='errors-wrap'>
+            { this.state.showError1 && <div className='error'>Seleccione primero tienda</div> }  
+
+            
+          </div>
+        }  
       </div>
     )
   }
