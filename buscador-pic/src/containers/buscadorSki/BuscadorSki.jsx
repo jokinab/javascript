@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchEstacionesItems } from './../../actions/buscadorSki';
+import { 
+  fetchEstacionesItems, 
+  handleEstacionesButtonClick, 
+  handleEstacionClick,
+  handleHideErrors,
+  handleShowErrors,
+  handleSectorClick 
+} from '../../actions/estaciones';
 
 import './BuscadorSki.css';
 
@@ -46,7 +53,7 @@ class BuscadorSkiComponent extends Component{
       placeHolderStartDate: lang.placeHolderStartDate,
       placeHolderEndDate: lang.placeHolderEndDate
     }
-    this.handleEstacionSectorselector = this.handleEstacionSectorselector.bind(this);
+    this.handleEstacionSectorSelector = this.handleEstacionSectorSelector.bind(this);
     this.handleEstacionClick = this.handleEstacionClick.bind(this);
     this.handleSectorClick = this.handleSectorClick.bind(this);
     this.handleStartDateSelection = this.handleStartDateSelection.bind(this);
@@ -54,41 +61,58 @@ class BuscadorSkiComponent extends Component{
     this.handlePlaceHolderEndDayClik = this.handlePlaceHolderEndDayClik.bind(this);
   }
 
-  handleEstacionSectorselector(e){
+  handleEstacionSectorSelector(){
+    this.props.onEstacionesButtonClick();
+
+    // quitar cuando todo este conectado
     this.setState({ 
-      displayEstaciones: !this.state.displayEstaciones,
-      displaySectoresFromEstacion: '-1'
+      displayEstaciones: this.props.UIX.displayEstaciones,
+      displaySectoresFromEstacion: this.props.UIX.displaySectoresFromEstacion
     })
+
   }
     
   handleEstacionClick(target){
-    if (this.state.isNotAgencia) {
+
+    this.props.onEstacionClick(target);
+
+    // quitar cuando este todo conectado  
+    if (this.props.UIX.isNotAgencia) {
       this.setState({
-                    selectedEstacionId: target.value,
-                    displaySectoresFromEstacion: target.value === this.state.displaySectoresFromEstacion ? '-1' : target.value
+                    selectedEstacionId: this.props.UIX.selectedEstacionId,
+                    displaySectoresFromEstacion: this.props.UIX.displaySectoresFromEstacion
                   });
     } else {
-      let estacion = this.state.estacionesList.find(estacion => estacion.estacionId === target.value);
       this.setState({
-        selectedEstacionId: target.value,
-        displayEstaciones: !this.state.displayEstaciones,
-        placeholder: estacion.nombre,
+        selectedEstacionId: this.props.UIX.selectedEstacionId,
+        displayEstaciones: this.props.UIX.displayEstaciones,
+        placeholder: this.props.UIX.placholder,
         isSectorSelected: true
       });
     } 
   }
 
   hideErrors(){
+
+    this.props.onHideErrors();
+    
+    // Quitar cuando todo este conectado
+
     this.setState({
       showErrors: false,
       showError1: false
     });
+
   }
 
   handleSectorClick(e){
     this.hideErrors();
+
+    this.props.onSectorClick(e);  
+
+    // Quitar cuando todo este conectado  
     this.setState({ 
-                    selectedSector: JSON.parse(e.target.value),
+                    selectedSector: JSON.parse(e.target.value).id,
                     placeholder: JSON.parse(e.target.value).nombre,
                     displayEstaciones: !this.state.displayEstaciones,
                     isSectorSelected: true
@@ -96,6 +120,13 @@ class BuscadorSkiComponent extends Component{
   }
 
   handlePlaceHolderStartDayClik(){
+
+    this.props.onShowErrors({
+                    show: true,
+                    showError1: true
+                  });
+
+    // Quitar cuando todo este conectado  
     this.setState({
                     showErrors: true,
                     showError1: true
@@ -116,7 +147,7 @@ class BuscadorSkiComponent extends Component{
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (this.props.estacionesList !== prevProps.estacionesList) {
+    if (this.props.estaciones.estacionesList !== prevProps.estaciones.estacionesList) {
       //this.setState( {estacionesList: this.props.estacionesList });
     }
   }  
@@ -124,20 +155,20 @@ class BuscadorSkiComponent extends Component{
   render(){
     return (
       <div className="buscador-container">
-        { this.props.estacionesList.length <= 0 && 
+        { this.props.estaciones.estacionesList.length <= 0 && 
           <div>Loading</div>
         } 
-        { this.props.estacionesList.length > 0 && 
+        { this.props.estaciones.estacionesList.length > 0 && 
           <div className="buscador-items">  
             <EstacionesSectoresSelector 
-              placeholder={this.state.placeholder}
-              isNotAgencia={this.state.isNotAgencia} 
-              displaySectoresFromEstacion={this.state.displaySectoresFromEstacion}
-              displayEstaciones={this.state.displayEstaciones}
-              estacionesList={this.props.estacionesList}
+              placeholder={this.props.UIX.placeholder}
+              isNotAgencia={this.props.UIX.isNotAgencia} 
+              estacionesList={this.props.estaciones.estacionesList}
+              displaySectoresFromEstacion={this.props.UIX.displaySectoresFromEstacion}
+              displayEstaciones={this.props.UIX.displayEstaciones}
               handleEstacionClick={this.handleEstacionClick} 
               handleSectorClick={this.handleSectorClick}
-              handleEstacionSectorselector={this.handleEstacionSectorselector}
+              handleEstacionSectorSelector={this.handleEstacionSectorSelector}
               classPlace={configBuscadorSki.inputClass} />
             
             <StartDatePicker
@@ -151,9 +182,9 @@ class BuscadorSkiComponent extends Component{
             
           </div>    
         }
-        { this.state.showErrors && 
+        { this.props.UIX.showErrors && 
           <div className='errors-wrap'>
-            { this.state.showError1 && <div className='error'>Seleccione primero Sector</div> }  
+            { this.props.UIX.showError1 && <div className='error'>Seleccione primero Sector</div> }  
 
             
           </div>
@@ -173,7 +204,12 @@ const mapStateToProps = (state) => {
 // Mapeamos las acciones a las propiedades.
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchEstacionesItems: () => dispatch(fetchEstacionesItems())
+    onFetchEstacionesItems: () => dispatch(fetchEstacionesItems()),
+    onEstacionesButtonClick: (e) => dispatch(handleEstacionesButtonClick(e)),
+    onEstacionClick: (target) => dispatch(handleEstacionClick(target)),
+    onHideErrors: () => dispatch(handleHideErrors()),
+    onShowErrors: (error) => dispatch(handleShowErrors(error)),
+    onSectorClick: (e) => dispatch(handleSectorClick(e))
   }
 }
 

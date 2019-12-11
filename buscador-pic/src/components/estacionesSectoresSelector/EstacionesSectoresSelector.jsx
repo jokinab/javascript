@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import EstacionItem from './EstacionItem';
-import { CSSTransition } from 'react-transition-group';
-
 
 const EstacionesSectoresSelector = (props) => {
 
@@ -12,26 +10,22 @@ const EstacionesSectoresSelector = (props) => {
   
   return (
     <div className='buscador-item'> 
-      <button value={props.displayEstaciones} onClick={props.handleEstacionSectorselector} className={props.classPlace}>{props.placeholder}</button>
-      <CSSTransition
-        in={props.displayEstaciones}
-        timeout={100}
-        classNames="slide"
-        unmountOnExit>
-          <ul className="tiendas-selector-container">
-            { props.estacionesList.map( (estacion, index) =>
-                
-                  <EstacionItem 
-                    key={index} 
-                    estacion={estacion} 
-                    isNotAgencia={props.isNotAgencia}
-                    displaySectoresFromEstacion={props.displaySectoresFromEstacion} 
-                    handleEstacionClick={(e)=>handleEstacionSelect(e)} 
-                    handleSectorClick={props.handleSectorClick} />
-                
-            ) }
-          </ul>
-      </CSSTransition>
+      <button value={props.displayEstaciones} onClick={props.handleEstacionSectorSelector} className={props.classPlace}>{props.placeholder}</button>
+      { props.displayEstaciones && 
+        <ul className="tiendas-selector-container">
+          { props.estacionesList.map( (estacion, index) =>
+              
+                <EstacionItem 
+                  key={index} 
+                  estacion={estacion} 
+                  isNotAgencia={props.isNotAgencia}
+                  displaySectoresFromEstacion={props.displaySectoresFromEstacion} 
+                  handleEstacionClick={(e)=>handleEstacionSelect(e)} 
+                  handleSectorClick={props.handleSectorClick} />
+              
+          ) }
+        </ul>
+      }          
     </div>  
   )  
 }  
@@ -43,7 +37,7 @@ EstacionesSectoresSelector.propTypes = {
   estacionesList: PropTypes.array,
   handleEstacionClick: PropTypes.func,
   handleTiendaClick: PropTypes.func,
-  handleEstacionSectorselector: PropTypes.func,
+  handleEstacionSectorSelector: PropTypes.func,
   classPlace:PropTypes.string
 } 
 
