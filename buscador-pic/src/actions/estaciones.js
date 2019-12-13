@@ -106,6 +106,7 @@ export const handleShowErrors = (error) => {
   };
 }
 
+// Action para cuando se clicka sector
 
 export const handleSectorClick = (e) => {
   return {
@@ -118,6 +119,8 @@ export const handleSectorClick = (e) => {
   }
 }
 
+// Action para cuando se selecciona fecha de inicio
+
 export const handleStartDateSelection = (date) => {
   return {
     type: types.START_DATE_SELECTION,
@@ -127,6 +130,7 @@ export const handleStartDateSelection = (date) => {
   }
 }
 
+// Action para cuando se selecciona fecha fin
 
 export const handleEndDateSelection = (date) => {
   return {
