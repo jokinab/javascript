@@ -26,8 +26,7 @@ const initialState = {
     },
     endDatePicker: {
       placeholder: 'Selecciona Fecha de Entrega',
-      selectedDate: '',
-      isEndDateSelected: false
+      selectedDate: ''
     }
   },
   estaciones: {
