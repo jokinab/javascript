@@ -10,7 +10,8 @@ export const fetchEstacionesList = (bool, error) => {
       payload:{
         isFetchingEstaciones: true,
         isFetchingEstacionesErr: error,
-        estacionesList: []
+        estacionesList: [],
+        isNotAgencia: true
       }
   };
 }
@@ -22,7 +23,8 @@ export const fetchEstacionesErr = (bool) => {
       payload:{
         isFetchingEstaciones: false,
         isFetchingEstacionesErr: bool,
-        estacionesList: []
+        estacionesList: [],
+        isNotAgencia: true       
       }
   };
 }
@@ -34,7 +36,8 @@ export const fetchEstacionesSuccess = (items) => {
       payload:{
         isFetchingEstaciones: false,
         isFetchingEstacionesErr: false,
-        estacionesList: items
+        estacionesList: items.estacionesData,
+        isNotAgencia: items.isNotAgencia
       }
   };
 }
@@ -47,8 +50,7 @@ export const fetchEstacionesItems = () => {
       try {
         const estacionesList = await ApiPic.getEstacionesList();
         const response = await estacionesList.json();
-        if (response.length > 0) {
-          console.log(response)
+        if (response.estacionesData.length > 0) {
           dispatch(fetchEstacionesSuccess(response));
         }else{
           dispatch(fetchEstacionesErr(true))            
@@ -75,7 +77,6 @@ export const handleEstacionesButtonClick = (e) => {
 // Action del cuando se selecciona una estación
 
 export const handleEstacionClick = (target) => {
-  
   return {
     type: types.ESTACION_CLICK,
     payload:{
@@ -116,3 +117,23 @@ export const handleSectorClick = (e) => {
     }
   }
 }
+
+export const handleStartDateSelection = (date) => {
+  return {
+    type: types.START_DATE_SELECTION,
+    payload: {
+      selectedDate: date
+    }
+  }
+}
+
+
+export const handleEndDateSelection = (date) => {
+  return {
+    type: types.END_DATE_SELECTION,
+    payload: {
+      selectedDate: date
+    }
+  }
+}
+

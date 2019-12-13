@@ -6,7 +6,6 @@ const EstacionItem = (props) => {
   return (
     <li style={ { backgroundImage:  `url(${props.estacion.imagen})` } }>
       <button onClick={props.handleEstacionClick} value={props.estacion.estacionId}>{props.estacion.nombre}</button>
-      {console.log(props.displaySectoresFromEstacion, '-', props.estacion.estacionId.toString())}
       { ( props.isNotAgencia && ( props.displaySectoresFromEstacion ===  props.estacion.estacionId.toString() ) ) &&
         <ul>
           { props.estacion.sectores.map( (sector, index ) => 
