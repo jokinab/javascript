@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 
 import rootReducer from './reducers/root';
 
-import BuscadorSki from './containers/buscadorSki/BuscadorSki';
+import Selector from './containers/selectorSkiBici/SelectorSkiBici';
 
 import './App.css';
 
@@ -22,7 +22,7 @@ const store = createStore(
 const App = () => {
   return (
     <Provider store={store}>
-      <BuscadorSki />
+      <Selector />      
     </Provider>     
   );
 }

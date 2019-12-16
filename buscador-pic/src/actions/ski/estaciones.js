@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import ApiPic from '../apiPic/apiPic';
+import ApiPic from '../../apiPic/apiPic';
 
 
 // Actions para recuperación de datos de estaciones
@@ -89,7 +89,6 @@ export const handleEstacionClick = (target) => {
 // Action para ocultar los errores
 
 export const handleHideErrors = () => {
-  
   return {
     type: types.HIDE_ERRORS,
     payload:{}
@@ -99,7 +98,6 @@ export const handleHideErrors = () => {
 // Action para ocultar los errores
 
 export const handleShowErrors = (error) => {
-  console.log(error);
   return {
     type: types.SHOW_ERRORS,
     payload: { error }

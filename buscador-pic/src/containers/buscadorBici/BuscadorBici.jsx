@@ -13,9 +13,9 @@ import {
   handleSectorClick,
   handleStartDateSelection,
   handleEndDateSelection 
-} from './../../actions/ski/estaciones';
+} from '../../actions/estaciones';
 
-import './BuscadorSki.css';
+import './BuscadorBici.css';
 
 import EstacionesSectoresSelector from './../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
 
@@ -24,7 +24,7 @@ const configBuscadorSki = {
   inputClass: 'input-buscador'
 }
 
-class BuscadorBiciComponent extends Component{
+class BuscadorSkiComponent extends Component{
   constructor(...args){
     super(...args);
     this.handleEstacionSectorSelector = this.handleEstacionSectorSelector.bind(this);
@@ -67,8 +67,8 @@ class BuscadorBiciComponent extends Component{
     this.props.onStartDateSelection(date);  
   }
 
-  handlePlaceHolderEndDayClik(){ 
-    let error = ( this.props.UIX.startDatePicker.isStartDateSelected ) ? { show: true, showError1: false, showError2: true } : { show: true, showError1: true, showError2: true };
+  handlePlaceHolderEndDayClik( isStartDateSelected = false ){ 
+    let error = ( isStartDateSelected ) ? { show: true, showError1: false, showError2: true } : { show: true, showError1: true, showError2: true };
     this.props.onShowErrors(error);
   }  
 
@@ -76,9 +76,9 @@ class BuscadorBiciComponent extends Component{
     this.props.onEndDateSelection(date);
   }
 
+
   componentDidMount(){
-    if ( this.props.estaciones.estacionesList.length === 0 )
-      this.props.onFetchEstacionesItems();
+    this.props.onFetchEstacionesItems();
   }
 
   render(){
@@ -128,7 +128,7 @@ class BuscadorBiciComponent extends Component{
             { ( !UIX.isSectorSelected || UIX.startDatePicker.selectedDate === '' ) && 
               <DatePickerPlaceHolder 
                 textPlace={UIX.endDatePicker.placeholder} 
-                handlePlaceHolderClick={this.handlePlaceHolderEndDayClik} 
+                handlePlaceHolderClick={ () =>this.handlePlaceHolderEndDayClik(UIX.startDatePicker.isStartDateSelected) } 
                 classPlace={configBuscadorSki.inputClass} /> }
             
             { ( UIX.isSectorSelected && UIX.startDatePicker.selectedDate !== '' ) && 
@@ -178,6 +178,6 @@ const mapDispatchToProps = (dispatch) => {
 
 
 // Conectamos el Componente al storage
-const BuscadorBici = connect(mapStateToProps, mapDispatchToProps)(BuscadorBiciComponent)
+const BuscadorSki = connect(mapStateToProps, mapDispatchToProps)(BuscadorSkiComponent)
 
-export default BuscadorBici;
+export default BuscadorSki;

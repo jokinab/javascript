@@ -1,4 +1,4 @@
-import * as types from '../actions/actionTypes';
+import * as types from '../../actions/ski/actionTypes';
 
 // Estado inicial de la aplicacion
 const initialState = {
@@ -256,6 +256,7 @@ const getStartDate = ( isNotAgencia = true, firstDayAvailable ) => {
 }
 */
 
+/*
 const formatDateToString = ( date = new Date() ) => {
   
   let year = date.getFullYear();
@@ -266,3 +267,4 @@ const formatDateToString = ( date = new Date() ) => {
   return `${year}-${month}-${day}`;
 
 }
+*/
