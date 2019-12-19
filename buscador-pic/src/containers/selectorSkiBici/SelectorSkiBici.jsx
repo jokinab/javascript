@@ -1,36 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { 
-  handleSelection
-} from '../../actions/selector/selector';
+  handleSelection,
+  fetchUserInfo
+} from './../../actions/selector/selector';
 
 import BuscadorSki from './../buscadorSki/BuscadorSki';
 
-const SelectorSkiBiciComponent = (props) => {
+class SelectorSkiBiciComponent extends Component{
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      hasUserInfo: false
+    }
+    this.handleSelection = this.handleSelection.bind(this);
+  } 
+
   
-  const handleSelection = (e) => {
-    props.onHandleselection(e.target.value);
+  handleSelection = (e) => {
+    this.props.onHandleselection(e.target.value);
   }  
 
-  console.log(props);
+  componentDidMount(){
+    if ( !this.state.hasUserInfo )
+      this.props.onFetchUserInfo();
+  }
 
-  let activeSki = ( props.selected === 'ski' || props.selected === undefined ) ? true : false;
-  let activeBici = props.selected === 'bici' ? true : false;
+  render() {
 
-  return (
-    <div className='buscador-selector'>
-      <ul className='selector-list'>
-        <li className={`selector-item ${activeBici}`}>
-          <button value='ski' onClick={ (e) => handleSelection(e) }>SKI</button>
-        </li>
-        <li className={`selector-item ${activeBici}`}>
-          <button value='bici' onClick={ (e) => handleSelection(e) }>BICI</button>
-        </li>
-      </ul> 
-      { activeSki  && <BuscadorSki /> }       
-    </div>
-  )
+    let activeSki = ( this.props.selected === 'ski' || this.props.selected === undefined ) ? true : false;
+    let activeBici = this.props.selected === 'bici' ? true : false;
+
+    return (
+      <div className='buscador-selector'>
+        <ul className='selector-list'>
+          <li className={`selector-item ${activeBici}`}>
+            <button value='ski' onClick={ (e) => this.handleSelection(e) }>SKI</button>
+          </li>
+          <li className={`selector-item ${activeBici}`}>
+            <button value='bici' onClick={ (e) => this.handleSelection(e) }>BICI</button>
+          </li>
+        </ul> 
+        { activeSki  && <BuscadorSki /> }       
+      </div>
+    )
+  }  
   
 }  
 
@@ -44,7 +59,8 @@ const mapStateToProps = (state) => {
 // Mapeamos las acciones a las propiedades.
 const mapDispatchToProps = (dispatch) => {
   return {
-    onHandleselection: (e) => dispatch(handleSelection(e))
+    onHandleselection: (e) => dispatch(handleSelection(e)),
+    onFetchUserInfo: () => dispatch(fetchUserInfo())
   }
 }
 
