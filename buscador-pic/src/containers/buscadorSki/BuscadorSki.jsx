@@ -160,7 +160,7 @@ class BuscadorSkiComponent extends Component{
                 classPlace={configBuscadorSki.inputClass} /> }
 
             { ( UIX.isSectorSelected && UIX.startDatePicker.selectedDate !== '' ) &&    
-              <button onClick={ () => this.props.onButtonClick() } classPlace={configBuscadorSki.inputClass}>{UIX.placeholderSubmit}</button> 
+              <button onClick={ () => this.props.onButtonClick() } className={configBuscadorSki.inputClass}>{UIX.placeholderSubmit}</button> 
             }
 
           </div>    
