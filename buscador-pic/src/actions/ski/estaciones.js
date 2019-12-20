@@ -10,8 +10,7 @@ export const fetchEstacionesList = (bool, error) => {
       payload:{
         isFetchingEstaciones: true,
         isFetchingEstacionesErr: error,
-        estacionesList: [],
-        isNotAgencia: true
+        estacionesList: []
       }
   };
 }
@@ -23,8 +22,7 @@ export const fetchEstacionesErr = (bool) => {
       payload:{
         isFetchingEstaciones: false,
         isFetchingEstacionesErr: bool,
-        estacionesList: [],
-        isNotAgencia: true       
+        estacionesList: []  
       }
   };
 }
@@ -36,8 +34,7 @@ export const fetchEstacionesSuccess = (items) => {
       payload:{
         isFetchingEstaciones: false,
         isFetchingEstacionesErr: false,
-        estacionesList: items.estacionesData,
-        isNotAgencia: items.isNotAgencia
+        estacionesList: items.estacionesData
       }
   };
 }
@@ -139,3 +136,11 @@ export const handleEndDateSelection = (date) => {
   }
 }
 
+export const handleButtonClick = () => {
+  return {
+    type: types.SKY_SUBMIT_CLICK,
+    payload: {
+      
+    }
+  }
+}

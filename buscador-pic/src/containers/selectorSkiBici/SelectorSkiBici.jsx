@@ -6,7 +6,7 @@ import {
   fetchUserInfo
 } from './../../actions/selector/selector';
 
-import BuscadorSki from './../buscadorSki/BuscadorSki';
+import BuscadorSki from '../buscadorSki/BuscadorSki';
 
 class SelectorSkiBiciComponent extends Component{
   constructor(...args) {
@@ -42,7 +42,7 @@ class SelectorSkiBiciComponent extends Component{
             <button value='bici' onClick={ (e) => this.handleSelection(e) }>BICI</button>
           </li>
         </ul> 
-        { activeSki  && <BuscadorSki /> }       
+        { this.props.hasInitInfo && this.props.showSki && activeSki && <BuscadorSki isNotAgencia={this.props.userInfo.isNotAgencia} /> }       
       </div>
     )
   }  

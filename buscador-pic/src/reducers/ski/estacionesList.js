@@ -3,15 +3,17 @@ import * as types from '../../actions/ski/actionTypes';
 // Estado inicial de la aplicacion
 const initialState = {
   UIX: {
-    isNotAgencia: true, 
     displayEstaciones: false,
     displaySectoresFromEstacion: '-1',
     selectedEstacionId: 0,
     isSectorSelected: false,
     placeholder: 'Estaciones / Sectores',
+    placeholderSubmit: 'Enviar',
     selectedSector: -1,
     disabledDays: [],
     firstDayAvailable: '',
+    showForfaitOverlay: false,
+    sendData: false,
     showErrors: {
       show: false,
       showError1: false,
@@ -66,13 +68,8 @@ export const buscadorSki = (state = initialState, action) => {
             }  
           }
         case types.FETCH_ESTACIONES_SUCCESS:
-            newUIX = {
-              ...state.UIX,
-              isNotAgencia: action.payload.isNotAgencia
-            }
           return {
             ...state,
-            UIX: newUIX,
             estaciones: {
               isFetchingEstacionesErr: action.payload.isFetchingEstacionesErr,
               isFetchingEstaciones: action.payload.isFetchingEstaciones,
@@ -211,12 +208,41 @@ export const buscadorSki = (state = initialState, action) => {
               return {
                 ...state,
                 UIX: newUIX
-              }      
+              }  
+            case types.SKY_SUBMIT_CLICK: 
+              if (displayForfaitOverlay(state.UIX.startDatePicker.selectedDate)) {
+                newUIX = {
+                  ...state.UIX,
+                  showForfaitOverlay: true,
+                  sendData: false
+                }
+              } else {
+                newUIX = {
+                  ...state.UIX,
+                  showForfaitOverlay: false,
+                  sendData: true
+                }
+              }
+              return {
+                ...state,
+                UIX: newUIX
+              }
+                    
         default:
           return state;
     }
 }
 
+
+const displayForfaitOverlay = (selectedDate) => {
+  
+  let selectedDay = new Date(selectedDate);
+  let inTwoDays = new Date();
+  inTwoDays.setDate(inTwoDays.getDate() + 2);
+  inTwoDays.setHours(0,0,0,0);
+  
+  return selectedDay.getTime() >= inTwoDays.getTime() ? true : false;
+}
 
 /* // Mirar si las condiciones de hora de reserva son necesarias
 // Devuelve el dia de posible alquiler dependiendo si es agencia o no, teniendo en cuenta las horas limites de reserva y el primer dia disponible dado por el servidor
@@ -268,3 +294,4 @@ const formatDateToString = ( date = new Date() ) => {
 
 }
 */
+

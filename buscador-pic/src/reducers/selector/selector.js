@@ -5,7 +5,13 @@ const initialState = {
   selected: 'ski',
   showSki: true,
   showBici: true,
-  isLoggedIn:false 
+  isLoggedIn:false,
+  hasInitInfo: false,
+  userInfo: {
+    isFetchingUserInfo: false,
+    isFetchingUserInfoErr: false,
+    isNotAgencia: true
+  } 
 };
 
 // Reducer que devuelve el nuevo estado
@@ -21,7 +27,9 @@ export const selector = (state = initialState, action) => {
         case types.FETCHING_USER_INFO:
           return {
             ...state,
+            hasInitInfo: false,
             userInfo: {
+              ...state.userInfo,
               isFetchingUserInfo: action.payload.isFetchingUserInfo,
               isFetchingUserInfoErr: action.payload.isFetchingUserInfoErr,
             }
@@ -29,7 +37,9 @@ export const selector = (state = initialState, action) => {
         case types.FETCH_USER_INFO_ERROR:
           return {
             ...state,
+            hasInitInfo: false,
             userInfo: {
+              ...state.userInfo,
               isFetchingUserInfo: action.payload.isFetchingUserInfo,
               isFetchingUserInfoErr: action.payload.isFetchingUserInfoErr,
             }
@@ -40,18 +50,17 @@ export const selector = (state = initialState, action) => {
             ...state.userInfo,
             ...action.payload.data.userData,
             isFetchingUserInfo: action.payload.isFetchingUserInfo,
-            isFetchingUserInfoErr: action.payload.isFetchingUserInfoErr
+            isFetchingUserInfoErr: action.payload.isFetchingUserInfoErr,
           }
           return {
             ...state,
             isLoggedIn: action.payload.data.isLoggedIn,
             showSki: action.payload.data.showSki,
             showBici: action.payload.data.showBici,
+            hasInitInfo: true,
             userInfo: newUserInfo
           }  
         default:
           return state;
-
     }
 }
-
