@@ -1,4 +1,4 @@
-import * as types from '../../actions/selector/actionTypes';
+import * as types from '../../actions/buscadorWrap/actionTypes';
 
 // Estado inicial de la aplicacion
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
 
 // Reducer que devuelve el nuevo estado
 
-export const selector = (state = initialState, action) => {
+export const buscador = (state = initialState, action) => {
     
     switch (action.type) {
         case types.SELECT_BUSCADOR_BICI_SKI:

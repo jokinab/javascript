@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import { buscadorSki } from './ski/estacionesList';
 
-import { selector } from './selector/selector';
+import { buscador } from './buscador/buscador';
 
 const rootReducer = combineReducers({
-  buscadorSki, selector
+  buscadorSki, buscador
 });
 
 export default rootReducer;

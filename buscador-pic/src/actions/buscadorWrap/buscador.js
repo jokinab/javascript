@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import ApiPic from './../../apiPic/apiPic';
+import ApiPic from '../../apiPic/apiPic';
 
 
 // Actions para recuperación de datos de estaciones

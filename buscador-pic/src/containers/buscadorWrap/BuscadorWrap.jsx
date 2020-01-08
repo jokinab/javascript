@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { 
   handleSelection,
   fetchUserInfo
-} from './../../actions/selector/selector';
+} from './../../actions/buscadorWrap/buscador';
 
 import BuscadorSki from '../buscadorSki/BuscadorSki';
-import { SelectorSkiBici } from './../selectorSkiBici/SelectorSkiBici';
+import { SelectorSkiBici } from '../../components/selectorSkiBici/SelectorSkiBici';
 
 class BuscadorWrapComponent extends Component{
   constructor(...args) {
@@ -46,7 +46,7 @@ class BuscadorWrapComponent extends Component{
 // Mapeamos el estado a las propiedades.
 const mapStateToProps = (state) => {
   return {
-    ...state.selector
+    ...state.buscador
   }
 }
 
