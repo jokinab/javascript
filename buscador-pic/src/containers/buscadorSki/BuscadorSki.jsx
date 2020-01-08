@@ -89,7 +89,7 @@ class BuscadorSkiComponent extends Component{
   componentDidMount(){
     this.hideErrors();
     if (! this.props.estaciones.estacionesList.length > 0 )
-      this.props.onFetchEstacionesItems();
+      this.props.onFetchEstacionesItems(this.props.isNotAgencia);
   }
 
   render(){
@@ -108,7 +108,7 @@ class BuscadorSkiComponent extends Component{
           <div className="buscador-items">  
             <EstacionesSectoresSelector 
               placeholder={UIX.placeholder}
-              isNotAgencia={this.props.isNotAgencia} 
+              isNotAgencia={UIX.isNotAgencia} 
               estacionesList={estacionesList}
               displaySectoresFromEstacion={UIX.displaySectoresFromEstacion}
               displayEstaciones={UIX.displayEstaciones}

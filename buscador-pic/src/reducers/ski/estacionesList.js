@@ -3,6 +3,7 @@ import * as types from '../../actions/ski/actionTypes';
 // Estado inicial de la aplicacion
 const initialState = {
   UIX: {
+    isNotAgencia: true,
     displayEstaciones: false,
     displaySectoresFromEstacion: '-1',
     selectedEstacionId: 0,
