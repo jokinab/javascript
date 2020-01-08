@@ -28,6 +28,7 @@ const configBuscadorSki = {
 class BuscadorSkiComponent extends Component{
   constructor(...args){
     super(...args);
+    this.state = {};
     this.handleEstacionSectorSelector = this.handleEstacionSectorSelector.bind(this);
     this.handleEstacionClick = this.handleEstacionClick.bind(this);
     this.handleSectorClick = this.handleSectorClick.bind(this);
@@ -90,6 +91,13 @@ class BuscadorSkiComponent extends Component{
     this.hideErrors();
     if (! this.props.estaciones.estacionesList.length > 0 )
       this.props.onFetchEstacionesItems(this.props.isNotAgencia);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState){
+    if (nextProps.UIX.sendData) {
+      alert('Mandar datos');
+    }
+    return null;
   }
 
   render(){
@@ -184,10 +192,7 @@ class BuscadorSkiComponent extends Component{
 
 // Mapeamos el estado a las propiedades.
 const mapStateToProps = (state, ownProps) => {
-  return {
-    ...state.buscadorSki,
-    ...ownProps  
-  }
+  return { ...state.buscadorSki }
 }
 
 // Mapeamos las acciones a las propiedades.
