@@ -8,7 +8,7 @@ import rootReducer from './reducers/root';
 
 import BuscadorWrapContainer from './containers/buscadorWrap/BuscadorWrap';
 
-import './App.css';
+import './App.scss';
 
 
 const store = createStore(

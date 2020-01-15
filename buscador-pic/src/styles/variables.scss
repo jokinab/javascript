@@ -1,0 +1,21 @@
+// Colors
+
+$selector-bg: rgba(255, 255, 255, 0.7);
+$selector-bg-active: rgba(45, 45, 45, 0.9);
+$black: black;
+$white: white;
+$buscador-item-color: #333333;
+$fa-color: #a9a9a9;
+$sectores-bg: #b2b2b2;
+$vallnord-color: #d22539;
+$grandvalira-color: #4aacd5;
+// Containers
+
+$max-width-general: 1000px;
+
+
+@mixin general-container() {
+  width: $max-width-general;
+  max-width:96%;
+  margin: 0 auto;
+}

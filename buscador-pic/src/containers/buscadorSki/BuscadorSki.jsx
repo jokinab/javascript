@@ -3,6 +3,12 @@ import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePickerPlaceHolder from '../../components/datePickerPlaceHolder/DatePickerPlaceHolder';
+import { LangsString } from './../../lang/Lang';
+
+// get our fontawesome imports
+import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 import { 
   fetchEstacionesItems, 
@@ -103,6 +109,7 @@ class BuscadorSkiComponent extends Component{
   render(){
     
     let UIX = this.props.UIX;
+    let lang = this.props.lang;
     let estacionesList = this.props.estaciones.estacionesList;
 
     return (
@@ -114,63 +121,80 @@ class BuscadorSkiComponent extends Component{
 
         { estacionesList.length > 0 && 
           <div className="buscador-items">  
-            <EstacionesSectoresSelector 
-              placeholder={UIX.placeholder}
-              isNotAgencia={UIX.isNotAgencia} 
-              estacionesList={estacionesList}
-              displaySectoresFromEstacion={UIX.displaySectoresFromEstacion}
-              displayEstaciones={UIX.displayEstaciones}
-              handleEstacionClick={this.handleEstacionClick} 
-              handleSectorClick={this.handleSectorClick}
-              handleEstacionSectorSelector={this.handleEstacionSectorSelector}
-              classPlace={configBuscadorSki.inputClass} />
-            
-            { !UIX.isSectorSelected && 
-              <DatePickerPlaceHolder 
-                textPlace={UIX.startDatePicker.placeholder} 
-                handlePlaceHolderClick={this.handlePlaceHolderStartDayClik} 
-                classPlace={configBuscadorSki.inputClass} /> }
-            
-            { UIX.isSectorSelected &&   
-              <DatePicker 
-                dateFormat="dd-MM-yyyy"
-                selected={UIX.startDatePicker.selectedDate}
-                onChange={(date) => this.handleStartDateSelection(date)}
-                className={configBuscadorSki.inputClass}
-                excludeDates={UIX.disabledDays.map( date => new Date(date) )}
-                minDate={new Date(UIX.firstDayAvailable)}
-                maxDate={ ( UIX.endDatePicker.selectedDate === '' && 
-                            UIX.endDatePicker.isEndDateSelected ) ? new Date('2050-12-12') : UIX.endDatePicker.selectedDate}
-                />       
-            }
+            <div className='buscador-item'>
+              <div className='icon-input-wrap'> 
+                <EstacionesSectoresSelector 
+                  placeholder={ UIX.placeholder }
+                  isNotAgencia={UIX.isNotAgencia} 
+                  estacionesList={estacionesList}
+                  displaySectoresFromEstacion={UIX.displaySectoresFromEstacion}
+                  displayEstaciones={UIX.displayEstaciones}
+                  handleEstacionClick={this.handleEstacionClick} 
+                  handleSectorClick={this.handleSectorClick}
+                  handleEstacionSectorSelector={this.handleEstacionSectorSelector}
+                  classPlace={configBuscadorSki.inputClass} />
+                { !UIX.isSectorSelected && 
+                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                }  
+                </div>  
+            </div>
+                
+            <div className='buscador-item'>
+              <div className='icon-input-wrap'> 
+                { !UIX.isSectorSelected && 
+                  <DatePickerPlaceHolder 
+                    textPlace={LangsString.fechaInicio[lang]} 
+                    handlePlaceHolderClick={this.handlePlaceHolderStartDayClik} 
+                    classPlace={configBuscadorSki.inputClass} /> }
+                
+                { UIX.isSectorSelected &&   
+                  <DatePicker 
+                    dateFormat="dd-MM-yyyy"
+                    selected={UIX.startDatePicker.selectedDate}
+                    onChange={(date) => this.handleStartDateSelection(date)}
+                    className={configBuscadorSki.inputClass}
+                    excludeDates={UIX.disabledDays.map( date => new Date(date) )}
+                    minDate={new Date(UIX.firstDayAvailable)}
+                    maxDate={ ( UIX.endDatePicker.selectedDate === '' && 
+                                UIX.endDatePicker.isEndDateSelected ) ? new Date('2050-12-12') : UIX.endDatePicker.selectedDate}
+                    />       
+                }
+                <FontAwesomeIcon icon={faCalendarAlt} />
+              </div>  
+            </div>  
 
-            { ( !UIX.isSectorSelected || UIX.startDatePicker.selectedDate === '' ) && 
-              <DatePickerPlaceHolder 
-                textPlace={UIX.endDatePicker.placeholder} 
-                handlePlaceHolderClick={ () =>this.handlePlaceHolderEndDayClik(UIX.startDatePicker.isStartDateSelected) } 
-                classPlace={configBuscadorSki.inputClass} /> }
-            
-            { ( UIX.isSectorSelected && UIX.startDatePicker.selectedDate !== '' ) && 
-              <DatePicker 
-                dateFormat="dd-MM-yyyy"
-                selected={ UIX.endDatePicker.selectedDate !== '' ? UIX.endDatePicker.selectedDate : UIX.startDatePicker.selectedDate}
-                onChange={(endDate) => this.handleEndDateSelection(endDate)}
-                className={configBuscadorSki.inputClass}
-                excludeDates={UIX.disabledDays.map( date => new Date(date) )}
-                minDate={new Date(UIX.startDatePicker.selectedDate)}
-                />       
-            }
+            <div className='buscador-item'>
+              <div className='icon-input-wrap'>   
+                { ( !UIX.isSectorSelected || UIX.startDatePicker.selectedDate === '' ) && 
+                  <DatePickerPlaceHolder 
+                    textPlace={LangsString.fechaFin[lang]} 
+                    handlePlaceHolderClick={ () =>this.handlePlaceHolderEndDayClik(UIX.startDatePicker.isStartDateSelected) } 
+                    classPlace={configBuscadorSki.inputClass} /> }
+                
+                { ( UIX.isSectorSelected && UIX.startDatePicker.selectedDate !== '' ) && 
+                  <DatePicker 
+                    dateFormat="dd-MM-yyyy"
+                    selected={ UIX.endDatePicker.selectedDate !== '' ? UIX.endDatePicker.selectedDate : UIX.startDatePicker.selectedDate}
+                    onChange={(endDate) => this.handleEndDateSelection(endDate)}
+                    className={configBuscadorSki.inputClass}
+                    excludeDates={UIX.disabledDays.map( date => new Date(date) )}
+                    minDate={new Date(UIX.startDatePicker.selectedDate)}
+                    />       
+                }
+                <FontAwesomeIcon icon={faCalendarAlt} />
+              </div>  
+            </div>  
+            <div className='buscador-item'>    
+              { ( !UIX.isSectorSelected || UIX.startDatePicker.selectedDate === '' ) && 
+                <DatePickerPlaceHolder 
+                  textPlace={UIX.placeholderSubmit} 
+                  handlePlaceHolderClick={ () =>this.handlePlaceHolderSubmit(UIX.startDatePicker.isStartDateSelected) } 
+                  classPlace={configBuscadorSki.inputClass} /> }
 
-            { ( !UIX.isSectorSelected || UIX.startDatePicker.selectedDate === '' ) && 
-              <DatePickerPlaceHolder 
-                textPlace={UIX.placeholderSubmit} 
-                handlePlaceHolderClick={ () =>this.handlePlaceHolderSubmit(UIX.startDatePicker.isStartDateSelected) } 
-                classPlace={configBuscadorSki.inputClass} /> }
-
-            { ( UIX.isSectorSelected && UIX.startDatePicker.selectedDate !== '' ) &&    
-              <button onClick={ () => this.props.onButtonClick() } className={configBuscadorSki.inputClass}>{UIX.placeholderSubmit}</button> 
-            }
-
+              { ( UIX.isSectorSelected && UIX.startDatePicker.selectedDate !== '' ) &&    
+                <button onClick={ () => this.props.onButtonClick() } className={configBuscadorSki.inputClass}>{UIX.placeholderSubmit}</button> 
+              }
+            </div>
           </div>    
         }
         { UIX.showErrors.show && 
@@ -191,8 +215,11 @@ class BuscadorSkiComponent extends Component{
 }  
 
 // Mapeamos el estado a las propiedades.
-const mapStateToProps = (state, ownProps) => {
-  return { ...state.buscadorSki }
+const mapStateToProps = (state) => {
+  return { 
+    ...state.buscadorSki, 
+    lang: state.buscador.language 
+  }
 }
 
 // Mapeamos las acciones a las propiedades.

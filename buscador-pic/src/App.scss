@@ -1,0 +1,213 @@
+@import "./styles/reset.scss";
+@import "./styles/mixins.scss";
+@import "./styles/variables.scss";
+
+
+// *********************** //
+// *********************** //
+          // Tags //
+// *********************** //
+// *********************** //
+
+*{
+  @include x-box-sizing();
+}
+
+ul{
+  list-style:none;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 0px;
+}
+
+button{
+  -webkit-appearance: none;
+  border-radius: 0;
+  border: 0;
+  background-color: transparent;
+  padding:0;
+  cursor: pointer;
+}
+
+
+
+// *********************** //
+// *********************** //
+        // Classes //
+// *********************** //
+// *********************** //
+
+// Main Wrap
+
+.buscador-wrap{
+  margin:50px auto;
+}
+
+
+// Selector
+
+.buscador-selector{
+  @include general-container();
+}
+
+.selector-list{
+  @include flexbox();
+}
+
+
+.selector-button{
+  padding: 20px 40px;
+  font-size: 15px;
+  color: $black;
+  font-weight:500;
+  cursor:pointer;
+}
+
+.selector-item{
+  background: $selector-bg;
+  &.active,
+  &:hover{
+    background: $selector-bg-active;
+    .selector-button{
+      color: $white;
+    }
+  }
+}
+
+
+// Buscador Ski
+
+.buscador-cnt{
+  background: $selector-bg-active;
+  padding: 24px 0;
+}
+
+.buscador-container{
+  @include general-container();
+}
+
+.buscador-items{
+  @include flexbox();
+  @include justify-content(space-between);
+}
+
+.buscador-item {
+  position: relative;
+  width: 23%;
+  color: $buscador-item-color;
+}
+
+.input-buscador{
+  width: 100%;
+  padding: 0 38px 0 10px;
+  height: 50px;
+  background-color: $white;
+  text-align:left;
+  color:inherit;
+  font-size: 16px;
+  font-weight:100;
+}
+.estaciones-item-wrap{
+  position:relative;
+}
+
+.icon-input-wrap{
+  position:relative;
+  .fa-calendar-alt,
+  .fa-map-marker-alt{
+    position:absolute;
+    top:12px;
+    right:10px;
+    font-size: 22px;
+    color: $fa-color;
+  }
+}
+
+.tiendas-selector-container{
+  position:absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+.react-datepicker-wrapper{
+  width: 100%;
+}
+
+.estacion-item{
+  background:$black;
+  border-bottom: 1px solid $white;
+}
+
+.estacion-image{
+  position:relative;
+  display: block;
+  height: 80px;
+  padding: 10px;
+  &.Vallnord:hover{
+    background: $vallnord-color;
+  }
+  &.Grandvalira:hover{
+    background: $grandvalira-color;
+  }
+}
+
+.img-estacion{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include translate(-50%, -50%);
+  &.Vallnord{
+    height: 60px;
+    width: auto;
+  }
+  &.Grandvalira{
+    width: 188px;
+    height: auto;
+  }
+}
+
+.estacion-button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 9;
+  color:transparent;
+  cursor: pointer;
+}
+
+.sectores-items{
+  background-color: $sectores-bg;
+  &.Vallnord{
+    .sector-item:hover{
+      background: $vallnord-color;
+    }
+  }
+  &.Grandvalira{
+    .sector-item:hover{
+      background: $grandvalira-color;
+    }    
+  }
+}
+
+.sector-button{
+  position: relative;
+  display:block;
+  width:100%;
+  padding:10px;
+  color: $white;
+  font-size: 10px;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-weight: 500;
+  &::after {
+    content: '>';
+    position: absolute;
+    right: 10px;
+  }
+}

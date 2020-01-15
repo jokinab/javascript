@@ -9,20 +9,18 @@ const EstacionesSectoresSelector = (props) => {
   }
   
   return (
-    <div className='buscador-item'> 
+    <div className='estaciones-item-wrap'> 
       <button value={props.displayEstaciones} onClick={props.handleEstacionSectorSelector} className={props.classPlace}>{props.placeholder}</button>
       { props.displayEstaciones && 
         <ul className="tiendas-selector-container">
           { props.estacionesList.map( (estacion, index) =>
-              
-                <EstacionItem 
-                  key={index} 
-                  estacion={estacion} 
-                  isNotAgencia={props.isNotAgencia}
-                  displaySectoresFromEstacion={props.displaySectoresFromEstacion} 
-                  handleEstacionClick={(e)=>handleEstacionSelect(e)} 
-                  handleSectorClick={props.handleSectorClick} />
-              
+            <EstacionItem 
+              key={index} 
+              estacion={estacion} 
+              isNotAgencia={props.isNotAgencia}
+              displaySectoresFromEstacion={props.displaySectoresFromEstacion} 
+              handleEstacionClick={(e)=>handleEstacionSelect(e)} 
+              handleSectorClick={props.handleSectorClick} />
           ) }
         </ul>
       }          

@@ -4,10 +4,13 @@ import SectorItem from './SectorItem';
 
 const EstacionItem = (props) => {
   return (
-    <li style={ { backgroundImage:  `url(${props.estacion.imagen})` } }>
-      <button onClick={props.handleEstacionClick} value={props.estacion.estacionId}>{props.estacion.nombre}</button>
+    <li className='estacion-item'>
+      <div className={`estacion-image ${props.estacion.nombre}`}>
+        <img src={props.estacion.imagen} alt={props.estacion.nombre} className={`img-estacion ${props.estacion.nombre}`} />
+        <button className='estacion-button' onClick={props.handleEstacionClick} value={props.estacion.estacionId}>{props.estacion.nombre}</button>
+      </div>  
       { ( props.isNotAgencia && ( props.displaySectoresFromEstacion ===  props.estacion.estacionId.toString() ) ) &&
-        <ul>
+        <ul className={`sectores-items ${props.estacion.nombre}`}>
           { props.estacion.sectores.map( (sector, index ) => 
               <SectorItem 
                 key={`${props.estacion.estacionId}${index}`} 

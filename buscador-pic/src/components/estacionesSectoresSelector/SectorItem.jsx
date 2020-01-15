@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const SectorItem = (props) => {
   return (
-    <li>
-      <button value={JSON.stringify(props.sector)} onClick={props.handleSectorClick}>
+    <li className='sector-item'>
+      <button className='sector-button' value={JSON.stringify(props.sector)} onClick={props.handleSectorClick}>
         { props.sector.nombre }
       </button>
     </li>

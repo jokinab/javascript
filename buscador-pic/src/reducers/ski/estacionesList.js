@@ -1,4 +1,5 @@
 import * as types from '../../actions/ski/actionTypes';
+import { LangsString } from './../../lang/Lang';
 
 // Estado inicial de la aplicacion
 const initialState = {
@@ -8,7 +9,7 @@ const initialState = {
     displaySectoresFromEstacion: '-1',
     selectedEstacionId: 0,
     isSectorSelected: false,
-    placeholder: 'Estaciones / Sectores',
+    placeholder: LangsString.skiSelector.es, // corregir para que sea dinamico
     placeholderSubmit: 'Enviar',
     selectedSector: -1,
     disabledDays: [],

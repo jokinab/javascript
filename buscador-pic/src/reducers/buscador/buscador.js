@@ -7,6 +7,7 @@ const initialState = {
   showBici: true,
   isLoggedIn:false,
   hasInitInfo: false,
+  language: 'es',
   userInfo: {
     isFetchingUserInfo: false,
     isFetchingUserInfoErr: false,
