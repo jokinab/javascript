@@ -29,9 +29,12 @@ button{
   background-color: transparent;
   padding:0;
   cursor: pointer;
+  @include transition(all, 0.2s, ease);
 }
 
-
+img{
+  max-width: 100%;
+}
 
 // *********************** //
 // *********************** //
@@ -56,7 +59,6 @@ button{
   @include flexbox();
 }
 
-
 .selector-button{
   padding: 20px 40px;
   font-size: 15px;
@@ -67,6 +69,7 @@ button{
 
 .selector-item{
   background: $selector-bg;
+  @include transition(all, 0.4s, ease);
   &.active,
   &:hover{
     background: $selector-bg-active;
@@ -86,6 +89,23 @@ button{
 
 .buscador-container{
   @include general-container();
+}
+
+.buscador-message-title{
+  color: white;
+  font-size: 26px;
+  line-height: 1.2;
+  margin: 0 auto 22px;
+  font-weight: 300;
+  font-weight: 400;
+}
+
+.buscador-message-subtitle{
+  color: white;
+  font-size: 18px;
+  line-height: 1.2;
+  margin-bottom: 22px;
+  font-weight: 400;
 }
 
 .buscador-items{
@@ -209,5 +229,161 @@ button{
     content: '>';
     position: absolute;
     right: 10px;
+  }
+}
+
+.submit-button{
+  width: 100%;
+  padding: 0 10px;
+  height: 50px;
+  background-color: $button-submit;
+  text-align:center;
+  color:$white;
+  font-size: 16px;
+  font-weight:100;
+  border:1px solid $button-submit;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  -webkit-appearance: button;
+  &:hover{
+    background-color:transparent;
+    color: $button-submit;
+  }
+}
+
+// Forfait Overlay
+
+.forfait-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  background: $overlay-bg;
+  overflow-y: auto;
+  z-index: 9999999;
+}
+
+.forfait-wrap {
+  position: absolute;
+  top: 60px;
+  transform: translateX(-50%) translateY(0%);
+  left: 50%;
+  z-index: 999;
+  background: white;
+  height: auto;
+  width: 96%;
+  padding: 12px 12px;
+  max-width: 1000px;
+  color: $overlay-color;
+  border-radius: 6px;
+  margin-bottom: 100px;
+}
+
+.forfait-hdr {
+  @include flexbox();
+  @include align-items(center);
+  @include justify-content(center);
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+.forfait-novedad {
+  @include flexbox();
+  @include flex-direction(column);
+  text-align: justify;
+  padding: 0 30px;
+}
+
+.forfait-novedad-tit{
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.forfait-message-1 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.forfait-list {
+  list-style: none;
+  max-width: 700px;
+  margin: 0 auto 20px;
+}
+
+.forfait-list-item {
+  @include flexbox();
+  @include align-items(center);
+  @include align-content(flex-start);
+  margin-bottom: 4px;
+}
+
+.forfait-item-img {
+  width: 50px;
+  height: 50px;
+  display: block;
+  margin-right: 20px;
+}
+
+.forfait-item-text {
+  font-size: 16px;
+  width: calc(100% - 70px);
+}
+
+.forfait-message-2 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 900;
+  margin: 20px auto 20px;
+  max-width: 890px;
+}
+
+.forfait-ext-3 {
+  color: $forfait-txt-color;
+  font-size: 12px;
+  max-width: 810px;
+  margin: 0 auto 10px;
+  line-height: 1.8;
+}
+
+.forfait-buttons {
+  @include flexbox();
+  @include align-items(flex-start);
+  @include align-content(flex-end);
+  @include justify-content(flex-end);
+  padding: 10px 0px;
+}
+
+.forfait-button {
+  @include flexbox();
+  @include align-items(center);
+  @include justify-content(center);
+  padding: 4px 10px;
+  font-weight: bold;
+  margin-right: 20px;
+  line-height: 40px;
+  font-size: 14px;
+}
+
+.no-interest {
+  background-color: $no-interest;
+  color: white;
+  border: 2px solid $no-interest;
+  &:hover{
+    background-color: transparent;
+    color: $no-interest;
+  }
+}
+
+.si-interest {
+  background-color: $black;
+  color: $white;
+  border: 2px solid $black;
+  &:hover{
+    background-color: $button-submit;
+    color: $white;
+    border: 2px solid $button-submit;
   }
 }

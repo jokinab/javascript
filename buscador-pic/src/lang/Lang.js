@@ -41,10 +41,70 @@ export const LangsString = {
     "en": "Last day of skiing",
     "fr": "Dernier jour de ski"
   },
-  Alquilar: {
+  alquilar: {
     "es": "Alquilar",
     "ca": "Llogar",
     "en": "Rent",
     "fr": "Louer"
-  }       
+  },
+  forfaitNovedad: {
+    "es": "NOVEDAD",
+    "ca": "NOVETAT",
+    "en": "NEW",
+    "fr": "NOUVEAUTÉ"
+  },
+  forfaitMainMessage: {
+    "es": "AHORA PUEDES COMPRAR TU FORFAIT AL RESERVAR TU MATERIAL DE ESQUÍ",
+    "ca": "ARA POTS COMPRAR LA TEVA FORFAIT A RESERVAR EL TEU MATERIAL D'ESQUÍ",
+    "en": "NOW YOU CAN BUY YOUR FORFAIT WHEN RESERVING YOUR SKI MATERIAL",
+    "fr": "MAINTENANT, VOUS POUVEZ ACHETER VOTRE FORFAIT LORS DE LA RÉSERVATION DE VOTRE MATÉRIEL DE SKI"
+  },
+  forfaitListItemFirst: {
+    "es": "Recoge <strong>tu material y tu forfait al mismo tiempo<strong> en nuestras tiendas.",
+    "ca": "Recull <strong>el teu material i el teu forfet al mateix temps</strong> a les nostres botigues.",
+    "en": "Collect <strong>your material and your pass at the same time</strong> in our stores.",
+    "fr": "Collectez <strong>votre matériel et votre passeport en même temps</strong> dans nos magasins."
+  },
+  forfaitListItemSecond: {
+    "es": "<strong>Ahorra tiempo</strong> al no hacer cola en la estación y disfruta más de la nieve.",
+    "ca": "<strong>Estalvia temps</strong> al no fer cua a l'estació i gaudeix més de la neu.",
+    "en": "<strong>Save time</strong> by not queuing at the station and enjoying the snow more.",
+    "fr": "<strong>Gagnez du temps<strong> en ne faisant pas la queue à la station et en profitant davantage de la neige."
+  },
+  forfaitListItemThird: {
+    "es": "Obtén un <strong>descuento extra</strong> al alquilar tu material de esquí.",
+    "ca": "Obtingues un <strong>descompte extra</strong> en llogar el teu material d'esquí.",
+    "en": "Get an <strong>extra discount</strong> when renting your ski equipment.",
+    "fr": "Bénéficiez d'un <strong>rabais supplémentaire</strong> lors de la location de votre équipement de ski."
+  },
+  forfaitSecondMessage: {
+    "es": "Todo en un mismo proceso, sin colas extra, más fácil... más rápido... <span>MÁS PICNEGRE!!!</span>",
+    "ca": "Tot en un mateix procés, sense cues extra, més fàcil ... més ràpid ... <span>MÉS PICNEGRE !!!</span>",
+    "en": "All in one process, no extra queues, easier ... faster ... <span>MORE PICNEGRE!!!</span>",
+    "fr": "Tout en un, pas de files d'attente supplémentaires, plus facile... plus rapide... <span>PLUS DE PICNEGRE!!!</span>"
+  },
+  forfaitLastMessageFirst: {
+    "es": "Forfait válido para la estación de esquí de VallNord- Pal/ Arinsal, en contrataciones con 48h de antelación a la fecha de recogida. El forfait será recogido en la tienda Shusski especificada en la reserva.",
+    "ca": "Forfet vàlid per a l'estació d'esquí de Vallnord- Pal / Arinsal, a contractacions amb 48 hores d'antelació a la data de recollida. El forfet serà recollit a la botiga Shusski especificada a la reserva.",
+    "en": "Valid ski pass for the VallNord-Pal / Arinsal ski resort, hired 48 hours before the date of collection. The ski pass will be picked up at the Shusski store specified in the reservation.",
+    "fr": "Forfait de ski valable pour la station de ski Vall Nord-Pal / Arinsal, loué 48 heures avant la date de prise en charge. Le forfait sera récupéré au magasin Shusski indiqué dans la réservation."
+  },
+  forfaitLastMessageSecond: {
+    "es": "El forfait de VallNord-Pal/Arinsal está sujeto a las condiciones generales de uso y contratación</a>",
+    "ca": "El forfet de Vallnord-Pal / Arinsal està subjecte a les condicions generals d'ús i contractació definides per l'estació d'esquí i el govern d'Andorra.",
+    "en": "The VallNord-Pal / Arinsal ski pass is subject to the general conditions of use and hiring defined by the ski resort and the government of Andorra.",
+    "fr": "Le forfait de ski VallNord-Pal / Arinsal est soumis aux conditions générales d'utilisation et de location définies par la station de ski et le gouvernement d'Andorre."
+  },
+  alquilarSinForfait: {
+    "es": "ALQUILAR SIN FORFAIT",
+    "ca": "LLOGAR SENSE FORFAIT",
+    "en": "RENT WITHOUT FORFAIT",
+    "fr": "LOUER SANS FORFAIT"
+  },
+  alquilarConForfait: {
+    "es": "ALQUILAR CON FORFAIT",
+    "ca": "LLOGAR AMB FORFAIT",
+    "en": "RENT WITH FORFAIT",
+    "fr": "LOUER AVEC FORFAIT"
+  }                      
 } 

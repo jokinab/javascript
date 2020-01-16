@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LangsString } from './../../lang/Lang';
 
 export const SelectorSkiBici = (props) => {
   
@@ -7,10 +8,10 @@ export const SelectorSkiBici = (props) => {
     <div className='buscador-selector'>
       <ul className='selector-list'>
         <li className={`selector-item ${props.activeSki ? 'active' : ''}`}>
-          <button className='selector-button' value='ski' onClick={ (e) => props.handleSelection(e) }>SKI</button>
+          <button className='selector-button' value='ski' onClick={ (e) => props.handleSelection(e) }>{LangsString.skiSelector[props.lang]}</button>
         </li>
         <li className={`selector-item ${props.activeBici ? 'active' : ''}`}>
-          <button className='selector-button' value='bici' onClick={ (e) => props.handleSelection(e) }>BICI</button>
+          <button className='selector-button' value='bici' onClick={ (e) => props.handleSelection(e) }>{LangsString.biciSelector[props.lang]}</button>
         </li>
       </ul> 
     </div>
@@ -21,6 +22,7 @@ export const SelectorSkiBici = (props) => {
 SelectorSkiBici.propTypes = {
   activeSki: PropTypes.bool,
   activeBici: PropTypes.bool,
-  handleSelection: PropTypes.func
+  handleSelection: PropTypes.func,
+  lang: PropTypes.string
 }
 

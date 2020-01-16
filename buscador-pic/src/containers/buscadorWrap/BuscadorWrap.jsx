@@ -35,7 +35,7 @@ class BuscadorWrapComponent extends Component{
 
     return (
       <div className='buscador-wrap'>
-        { this.props.hasInitInfo && this.props.showSki && this.props.showBici && <SelectorSkiBici activeBici={activeBici} activeSki={activeSki} handleSelection={this.handleSelection} /> } 
+        { this.props.hasInitInfo && this.props.showSki && this.props.showBici && <SelectorSkiBici lang={this.props.language} activeBici={activeBici} activeSki={activeSki} handleSelection={this.handleSelection} /> } 
         <div className='buscador-cnt'>
           { this.props.hasInitInfo && this.props.showSki && activeSki && <BuscadorSki /> }       
         </div>

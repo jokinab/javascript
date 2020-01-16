@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePickerPlaceHolder from '../../components/datePickerPlaceHolder/DatePickerPlaceHolder';
 import { LangsString } from './../../lang/Lang';
-
+import MensajeBuscadorItem from './../../components/mensajeBuscadorItem/MensajeBuscadorItem';
 // get our fontawesome imports
 import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +25,7 @@ import {
 import './BuscadorSki.css';
 
 import EstacionesSectoresSelector from '../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
+import ForfaitOverlay from '../../components/forfaitOverlay/ForfaitOverlay';
 
 const configBuscadorSki = {
   isNotAgencia: true,
@@ -43,6 +44,7 @@ class BuscadorSkiComponent extends Component{
     this.handlePlaceHolderEndDayClik = this.handlePlaceHolderEndDayClik.bind(this);
     this.handleEndDateSelection = this.handleEndDateSelection.bind(this);
     this.handlePlaceHolderSubmit = this.handlePlaceHolderSubmit.bind(this);
+    this.handleForfaitButtonCLick = this.handleForfaitButtonCLick.bind(this);
   }
 
   handleEstacionSectorSelector(){
@@ -93,6 +95,10 @@ class BuscadorSkiComponent extends Component{
     this.props.onShowErrors(error);
   }
 
+  handleForfaitButtonCLick(e){
+    console.log(e.target.value);
+  }
+
   componentDidMount(){
     this.hideErrors();
     if (! this.props.estaciones.estacionesList.length > 0 )
@@ -118,13 +124,15 @@ class BuscadorSkiComponent extends Component{
         { estacionesList.length <= 0 && 
           <div>Loading</div>
         }
-
+        
+        { estacionesList.length > 0 && <MensajeBuscadorItem title={LangsString.skiTitle[lang]} subtitle={LangsString.skiSubTitle[lang]} /> }
+        
         { estacionesList.length > 0 && 
           <div className="buscador-items">  
             <div className='buscador-item'>
               <div className='icon-input-wrap'> 
                 <EstacionesSectoresSelector 
-                  placeholder={ UIX.placeholder }
+                  placeholder={ UIX.placeholder === '' ? LangsString.skiSelector[lang] : UIX.placeholder }
                   isNotAgencia={UIX.isNotAgencia} 
                   estacionesList={estacionesList}
                   displaySectoresFromEstacion={UIX.displaySectoresFromEstacion}
@@ -187,12 +195,12 @@ class BuscadorSkiComponent extends Component{
             <div className='buscador-item'>    
               { ( !UIX.isSectorSelected || UIX.startDatePicker.selectedDate === '' ) && 
                 <DatePickerPlaceHolder 
-                  textPlace={UIX.placeholderSubmit} 
+                  textPlace={LangsString.alquilar[lang]}
                   handlePlaceHolderClick={ () =>this.handlePlaceHolderSubmit(UIX.startDatePicker.isStartDateSelected) } 
-                  classPlace={configBuscadorSki.inputClass} /> }
+                  classPlace='submit-button' /> }
 
               { ( UIX.isSectorSelected && UIX.startDatePicker.selectedDate !== '' ) &&    
-                <button onClick={ () => this.props.onButtonClick() } className={configBuscadorSki.inputClass}>{UIX.placeholderSubmit}</button> 
+                <button onClick={ () => this.props.onButtonClick() } className='submit-button' >{LangsString.alquilar[lang]}</button> 
               }
             </div>
           </div>    
@@ -206,7 +214,7 @@ class BuscadorSkiComponent extends Component{
         }  
 
         { UIX.showForfaitOverlay && 
-          <span>Forfait</span>
+          <ForfaitOverlay lang={lang} handleForfaitButtonCLick={this.handleForfaitButtonCLick} />
         } 
 
       </div>
