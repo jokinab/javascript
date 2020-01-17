@@ -7,7 +7,9 @@ import {
 } from './../../actions/buscadorWrap/buscador';
 
 import BuscadorSki from '../buscadorSki/BuscadorSki';
+import BuscadorBici from '../buscadorBici/BuscadorBici';
 import { SelectorSkiBici } from '../../components/selectorSkiBici/SelectorSkiBici';
+import Loading from './../../components/loading/Loading';
 
 class BuscadorWrapComponent extends Component{
   constructor(...args) {
@@ -37,7 +39,9 @@ class BuscadorWrapComponent extends Component{
       <div className='buscador-wrap'>
         { this.props.hasInitInfo && this.props.showSki && this.props.showBici && <SelectorSkiBici lang={this.props.language} activeBici={activeBici} activeSki={activeSki} handleSelection={this.handleSelection} /> } 
         <div className='buscador-cnt'>
-          { this.props.hasInitInfo && this.props.showSki && activeSki && <BuscadorSki /> }       
+          { !this.props.hasInitInfo && <Loading /> }
+          { this.props.hasInitInfo && this.props.showSki && activeSki && <BuscadorSki /> }
+          { this.props.hasInitInfo && this.props.showBici && activeBici && <BuscadorBici /> }       
         </div>
       </div>
     )

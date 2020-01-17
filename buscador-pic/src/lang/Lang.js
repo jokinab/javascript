@@ -90,7 +90,7 @@ export const LangsString = {
     "fr": "Forfait de ski valable pour la station de ski Vall Nord-Pal / Arinsal, loué 48 heures avant la date de prise en charge. Le forfait sera récupéré au magasin Shusski indiqué dans la réservation."
   },
   forfaitLastMessageSecond: {
-    "es": "El forfait de VallNord-Pal/Arinsal está sujeto a las condiciones generales de uso y contratación</a>",
+    "es": "El forfait de VallNord-Pal/Arinsal está sujeto a las condiciones generales de uso y contratación",
     "ca": "El forfet de Vallnord-Pal / Arinsal està subjecte a les condicions generals d'ús i contractació definides per l'estació d'esquí i el govern d'Andorra.",
     "en": "The VallNord-Pal / Arinsal ski pass is subject to the general conditions of use and hiring defined by the ski resort and the government of Andorra.",
     "fr": "Le forfait de ski VallNord-Pal / Arinsal est soumis aux conditions générales d'utilisation et de location définies par la station de ski et le gouvernement d'Andorre."
@@ -106,5 +106,29 @@ export const LangsString = {
     "ca": "LLOGAR AMB FORFAIT",
     "en": "RENT WITH FORFAIT",
     "fr": "LOUER AVEC FORFAIT"
-  }                      
+  },
+  errorSector: {
+    "es": "Seleccione primero una tienda",
+    "ca": "Selecciona primer una botiga",
+    "en": "Select a store first",
+    "fr": "Choisissez d'abord un magasin"
+  },
+  errorFechaInicio: {
+    "es": "Seleccione primero una tienda",
+    "ca": "Introdueix Data de Recollida",
+    "en": "Enter Collection Date",
+    "fr": "Entrer la date de collecte"
+  },
+  errorFechaFin: {
+    "es": "Seleccione primero una tienda",
+    "ca": "SIntrodueix Data de Lliurament",
+    "en": "Enter Delivery Date",
+    "fr": "Entrez la date de livraison"
+  },
+  errorCuantosDias: {
+    "es": "Introduce Cuántos días",
+    "ca": "Introdueix Quants dies",
+    "en": "Enter how many days",
+    "fr": "Entrez combien de jours"
+  }                          
 } 

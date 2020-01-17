@@ -5,6 +5,7 @@ import forfaitValldnord from './../../images/forfaitValldnord.jpg';
 import forfaitSki from './../../images/forfaitSki.png';
 import forfaitAhorra from './../../images/forfaitAhorra.png';
 import forfaitdescuento from './../../images/forfaitDescuento.png';
+import forfaitIcono from './../../images/forfaitIcono.png';
 
 const ForfaitOverlay = (props) => {
   return (
@@ -43,6 +44,7 @@ const ForfaitOverlay = (props) => {
             {LangsString.alquilarSinForfait[props.lang]}
           </button>
           <button className='si-interest forfait-button' value={true} onClick={ (e) => props.handleForfaitButtonCLick(e) } >
+            <img src={forfaitIcono} className='forfait-img' alt='' />
             {LangsString.alquilarConForfait[props.lang]}
           </button>
         </div>

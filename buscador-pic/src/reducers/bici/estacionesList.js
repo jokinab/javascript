@@ -1,4 +1,4 @@
-import * as types from '../../actions/ski/actionTypes';
+import * as types from '../../actions/bici/actionTypes';
 
 // Estado inicial de la aplicacion
 const initialState = {
@@ -40,7 +40,7 @@ const initialState = {
 
 // Reducer que devuelve el nuevo estado
 
-export const buscadorSki = (state = initialState, action) => {
+export const buscadorBici = (state = initialState, action) => {
     
     let newUIX = {};
     let newStartDatePicker = {};
@@ -48,7 +48,7 @@ export const buscadorSki = (state = initialState, action) => {
     let newErrors = {};
 
     switch (action.type) {
-        case types.FETCH_ESTACIONES_ERROR_SKI:
+        case types.FETCH_ESTACIONES_ERROR_BICI:
           return {
             ...state,
             estaciones: {
@@ -57,7 +57,7 @@ export const buscadorSki = (state = initialState, action) => {
               estacionesList: []
             }
           }
-        case types.FETCH_ESTACIONES_LIST_SKI:
+        case types.FETCH_ESTACIONES_LIST_BICI:
           return {
             ...state,
             estaciones: {
@@ -66,14 +66,14 @@ export const buscadorSki = (state = initialState, action) => {
               estacionesList: []
             }  
           }
-        case types.FETCH_ESTACIONES_SUCCESS_SKI:
+        case types.FETCH_ESTACIONES_SUCCESS_BICI:
           return {
             ...state,
             estaciones: {
               estacionesList: action.payload.estacionesList
             }  
           }
-        case types.ESTACIONES_BUTTON_CLICK_SKI:
+        case types.ESTACIONES_BUTTON_CLICK_BICI:
           newUIX = {
             ...state.UIX,
             displayEstaciones: !state.UIX.displayEstaciones,
@@ -84,7 +84,7 @@ export const buscadorSki = (state = initialState, action) => {
             ...state,
             UIX: newUIX
           } 
-        case types.ESTACION_CLICK_SKI:
+        case types.ESTACION_CLICK_BICI:
 
           let bloquedDays = state.estaciones.estacionesList.find( (estacion) =>  estacion.estacionId === action.payload.estacionId).diasBloqueados;
           let firstDayAvailable = state.estaciones.estacionesList.find( (estacion) =>  estacion.estacionId === action.payload.estacionId).primerDiaLibre;
@@ -124,7 +124,7 @@ export const buscadorSki = (state = initialState, action) => {
             UIX: newUIX
           }   
         
-          case types.HIDE_ERRORS_SKI:
+          case types.HIDE_ERRORS_BICI:
               newUIX = {
                 ...state.UIX,
                 showErrors: {
@@ -141,7 +141,7 @@ export const buscadorSki = (state = initialState, action) => {
                 UIX: newUIX
               }  
           
-          case types.SHOW_ERRORS_SKI:
+          case types.SHOW_ERRORS_BICI:
               newErrors = { 
                 ...state.UIX.showErrors,
                 ...action.payload.error
@@ -155,7 +155,7 @@ export const buscadorSki = (state = initialState, action) => {
                 ...state,
                 UIX: newUIX
               }      
-          case types.SECTOR_CLICK_SKI:
+          case types.SECTOR_CLICK_BICI:
               newStartDatePicker = {
                 ...state.UIX.startDatePicker,
                 isStartDateSelected: true
@@ -172,7 +172,7 @@ export const buscadorSki = (state = initialState, action) => {
                 ...state,                
                 UIX: newUIX
               }     
-          case types.START_DATE_SELECTION_SKI:
+          case types.START_DATE_SELECTION_BICI:
 
             newStartDatePicker = {
               ...state.UIX.startDatePicker,
@@ -192,7 +192,7 @@ export const buscadorSki = (state = initialState, action) => {
               ...state,
               UIX: newUIX
             }    
-            case types.END_DATE_SELECTION_SKI:
+            case types.END_DATE_SELECTION_BICI:
               newEndDatePicker = {
                 ...state.UIX.EndDatePicker,
                 selectedDate: action.payload.selectedDate,
@@ -206,7 +206,7 @@ export const buscadorSki = (state = initialState, action) => {
                 ...state,
                 UIX: newUIX
               }  
-            case types.SKY_SUBMIT_CLICK_SKI: 
+            case types.SKY_SUBMIT_CLICK_BICI: 
               if (displayForfaitOverlay(state.UIX.startDatePicker.selectedDate)) {
                 newUIX = {
                   ...state.UIX,
@@ -224,7 +224,7 @@ export const buscadorSki = (state = initialState, action) => {
                 ...state,
                 UIX: newUIX
               }
-            case types.FORFAIT_BUTTON_CLICK_SKI:
+            case types.FORFAIT_BUTTON_CLICK_BICI:
               newUIX = {
                 ...state.UIX,
                 hasForfaitSelected: action.payload.hasForfaitSelected 

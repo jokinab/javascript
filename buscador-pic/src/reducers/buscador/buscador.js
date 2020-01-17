@@ -2,7 +2,7 @@ import * as types from '../../actions/buscadorWrap/actionTypes';
 
 // Estado inicial de la aplicacion
 const initialState = {
-  selected: 'ski',
+  selected: 'bici',
   showSki: true,
   showBici: true,
   isLoggedIn:false,

@@ -6,7 +6,7 @@ import ApiPic from './../../apiPic/apiPic';
 
 export const fetchEstacionesList = (bool, error) => {
   return {
-      type: types.FETCH_ESTACIONES_LIST_SKI,
+      type: types.FETCH_ESTACIONES_LIST_BICI,
       payload:{
         isFetchingEstaciones: true,
         isFetchingEstacionesErr: error,
@@ -18,7 +18,7 @@ export const fetchEstacionesList = (bool, error) => {
 
 export const fetchEstacionesErr = (bool) => {
   return {
-      type: types.FETCH_ESTACIONES_ERROR_SKI,
+      type: types.FETCH_ESTACIONES_ERROR_BICI,
       payload:{
         isFetchingEstaciones: false,
         isFetchingEstacionesErr: bool,
@@ -30,7 +30,7 @@ export const fetchEstacionesErr = (bool) => {
 
 export const fetchEstacionesSuccess = (items) => {
   return {
-      type: types.FETCH_ESTACIONES_SUCCESS_SKI,
+      type: types.FETCH_ESTACIONES_SUCCESS_BICI,
       payload:{
         isFetchingEstaciones: false,
         isFetchingEstacionesErr: false,
@@ -45,7 +45,7 @@ export const fetchEstacionesItems = () => {
     ( async function(){
       dispatch(fetchEstacionesList(true, false));
       try {
-        const estacionesList = await ApiPic.getSkiEstacionesList();
+        const estacionesList = await ApiPic.getBiciEstacionesList();
         const response = await estacionesList.json();
         if (response.estacionesData.length > 0) {
           dispatch(fetchEstacionesSuccess(response));
@@ -66,7 +66,7 @@ export const fetchEstacionesItems = () => {
 
 export const handleEstacionesButtonClick = (e) => {
   return {
-    type: types.ESTACIONES_BUTTON_CLICK_SKI,
+    type: types.ESTACIONES_BUTTON_CLICK_BICI,
     payload:{}
   };
 }
@@ -75,7 +75,7 @@ export const handleEstacionesButtonClick = (e) => {
 
 export const handleEstacionClick = (target) => {
   return {
-    type: types.ESTACION_CLICK_SKI,
+    type: types.ESTACION_CLICK_BICI,
     payload:{
       estacionId: target.value
     }
@@ -87,7 +87,7 @@ export const handleEstacionClick = (target) => {
 
 export const handleHideErrors = () => {
   return {
-    type: types.HIDE_ERRORS_SKI,
+    type: types.HIDE_ERRORS_BICI,
     payload:{}
   };
 }
@@ -96,7 +96,7 @@ export const handleHideErrors = () => {
 
 export const handleShowErrors = (error) => {
   return {
-    type: types.SHOW_ERRORS_SKI,
+    type: types.SHOW_ERRORS_BICI,
     payload: { error }
   };
 }
@@ -105,7 +105,7 @@ export const handleShowErrors = (error) => {
 
 export const handleSectorClick = (e) => {
   return {
-    type: types.SECTOR_CLICK_SKI,
+    type: types.SECTOR_CLICK_BICI,
     payload: {
       selectedSector: JSON.parse(e.target.value).id,
       placeholder: JSON.parse(e.target.value).nombre,
@@ -118,7 +118,7 @@ export const handleSectorClick = (e) => {
 
 export const handleStartDateSelection = (date) => {
   return {
-    type: types.START_DATE_SELECTION_SKI,
+    type: types.START_DATE_SELECTION_BICI,
     payload: {
       selectedDate: date
     }
@@ -129,7 +129,7 @@ export const handleStartDateSelection = (date) => {
 
 export const handleEndDateSelection = (date) => {
   return {
-    type: types.END_DATE_SELECTION_SKI,
+    type: types.END_DATE_SELECTION_BICI,
     payload: {
       selectedDate: date
     }
@@ -138,7 +138,7 @@ export const handleEndDateSelection = (date) => {
 
 export const handleButtonClick = () => {
   return {
-    type: types.SKY_SUBMIT_CLICK_SKI,
+    type: types.SKY_SUBMIT_CLICK_BICI,
     payload: {
       
     }
@@ -147,7 +147,7 @@ export const handleButtonClick = () => {
 
 export const handleForfaitButtonClick = ( hasForfaitSelected = false ) => {
   return {
-    type: types.FORFAIT_BUTTON_CLICK_SKI,
+    type: types.FORFAIT_BUTTON_CLICK_BICI,
     payload: {
       hasForfaitSelected: hasForfaitSelected
     }

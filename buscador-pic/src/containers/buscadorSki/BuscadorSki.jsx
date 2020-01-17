@@ -8,7 +8,7 @@ import MensajeBuscadorItem from './../../components/mensajeBuscadorItem/MensajeB
 // get our fontawesome imports
 import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import Loading from './../../components/loading/Loading';
 
 import { 
   fetchEstacionesItems, 
@@ -19,10 +19,9 @@ import {
   handleSectorClick,
   handleStartDateSelection,
   handleEndDateSelection,
-  handleButtonClick 
+  handleButtonClick,
+  handleForfaitButtonClick 
 } from './../../actions/ski/estaciones';
-
-import './BuscadorSki.css';
 
 import EstacionesSectoresSelector from '../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
 import ForfaitOverlay from '../../components/forfaitOverlay/ForfaitOverlay';
@@ -97,6 +96,7 @@ class BuscadorSkiComponent extends Component{
 
   handleForfaitButtonCLick(e){
     console.log(e.target.value);
+    this.props.onForfaitButtonClick(e.target.value);
   }
 
   componentDidMount(){
@@ -122,7 +122,7 @@ class BuscadorSkiComponent extends Component{
       <div className="buscador-container">
         
         { estacionesList.length <= 0 && 
-          <div>Loading</div>
+          <Loading />
         }
         
         { estacionesList.length > 0 && <MensajeBuscadorItem title={LangsString.skiTitle[lang]} subtitle={LangsString.skiSubTitle[lang]} /> }
@@ -207,9 +207,9 @@ class BuscadorSkiComponent extends Component{
         }
         { UIX.showErrors.show && 
           <div className='errors-wrap'>
-            { UIX.showErrors.showError1 && <div className='error'>Seleccione primero Sector</div> }  
-            { UIX.showErrors.showError2 && <div className='error'>Seleccione primero Fecha de Inicio</div> }  
-            { UIX.showErrors.showError3 && <div className='error'>Seleccione primero Fecha de Fin</div> }  
+            { UIX.showErrors.showError1 && <div className='error'>{LangsString.errorSector[lang]}</div> }  
+            { UIX.showErrors.showError2 && <div className='error'>{LangsString.errorFechaInicio[lang]}</div> }  
+            { UIX.showErrors.showError3 && <div className='error'>{LangsString.errorFechaFin[lang]}</div> }  
           </div>
         }  
 
@@ -241,7 +241,8 @@ const mapDispatchToProps = (dispatch) => {
     onSectorClick: (e) => dispatch(handleSectorClick(e)),
     onStartDateSelection: (date) => dispatch(handleStartDateSelection(date)),
     onEndDateSelection: (date) => dispatch(handleEndDateSelection(date)),
-    onButtonClick: () => dispatch(handleButtonClick())
+    onButtonClick: () => dispatch(handleButtonClick()),
+    onForfaitButtonClick: (e) => dispatch(handleForfaitButtonClick(e))
   }
 }
 
