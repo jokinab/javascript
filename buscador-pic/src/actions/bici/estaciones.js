@@ -153,3 +153,12 @@ export const handleForfaitButtonClick = ( hasForfaitSelected = false ) => {
     }
   }
 }
+
+export const handleCuantosDiasSelection = ( cuantosDias = 1) => {
+  return {
+    type: types.CUANTOS_DIAS_SELECTION,
+    payload: {
+      howManyDays: cuantosDias
+    }
+  }
+}

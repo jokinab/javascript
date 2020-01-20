@@ -23,6 +23,18 @@ export const LangsString = {
     "en": "Where and what days do you want to ski? - Select a store first",
     "fr": "Où et quels jours voulez-vous skier? - Choisissez d'abord un magasin"
   },
+  biciTitle: {
+    "es": "Alquila tu bici en la mayor red de tiendas de Andorra",
+    "ca": "Llogueu el vostre bici a la major xarxa de botigues d'Andorra",
+    "en": "Rent your bike in the largest network of shops in Andorra",
+    "fr": "Louez votre vélo dans le plus grand réseau de magasins en Andorre"
+  },
+  biciSubTitle: {
+    "es": "¿Dónde y que días quieres alquilar tu bici? - Selecciona primero una tienda",
+    "ca": "¿On i que dies vols llogar la teva bici? - Selecciona primer una botiga",
+    "en": "Where and what days do you want to rent your bike? - Select a store first",
+    "fr": "¿Où et quels jours souhaitez-vous louer votre vélo? - Choisissez d'abord un magasin"
+  },
   estacionesPlaceHolder: {
     "es": "Estaciones / Tiendas",
     "ca": "Estacions / Botigues",
@@ -40,6 +52,12 @@ export const LangsString = {
     "ca": "Últim dia d'esquí",
     "en": "Last day of skiing",
     "fr": "Dernier jour de ski"
+  },
+  cuantosDias: {
+    "es": "¿Cuántos días?",
+    "ca": "Quants dies?",
+    "en": "How many days?",
+    "fr": "Combien de jours?"
   },
   alquilar: {
     "es": "Alquilar",

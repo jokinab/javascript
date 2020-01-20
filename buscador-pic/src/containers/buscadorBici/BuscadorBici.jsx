@@ -8,8 +8,7 @@ import MensajeBuscadorItem from '../../components/mensajeBuscadorItem/MensajeBus
 // get our fontawesome imports
 import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-
+import Loading from './../../components/loading/Loading';
 import { 
   fetchEstacionesItems, 
   handleEstacionesButtonClick, 
@@ -20,12 +19,12 @@ import {
   handleStartDateSelection,
   handleEndDateSelection,
   handleButtonClick,
-  handleForfaitButtonClick 
+  handleForfaitButtonClick,
+  handleCuantosDiasSelection 
 } from '../../actions/bici/estaciones';
-
 import EstacionesSectoresSelector from '../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
 import ForfaitOverlay from '../../components/forfaitOverlay/ForfaitOverlay';
-
+import CuantosDiasSelector from './../../components/cuantosDiasSelector/CuantosDiasSelector';
 class BuscadorBiciComponent extends Component{
   constructor(...args){
     super(...args);
@@ -117,10 +116,10 @@ class BuscadorBiciComponent extends Component{
       <div className="buscador-container">
         
         { estacionesList.length <= 0 && 
-          <div>Loading</div>
+          <Loading />
         }
         
-        { estacionesList.length > 0 && <MensajeBuscadorItem title={LangsString.skiTitle[lang]} subtitle={LangsString.skiSubTitle[lang]} /> }
+        { estacionesList.length > 0 && <MensajeBuscadorItem title={LangsString.biciTitle[lang]} subtitle={LangsString.biciSubTitle[lang]} /> }
         
         { estacionesList.length > 0 && 
           <div className="buscador-items">  
@@ -158,8 +157,6 @@ class BuscadorBiciComponent extends Component{
                     className='input-buscador'
                     excludeDates={UIX.disabledDays.map( date => new Date(date) )}
                     minDate={new Date(UIX.firstDayAvailable)}
-                    maxDate={ ( UIX.endDatePicker.selectedDate === '' && 
-                                UIX.endDatePicker.isEndDateSelected ) ? new Date('2050-12-12') : UIX.endDatePicker.selectedDate}
                     />       
                 }
                 <FontAwesomeIcon icon={faCalendarAlt} />
@@ -175,14 +172,12 @@ class BuscadorBiciComponent extends Component{
                     classPlace='input-buscador' /> }
                 
                 { ( UIX.isSectorSelected && UIX.startDatePicker.selectedDate !== '' ) && 
-                  <DatePicker 
-                    dateFormat="dd-MM-yyyy"
-                    selected={ UIX.endDatePicker.selectedDate !== '' ? UIX.endDatePicker.selectedDate : UIX.startDatePicker.selectedDate}
-                    onChange={(endDate) => this.handleEndDateSelection(endDate)}
-                    className='input-buscador'
-                    excludeDates={UIX.disabledDays.map( date => new Date(date) )}
-                    minDate={new Date(UIX.startDatePicker.selectedDate)}
-                    />       
+                  <CuantosDiasSelector
+                    howManyDays={String(UIX.howManyDays)} 
+                    firstDaySelected={UIX.startDatePicker.selectedDate}
+                    disabledDates={UIX.disabledDays}
+                    selectionCuantosDias={ (e) => this.props.onCuantosDiasSelect(e) }
+                  />   
                 }
                 <FontAwesomeIcon icon={faCalendarAlt} />
               </div>  
@@ -237,7 +232,8 @@ const mapDispatchToProps = (dispatch) => {
     onStartDateSelection: (date) => dispatch(handleStartDateSelection(date)),
     onEndDateSelection: (date) => dispatch(handleEndDateSelection(date)),
     onButtonClick: () => dispatch(handleButtonClick()),
-    onForfaitButtonClick: (e) => dispatch(handleForfaitButtonClick(e))
+    onForfaitButtonClick: (e) => dispatch(handleForfaitButtonClick(e)),
+    onCuantosDiasSelect: (e) => dispatch(handleCuantosDiasSelection(e) )
   }
 }
 
