@@ -15,9 +15,11 @@ const CuantosDiasSelector = (props) => {
   }
 
   const getFormatedDate = (inNDays) => {
+
     let month = inNDays.getMonth();
     month = month + 1 > 12 ? 1 : month + 1;
     month = month < 10 ? '0' + month : month;
+    
     let day = inNDays.getDate();
     day = parseInt(day) < 10 ? '0' + day : day;
 
