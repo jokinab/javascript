@@ -8,6 +8,7 @@ import forfaitdescuento from './../../images/forfaitDescuento.png';
 import forfaitIcono from './../../images/forfaitIcono.png';
 
 const ForfaitOverlay = (props) => {
+
   return (
     <div className='forfait-layer'>
       <div className='forfait-wrap'>
@@ -51,12 +52,12 @@ const ForfaitOverlay = (props) => {
       </div>
     </div>  
   )
+  
 }
 
 ForfaitOverlay.propTypes = {
   lang: PropTypes.string,
   handleForfaitButtonCLick: PropTypes.func
 }
-
 
 export default ForfaitOverlay;

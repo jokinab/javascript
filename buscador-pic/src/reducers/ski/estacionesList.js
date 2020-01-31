@@ -1,4 +1,5 @@
 import * as types from '../../actions/ski/actionTypes';
+import DateTools from './../../lib/dateTools';
 
 // Estado inicial de la aplicacion
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
     placeholder: '', 
     selectedSector: -1,
     disabledDays: [],
+    selecetedTienda: -1,
     firstDayAvailable: '',
     showForfaitOverlay: false,
     sendData: false,
@@ -28,7 +30,8 @@ const initialState = {
     endDatePicker: {
       selectedDate: ''
     },
-    hasForfaitSelected: false
+    hasForfaitSelected: false,
+    noForfaitStation: '-1'
   },
   estaciones: {
     estacionesList: [],
@@ -67,8 +70,42 @@ export const buscadorSki = (state = initialState, action) => {
             }  
           }
         case types.FETCH_ESTACIONES_SUCCESS_SKI:
+          
+          if ( action.payload.hasSelectedData ) {
+            let startDateArr = action.payload.fechaIni.split('-');
+            let endDateArr = action.payload.fechaFin.split('-');
+            let selectedEstacion = action.payload.estacionesList.find( estacion => estacion.sectores.find( sector => sector.id === action.payload.sectorId) );
+            newUIX = {
+              ...state.UIX,
+              isNotAgencia: action.payload.isNotAgencia,
+              isSectorSelected: true,
+              selectedEstacionId: selectedEstacion.estacionId,
+              disabledDays: selectedEstacion.diasBloqueados,
+              selectedSector: action.payload.sectorId,
+              startDatePicker: {
+                selectedDate: new Date(startDateArr[0], parseInt(startDateArr[1])-1 < 0 ? '11' : (parseInt(startDateArr[1])-1).toString(), startDateArr[2]),
+                isStartDateSelected: true
+              },
+              endDatePicker: {
+                selectedDate:  new Date(endDateArr[0],parseInt(endDateArr[1])-1 < 0 ? '11' : (parseInt(endDateArr[1])-1).toString() ,endDateArr[2])
+              },
+              selectedTienda: action.payload.selecetedTienda,
+              placeholder: selectedEstacion.sectores.find( sector => sector.id === action.payload.sectorId).nombre,
+              hasForfaitSelected: action.payload.hasForfaitSelected ? true : false,
+              hasSelectedData: action.payload.hasSelectedData
+            }
+            
+          } else {
+            newUIX = { 
+              ...state.UIX,
+              isNotAgencia: action.payload.isNotAgencia,
+              hasSelectedData: action.payload.hasSelectedData
+            };
+          }
+          
           return {
             ...state,
+            UIX: newUIX,
             estaciones: {
               estacionesList: action.payload.estacionesList
             }  
@@ -91,10 +128,23 @@ export const buscadorSki = (state = initialState, action) => {
 
           newUIX = {}; 
 
-          newStartDatePicker = {
-            ...state.UIX.startDatePicker,
-            selectedDate: new Date(firstDayAvailable)
-          }
+          if ( state.UIX.startDatePicker.isStartDateSelected && !DateTools.hasBloquedDaysInSelected( state.UIX.startDatePicker.selectedDate, state.UIX.endDatePicker.selectedDate, bloquedDays ) ) {
+            newStartDatePicker = {
+              ...state.UIX.startDatePicker,
+            } 
+            newEndDatePicker = {
+              ...state.UIX.endDatePicker,
+            }  
+          } else {
+            newStartDatePicker = {
+              ...state.UIX.startDatePicker,
+              selectedDate: new Date(firstDayAvailable)
+            }
+            newEndDatePicker = {
+              ...state.UIX.endDatePicker,
+              selectedDate: new Date(firstDayAvailable)
+            }
+          }          
           
           if (state.UIX.isNotAgencia) {
             newUIX = {
@@ -103,7 +153,10 @@ export const buscadorSki = (state = initialState, action) => {
               displaySectoresFromEstacion: action.payload.estacionId === state.UIX.displaySectoresFromEstacion ? '-1' : action.payload.estacionId,
               disabledDays: bloquedDays,
               firstDayAvailable: firstDayAvailable,
-              startDatePicker: newStartDatePicker
+              startDatePicker: newStartDatePicker,
+              endDatePicker: newEndDatePicker,
+              hasForfaitSelected: state.UIX.showChangeToNoForfaitOverlay ? false : state.UIX.hasForfaitSelected,
+              showChangeToNoForfaitOverlay: false
             }
           } else {
             let estacion = state.estaciones.estacionesList.find(estacion => estacion.estacionId === action.payload.estacionId);
@@ -115,7 +168,10 @@ export const buscadorSki = (state = initialState, action) => {
               isSectorSelected: true,
               disabledDays: bloquedDays,
               firstDayAvailable: new Date(firstDayAvailable),
-              startDatePicker: newStartDatePicker
+              startDatePicker: newStartDatePicker,
+              endDatePicker: newEndDatePicker,
+              hasForfaitSelected: state.UIX.showChangeToNoForfaitOverlay ? false : state.UIX.hasForfaitSelected,
+              showChangeToNoForfaitOverlay: false
             }
           } 
           
@@ -207,7 +263,8 @@ export const buscadorSki = (state = initialState, action) => {
                 UIX: newUIX
               }  
             case types.SKY_SUBMIT_CLICK_SKI: 
-              if (displayForfaitOverlay(state.UIX.startDatePicker.selectedDate)) {
+              if ( state.estaciones.estacionesList.find( estacion => estacion.estacionId === state.UIX.selectedEstacionId ).sectores[0].forfait === 1  && 
+                   displayForfaitOverlay(state.UIX.startDatePicker.selectedDate) ) {
                 newUIX = {
                   ...state.UIX,
                   showForfaitOverlay: true,
@@ -233,7 +290,16 @@ export const buscadorSki = (state = initialState, action) => {
                 ...state, 
                 UIX: newUIX
               }    
-                    
+            case types.CHANGE_TO_NO_FORFAIT_STATION_OVERLAY:
+              newUIX = {
+                ...state.UIX,
+                showChangeToNoForfaitOverlay: action.payload.showChangeToNoForfaitOverlay,
+                noForfaitStation: action.payload.noForfaitStation
+              }
+              return {
+                ...state,
+                UIX: newUIX
+              }        
         default:
           return state;
     }
@@ -249,55 +315,3 @@ const displayForfaitOverlay = (selectedDate) => {
   
   return selectedDay.getTime() >= inTwoDays.getTime() ? true : false;
 }
-
-/* // Mirar si las condiciones de hora de reserva son necesarias
-// Devuelve el dia de posible alquiler dependiendo si es agencia o no, teniendo en cuenta las horas limites de reserva y el primer dia disponible dado por el servidor
-
-const getStartDate = ( isNotAgencia = true, firstDayAvailable ) => {
-
-  // Miramos primero si es agencia para comparar con las horas limite de reserva. 
-  // Para agencia, si es antes de las 13:00 se puede reservar el mismo dia
-  // Para quien no es agencia, si se reserva antes de las 07:00, se puede reservar el mismo dia. 
-  // En caso contrario, el primer deia disponible sera el dia siguiente
-
-  let today = new Date();
-  let currentHour = today.getHours();
-
-  let tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  
-  let availableDayByBookingHour = ''; 
-  console.log('hora', currentHour);
-  if (isNotAgencia) {
-    availableDayByBookingHour = currentHour < 20 ? formatDateToString(today) : formatDateToString(tomorrow);
-  } else {
-    availableDayByBookingHour = currentHour < 13 ? formatDateToString(today) : formatDateToString(tomorrow);
-  }
-  console.log(availableDayByBookingHour)
-  // Comparamos el dia calculado con el primer dia disponible calculado en el servidor.
-  // Si el que hemos calculado nosotros es mayor que el del servidor, devolvemos el nuestro, si no, el suyo
-
-  let availableFirstDayDate = new Date(`${firstDayAvailable}T00:00:00Z`);
-  let availableDayByBookingHourDate = new Date(`${availableDayByBookingHour}T00:00:00Z`);
-
-  console.log(availableDayByBookingHourDate.getTime())
-  console.log(availableFirstDayDate.getTime())
-    
-  return  availableDayByBookingHourDate.getTime() > availableFirstDayDate.getTime() ? availableDayByBookingHour : availableDayByBookingHour;
-
-}
-*/
-
-/*
-const formatDateToString = ( date = new Date() ) => {
-  
-  let year = date.getFullYear();
-  let month = date.getMonth();
-  month = month + 1 > 12 ? 1 : month + 1;
-  let day = date.getDate();
-
-  return `${year}-${month}-${day}`;
-
-}
-*/
-

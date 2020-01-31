@@ -3,7 +3,6 @@ import ApiPic from './../../apiPic/apiPic';
 
 
 // Actions para recuperación de datos de estaciones
-
 export const fetchEstacionesList = (bool, error) => {
   return {
       type: types.FETCH_ESTACIONES_LIST_SKI,
@@ -29,13 +28,31 @@ export const fetchEstacionesErr = (bool) => {
 
 
 export const fetchEstacionesSuccess = (items) => {
+  
+  let data = {};
+  
+  if ( items.hasSelectedData ) {
+    data = {
+      sectorId: items.sectorId,
+      fechaIni: items.fechaIni,
+      fechaFin: items.fechaFin,
+      selecetedTienda: items.tiendaId,
+      estacionesList: items.estacionesData,
+      hasSelectedData: items.hasSelectedData,
+      isNotAgencia: items.isNotAgencia,
+      hasForfaitSelected: items.hasForfaitSelected
+    }
+  } else {
+    data = {
+      estacionesList: items.estacionesData,
+      hasSelectedData: items.hasSelectedData,
+      isNotAgencia: items.isNotAgencia
+    }
+  }
+  
   return {
       type: types.FETCH_ESTACIONES_SUCCESS_SKI,
-      payload:{
-        isFetchingEstaciones: false,
-        isFetchingEstacionesErr: false,
-        estacionesList: items.estacionesData
-      }
+      payload: data
   };
 }
 
@@ -47,12 +64,16 @@ export const fetchEstacionesItems = () => {
       try {
         const estacionesList = await ApiPic.getSkiEstacionesList();
         const response = await estacionesList.json();
+        // console.log(response)
         if (response.estacionesData.length > 0) {
+          // console.log('Entra en el success', JSON.stringify(response));
           dispatch(fetchEstacionesSuccess(response));
         }else{
+          // console.log('length de estaciones data es 0');
           dispatch(fetchEstacionesErr(true))            
         }
       } catch (error) {
+        // console.log('falla el try');
         dispatch(fetchEstacionesErr(true));
         throw new Error(error);
       }
@@ -60,10 +81,7 @@ export const fetchEstacionesItems = () => {
   }
 }
 
-
-
 // Action del botón de mostrar/ocultar selector de Estaciones
-
 export const handleEstacionesButtonClick = (e) => {
   return {
     type: types.ESTACIONES_BUTTON_CLICK_SKI,
@@ -72,7 +90,6 @@ export const handleEstacionesButtonClick = (e) => {
 }
 
 // Action del cuando se selecciona una estación
-
 export const handleEstacionClick = (target) => {
   return {
     type: types.ESTACION_CLICK_SKI,
@@ -82,9 +99,7 @@ export const handleEstacionClick = (target) => {
   };
 }
 
-
 // Action para ocultar los errores
-
 export const handleHideErrors = () => {
   return {
     type: types.HIDE_ERRORS_SKI,
@@ -93,7 +108,6 @@ export const handleHideErrors = () => {
 }
 
 // Action para ocultar los errores
-
 export const handleShowErrors = (error) => {
   return {
     type: types.SHOW_ERRORS_SKI,
@@ -102,7 +116,6 @@ export const handleShowErrors = (error) => {
 }
 
 // Action para cuando se clicka sector
-
 export const handleSectorClick = (e) => {
   return {
     type: types.SECTOR_CLICK_SKI,
@@ -115,7 +128,6 @@ export const handleSectorClick = (e) => {
 }
 
 // Action para cuando se selecciona fecha de inicio
-
 export const handleStartDateSelection = (date) => {
   return {
     type: types.START_DATE_SELECTION_SKI,
@@ -126,7 +138,6 @@ export const handleStartDateSelection = (date) => {
 }
 
 // Action para cuando se selecciona fecha fin
-
 export const handleEndDateSelection = (date) => {
   return {
     type: types.END_DATE_SELECTION_SKI,
@@ -152,4 +163,14 @@ export const handleForfaitButtonClick = ( hasForfaitSelected = false ) => {
       hasForfaitSelected: hasForfaitSelected
     }
   }
+}
+
+export const changeToNoForfaitStation = (target) => {
+  return {
+    type: types.CHANGE_TO_NO_FORFAIT_STATION_OVERLAY,
+    payload: {
+      showChangeToNoForfaitOverlay: true,
+      noForfaitStation: target.value 
+    }
+  }    
 }

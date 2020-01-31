@@ -9,6 +9,7 @@ import MensajeBuscadorItem from './../../components/mensajeBuscadorItem/MensajeB
 import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loading from './../../components/loading/Loading';
+import ChangeToNoForfaitOverlay from './../../components/changeToNoForfaitOverlay/ChangeToNoForfaitOverlay';
 
 import { 
   fetchEstacionesItems, 
@@ -20,7 +21,8 @@ import {
   handleStartDateSelection,
   handleEndDateSelection,
   handleButtonClick,
-  handleForfaitButtonClick 
+  handleForfaitButtonClick,
+  changeToNoForfaitStation 
 } from './../../actions/ski/estaciones';
 
 import EstacionesSectoresSelector from '../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
@@ -44,6 +46,7 @@ class BuscadorSkiComponent extends Component{
     this.handleEndDateSelection = this.handleEndDateSelection.bind(this);
     this.handlePlaceHolderSubmit = this.handlePlaceHolderSubmit.bind(this);
     this.handleForfaitButtonCLick = this.handleForfaitButtonCLick.bind(this);
+    this.handleTonoForfaitStationOverlayCLick = this.handleTonoForfaitStationOverlayCLick.bind(this);
   }
 
   handleEstacionSectorSelector(){
@@ -52,8 +55,14 @@ class BuscadorSkiComponent extends Component{
   }
     
   handleEstacionClick(target){
-    this.hideErrors();
-    this.props.onEstacionClick(target);
+    // Miramos si tenia forfait seleccionado y si la nueva estacion seleccionada no tiene forfait
+    if ( this.props.UIX.hasForfaitSelected && this.props.estaciones.estacionesList.find( estacion => estacion.estacionId === target.value ).sectores[0].forfait === 0 ) {
+      // this.props.onEstacionClick(target);
+      this.props.onChangeToNoForfaitStation(target);
+    } else {
+      this.hideErrors();
+      this.props.onEstacionClick(target);
+    }  
   }
 
   hideErrors(){
@@ -95,8 +104,15 @@ class BuscadorSkiComponent extends Component{
   }
 
   handleForfaitButtonCLick(e){
-    console.log(e.target.value);
     this.props.onForfaitButtonClick(e.target.value);
+  }
+
+  handleTonoForfaitStationOverlayCLick(e){
+    if ( e.target.value ) {
+      let data = {};
+      data.value = this.props.UIX.noForfaitStation; 
+      this.props.onEstacionClick(data);
+    }
   }
 
   componentDidMount(){
@@ -217,6 +233,10 @@ class BuscadorSkiComponent extends Component{
           <ForfaitOverlay lang={lang} handleForfaitButtonCLick={this.handleForfaitButtonCLick} />
         } 
 
+        { UIX.showChangeToNoForfaitOverlay && 
+          <ChangeToNoForfaitOverlay lang={lang} handleTonoForfaitStationOverlayCLick={this.handleTonoForfaitStationOverlayCLick} />
+        } 
+
       </div>
     )
   }
@@ -242,7 +262,8 @@ const mapDispatchToProps = (dispatch) => {
     onStartDateSelection: (date) => dispatch(handleStartDateSelection(date)),
     onEndDateSelection: (date) => dispatch(handleEndDateSelection(date)),
     onButtonClick: () => dispatch(handleButtonClick()),
-    onForfaitButtonClick: (e) => dispatch(handleForfaitButtonClick(e))
+    onForfaitButtonClick: (e) => dispatch(handleForfaitButtonClick(e)),
+    onChangeToNoForfaitStation: (target) => dispatch(changeToNoForfaitStation(target))
   }
 }
 

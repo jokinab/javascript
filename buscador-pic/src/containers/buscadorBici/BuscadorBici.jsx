@@ -6,7 +6,7 @@ import DatePickerPlaceHolder from '../../components/datePickerPlaceHolder/DatePi
 import { LangsString } from '../../lang/Lang';
 import MensajeBuscadorItem from '../../components/mensajeBuscadorItem/MensajeBuscadorItem';
 // get our fontawesome imports
-import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt, faCalendarAlt, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loading from './../../components/loading/Loading';
 import { 
@@ -25,6 +25,7 @@ import {
 import EstacionesSectoresSelector from '../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
 import ForfaitOverlay from '../../components/forfaitOverlay/ForfaitOverlay';
 import CuantosDiasSelector from './../../components/cuantosDiasSelector/CuantosDiasSelector';
+
 class BuscadorBiciComponent extends Component{
   constructor(...args){
     super(...args);
@@ -167,7 +168,7 @@ class BuscadorBiciComponent extends Component{
               <div className='icon-input-wrap'>   
                 { ( !UIX.isSectorSelected || UIX.startDatePicker.selectedDate === '' ) && 
                   <DatePickerPlaceHolder 
-                    textPlace={LangsString.fechaFin[lang]} 
+                    textPlace={LangsString.cuantosDias[lang]} 
                     handlePlaceHolderClick={ () =>this.handlePlaceHolderEndDayClik(UIX.startDatePicker.isStartDateSelected) } 
                     classPlace='input-buscador' /> }
                 
@@ -179,7 +180,7 @@ class BuscadorBiciComponent extends Component{
                     selectionCuantosDias={ (e) => this.props.onCuantosDiasSelect(e) }
                   />   
                 }
-                <FontAwesomeIcon icon={faCalendarAlt} />
+                <FontAwesomeIcon icon={faAngleDown} />
               </div>  
             </div>  
             <div className='buscador-item'>    

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import DateTools from './../../lib/dateTools';
 
 const CuantosDiasSelector = (props) => {
   
@@ -14,40 +15,9 @@ const CuantosDiasSelector = (props) => {
     props.selectionCuantosDias(e.target.value);
   }
 
-  const getFormatedDate = (inNDays) => {
-
-    let month = inNDays.getMonth();
-    month = month + 1 > 12 ? 1 : month + 1;
-    month = month < 10 ? '0' + month : month;
-    
-    let day = inNDays.getDate();
-    day = parseInt(day) < 10 ? '0' + day : day;
-
-    return `${inNDays.getFullYear()}-${month}-${day}`;
-  }
-
-  const calcManydays = (bloquedDays = [], firstDay = '' ) => {
-    
-    let manyDaysAvailable = [];
-    
-    for (let i=0; i<12; i++) {
-
-      let inNDays = new Date(firstDay);
-      inNDays.setDate(inNDays.getDate() + i);
-      let formatedDate = getFormatedDate(inNDays);
-      if ( !bloquedDays.includes(formatedDate) ){
-        manyDaysAvailable.push(formatedDate);
-      } else {
-        break;
-      }
-    }
-    return manyDaysAvailable;
+  const manyDaysAvailable = DateTools.calcManydays(props.disabledDates, props.firstDaySelected);
   
-  }
-
-  const manyDaysAvailable = calcManydays(props.disabledDates, props.firstDaySelected);
-
-  if ( props.howManyDays > manyDaysAvailable.length ) {
+  if ( manyDaysAvailable.length !== 0 && props.howManyDays > manyDaysAvailable.length ) {
     props.selectionCuantosDias(1);
   }
 

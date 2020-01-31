@@ -49,9 +49,7 @@ export const buscador = (state = initialState, action) => {
           console.log(action.payload.data.userData)
           let newUserInfo = {
             ...state.userInfo,
-            ...action.payload.data.userData,
-            isFetchingUserInfo: action.payload.isFetchingUserInfo,
-            isFetchingUserInfoErr: action.payload.isFetchingUserInfoErr,
+            ...action.payload.data.userData
           }
           return {
             ...state,
@@ -59,7 +57,8 @@ export const buscador = (state = initialState, action) => {
             showSki: action.payload.data.showSki,
             showBici: action.payload.data.showBici,
             hasInitInfo: true,
-            userInfo: newUserInfo
+            userInfo: newUserInfo,
+            selected: action.payload.data.selected
           }  
         default:
           return state;

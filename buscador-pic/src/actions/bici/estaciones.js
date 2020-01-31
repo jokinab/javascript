@@ -29,13 +29,32 @@ export const fetchEstacionesErr = (bool) => {
 
 
 export const fetchEstacionesSuccess = (items) => {
+
+  let data = {};
+  
+  if ( items.hasSelectedData === 'true' ) {
+    // console.log( JSON.stringify(items));
+    data = {
+      sectorId: items.sectorId,
+      fechaIni: items.fechaIni,
+      fechaFin: items.fechaFin,
+      howManyDays: items.cuantosDias,
+      selecetedTienda: items.tiendaId,
+      estacionesList: items.estacionesData,
+      hasSelectedData: items.hasSelectedData,
+      isNotAgencia: items.isNotAgencia
+    }
+  } else {
+    data = {
+      estacionesList: items.estacionesData,
+      hasSelectedData: items.hasSelectedData,
+      isNotAgencia: items.isNotAgencia
+    }
+  }
+  
   return {
       type: types.FETCH_ESTACIONES_SUCCESS_BICI,
-      payload:{
-        isFetchingEstaciones: false,
-        isFetchingEstacionesErr: false,
-        estacionesList: items.estacionesData
-      }
+      payload: data
   };
 }
 

@@ -1,4 +1,5 @@
 import * as types from '../../actions/bici/actionTypes';
+import DateTools from './../../lib/dateTools';
 
 // Estado inicial de la aplicacion
 const initialState = {
@@ -24,7 +25,10 @@ const initialState = {
       selectedDate: '',
       isStartDateSelected: false
     },
-    howManyDays: 1,
+    endDatePicker: {
+      selectedDate: '',
+    },
+    howManyDays: 1
   },
   estaciones: {
     estacionesList: [],
@@ -40,6 +44,7 @@ export const buscadorBici = (state = initialState, action) => {
     
     let newUIX = {};
     let newStartDatePicker = {};
+    let newEndDatePicker = {};
     let newErrors = {};
 
     switch (action.type) {
@@ -62,11 +67,43 @@ export const buscadorBici = (state = initialState, action) => {
             }  
           }
         case types.FETCH_ESTACIONES_SUCCESS_BICI:
+
+          if ( action.payload.hasSelectedData === 'true' ) {
+            let startDateArr = action.payload.fechaIni.split('-');
+            let endDateArr = action.payload.fechaFin.split('-');
+            let selectedEstacion = action.payload.estacionesList.find( estacion => estacion.sectores.find( sector => sector.id === action.payload.sectorId) );
+            newUIX = {
+              ...state.UIX,
+              isNotAgencia: action.payload.isNotAgencia,
+              isSectorSelected: true,
+              selectedEstacionId: selectedEstacion.estacionId,
+              disabledDays: selectedEstacion.diasBloqueados,
+              selectedSector: action.payload.sectorId,
+              startDatePicker: {
+                selectedDate: new Date(startDateArr[0], parseInt(startDateArr[1])-1 < 0 ? '11' : (parseInt(startDateArr[1])-1).toString(), startDateArr[2]),
+                isStartDateSelected: true
+              },
+              endDatePicker: {
+                selectedDate:  new Date(endDateArr[0],parseInt(endDateArr[1])-1 < 0 ? '11' : (parseInt(endDateArr[1])-1).toString() ,endDateArr[2])
+              },
+              howManyDays: action.payload.howManyDays,
+              selectedTienda: action.payload.selecetedTienda,
+              placeholder: selectedEstacion.sectores.find( sector => sector.id === action.payload.sectorId).nombre
+            }
+            
+          } else {
+            newUIX = { 
+              ...state.UIX,
+              isNotAgencia: action.payload.isNotAgencia
+            };
+          }
+
           return {
             ...state,
+            UIX: newUIX,
             estaciones: {
               estacionesList: action.payload.estacionesList
-            }  
+            }   
           }
         case types.ESTACIONES_BUTTON_CLICK_BICI:
           newUIX = {
@@ -86,10 +123,26 @@ export const buscadorBici = (state = initialState, action) => {
 
           newUIX = {}; 
 
-          newStartDatePicker = {
-            ...state.UIX.startDatePicker,
-            selectedDate: new Date(firstDayAvailable)
-          }          
+          let endDay = new Date(state.UIX.startDatePicker.selectedDate);
+          endDay.setDate(endDay + state.UIX.howManyDays);
+
+          if ( state.UIX.startDatePicker.isStartDateSelected && !DateTools.hasBloquedDaysInSelected( state.UIX.startDatePicker.selectedDate, endDay, bloquedDays ) ) {
+            newStartDatePicker = {
+              ...state.UIX.startDatePicker,
+            }
+            newEndDatePicker = {
+              ...state.UIX.endDatePicker,
+            }  
+          } else {
+            newStartDatePicker = {
+              ...state.UIX.startDatePicker,
+              selectedDate: new Date(firstDayAvailable)
+            }
+            newEndDatePicker = {
+              ...state.UIX.endDatePicker,
+              selectedDate: new Date(firstDayAvailable)
+            }
+          }    
           
           let estacion = state.estaciones.estacionesList.find(estacion => estacion.estacionId === action.payload.estacionId);
           newUIX = {
@@ -100,9 +153,10 @@ export const buscadorBici = (state = initialState, action) => {
             isSectorSelected: true,
             disabledDays: bloquedDays,
             firstDayAvailable: new Date(firstDayAvailable),
-            startDatePicker: newStartDatePicker
-          }          
-          
+            startDatePicker: newStartDatePicker,
+            endDatePicker: newEndDatePicker
+          }
+
           return { 
             ...state,
             UIX: newUIX
@@ -199,3 +253,51 @@ export const buscadorBici = (state = initialState, action) => {
           return state;
     }
 }
+
+/*
+
+const formatDateToString = ( date = new Date() ) => {
+  
+  let year = date.getFullYear();
+  let month = date.getMonth();
+  month = month + 1 > 12 ? 1 : month + 1;
+  month = parseInt(month) < 10 ? '0'+month : month;
+  let day = date.getDate();
+  day = parseInt(day) < 10 ? '0'+day : day;
+
+  return `${year}-${month}-${day}`;
+
+}
+
+const hasBloquedDaysInSelected = ( startDate, endDate, bloquedDays ) => {
+  
+  let hasBloquedDay = false;
+  let day = new Date(startDate);
+  day.setHours(0,0,0,0);
+  let endDay = new Date(endDate);
+  endDay.setHours(0,0,0,0);
+  let firstLoop = true;
+
+  do{
+    
+    if ( firstLoop ) {
+      day.setDate(day.getDate()+0); 
+      firstLoop = false;
+    } else {
+      day.setDate(day.getDate() + 1); 
+    }
+    
+    if ( bloquedDays.includes(formatDateToString(day) ) ) {
+      hasBloquedDay = true;
+    }
+
+  }while( day.getTime() < endDay.getTime() && !hasBloquedDay );
+  
+  if ( bloquedDays.includes(formatDateToString(endDay) ) ) {
+    hasBloquedDay = true;
+  }
+
+  return hasBloquedDay;
+
+}
+*/
