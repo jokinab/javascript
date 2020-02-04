@@ -28,7 +28,8 @@ const initialState = {
     endDatePicker: {
       selectedDate: '',
     },
-    howManyDays: 1
+    howManyDays: 1,
+    displayAvailableStores: false
   },
   estaciones: {
     estacionesList: [],
@@ -68,16 +69,20 @@ export const buscadorBici = (state = initialState, action) => {
           }
         case types.FETCH_ESTACIONES_SUCCESS_BICI:
 
-          if ( action.payload.hasSelectedData === 'true' ) {
+          if ( action.payload.hasSelectedData ) {
+            
             let startDateArr = action.payload.fechaIni.split('-');
             let endDateArr = action.payload.fechaFin.split('-');
             let selectedEstacion = action.payload.estacionesList.find( estacion => estacion.sectores.find( sector => sector.id === action.payload.sectorId) );
+            let firstDayAvailable = action.payload.estacionesList.find( (estacion) =>  estacion.estacionId === selectedEstacion.estacionId ).primerDiaLibre;
+            
             newUIX = {
               ...state.UIX,
               isNotAgencia: action.payload.isNotAgencia,
               isSectorSelected: true,
               selectedEstacionId: selectedEstacion.estacionId,
               disabledDays: selectedEstacion.diasBloqueados,
+              firstDayAvailable: firstDayAvailable,
               selectedSector: action.payload.sectorId,
               startDatePicker: {
                 selectedDate: new Date(startDateArr[0], parseInt(startDateArr[1])-1 < 0 ? '11' : (parseInt(startDateArr[1])-1).toString(), startDateArr[2]),
@@ -88,7 +93,7 @@ export const buscadorBici = (state = initialState, action) => {
               },
               howManyDays: action.payload.howManyDays,
               selectedTienda: action.payload.selecetedTienda,
-              placeholder: selectedEstacion.sectores.find( sector => sector.id === action.payload.sectorId).nombre
+              placeholder: selectedEstacion.nombre
             }
             
           } else {
@@ -154,7 +159,8 @@ export const buscadorBici = (state = initialState, action) => {
             disabledDays: bloquedDays,
             firstDayAvailable: new Date(firstDayAvailable),
             startDatePicker: newStartDatePicker,
-            endDatePicker: newEndDatePicker
+            endDatePicker: newEndDatePicker,
+            displayAvailableStores: true
           }
 
           return { 

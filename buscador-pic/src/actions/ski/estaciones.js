@@ -40,13 +40,17 @@ export const fetchEstacionesSuccess = (items) => {
       estacionesList: items.estacionesData,
       hasSelectedData: items.hasSelectedData,
       isNotAgencia: items.isNotAgencia,
-      hasForfaitSelected: items.hasForfaitSelected
+      hasForfaitSelected: items.hasForfaitSelected,
+      linkToCesta: items.linkToCesta,
+      marquee: items.marquee
     }
   } else {
     data = {
       estacionesList: items.estacionesData,
       hasSelectedData: items.hasSelectedData,
-      isNotAgencia: items.isNotAgencia
+      isNotAgencia: items.isNotAgencia,
+      linkToCesta: items.linkToCesta,
+      marquee: items.marquee
     }
   }
   
@@ -150,9 +154,7 @@ export const handleEndDateSelection = (date) => {
 export const handleButtonClick = () => {
   return {
     type: types.SKY_SUBMIT_CLICK_SKI,
-    payload: {
-      
-    }
+    payload: {}
   }
 }
 
@@ -160,7 +162,7 @@ export const handleForfaitButtonClick = ( hasForfaitSelected = false ) => {
   return {
     type: types.FORFAIT_BUTTON_CLICK_SKI,
     payload: {
-      hasForfaitSelected: hasForfaitSelected
+      hasForfaitSelected: ( hasForfaitSelected === 'true' || hasForfaitSelected === true ) ? true : false
     }
   }
 }
@@ -172,5 +174,12 @@ export const changeToNoForfaitStation = (target) => {
       showChangeToNoForfaitOverlay: true,
       noForfaitStation: target.value 
     }
+  }    
+}
+
+export const closeChangeStationOverlay = () => {
+  return {
+    type: types.CLOSE_TO_NO_FORFAIT_STATION_OVERLAY,
+    payload: {}
   }    
 }

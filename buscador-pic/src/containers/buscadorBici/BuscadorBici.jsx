@@ -20,11 +20,14 @@ import {
   handleEndDateSelection,
   handleButtonClick,
   handleForfaitButtonClick,
-  handleCuantosDiasSelection 
+  handleCuantosDiasSelection,
+  fetchTiendasFormEstacion 
 } from '../../actions/bici/estaciones';
 import EstacionesSectoresSelector from '../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
 import ForfaitOverlay from '../../components/forfaitOverlay/ForfaitOverlay';
 import CuantosDiasSelector from './../../components/cuantosDiasSelector/CuantosDiasSelector';
+import DateTools from './../../lib/dateTools';
+import ApiPic from './../../apiPic/apiPic';
 
 class BuscadorBiciComponent extends Component{
   constructor(...args){
@@ -101,9 +104,37 @@ class BuscadorBiciComponent extends Component{
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
-    if (nextProps.UIX.sendData) {
-      alert('Mandar datos');
+
+    if ( nextProps.UIX.displayAvailableStores ) {
+
+      let estacionId1 = nextProps.UIX.selectedEstacionId;
+      let estacion1 = nextProps.estaciones.estacionesList.find( estacion => estacion.estacionId === nextProps.UIX.selectedEstacionId );
+      let sector1 = estacion1.sectores[0];
+
+      nextProps.onDisplayShopsFromStation( sector1.tiendas[0].id, sector1.id, estacionId1 );
+
     }
+
+    if (nextProps.UIX.sendData) {  
+
+      let estacionId = nextProps.UIX.selectedEstacionId;
+      let estacion = nextProps.estaciones.estacionesList.find( estacion => estacion.estacionId === nextProps.UIX.selectedEstacionId );
+      let sector = estacion.sectores[0];
+
+      // console.log(`Estacion seleccionada: ${estacion}`);
+      // console.log(`Sector seleccionado: ${JSON.stringify(sector)}`);
+      
+      const dataToSend = {
+        fecha_inicio: DateTools.formatDateToString(nextProps.UIX.startDatePicker.selectedDate, 'es'),
+        cuantos_dias: nextProps.UIX.howManyDays,
+        sector_id: sector.id,
+        store_id: sector.tiendas[0].id, // poner la primera tienda del sector elegido
+        estacionId: estacionId
+      };
+
+      ApiPic.sendBiciData(dataToSend);
+    
+    }  
     return null;
   }
 
@@ -208,6 +239,8 @@ class BuscadorBiciComponent extends Component{
           <ForfaitOverlay lang={lang} handleForfaitButtonCLick={this.handleForfaitButtonCLick} />
         } 
 
+
+
       </div>
     )
   }
@@ -234,7 +267,8 @@ const mapDispatchToProps = (dispatch) => {
     onEndDateSelection: (date) => dispatch(handleEndDateSelection(date)),
     onButtonClick: () => dispatch(handleButtonClick()),
     onForfaitButtonClick: (e) => dispatch(handleForfaitButtonClick(e)),
-    onCuantosDiasSelect: (e) => dispatch(handleCuantosDiasSelection(e) )
+    onCuantosDiasSelect: (e) => dispatch(handleCuantosDiasSelection(e) ),
+    onDisplayShopsFromStation: (e,u,j) => dispatch(fetchTiendasFormEstacion(e,u,j) )
   }
 }
 

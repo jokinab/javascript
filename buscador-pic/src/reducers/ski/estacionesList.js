@@ -12,7 +12,7 @@ const initialState = {
     placeholder: '', 
     selectedSector: -1,
     disabledDays: [],
-    selecetedTienda: -1,
+    selectedTienda: -1,
     firstDayAvailable: '',
     showForfaitOverlay: false,
     sendData: false,
@@ -31,7 +31,8 @@ const initialState = {
       selectedDate: ''
     },
     hasForfaitSelected: false,
-    noForfaitStation: '-1'
+    noForfaitStation: '-1',
+    linkToCesta: ''
   },
   estaciones: {
     estacionesList: [],
@@ -72,15 +73,19 @@ export const buscadorSki = (state = initialState, action) => {
         case types.FETCH_ESTACIONES_SUCCESS_SKI:
           
           if ( action.payload.hasSelectedData ) {
+
             let startDateArr = action.payload.fechaIni.split('-');
             let endDateArr = action.payload.fechaFin.split('-');
             let selectedEstacion = action.payload.estacionesList.find( estacion => estacion.sectores.find( sector => sector.id === action.payload.sectorId) );
+            let firstDayAvailable = action.payload.estacionesList.find( (estacion) =>  estacion.estacionId === selectedEstacion.estacionId ).primerDiaLibre;
+
             newUIX = {
               ...state.UIX,
               isNotAgencia: action.payload.isNotAgencia,
               isSectorSelected: true,
               selectedEstacionId: selectedEstacion.estacionId,
               disabledDays: selectedEstacion.diasBloqueados,
+              firstDayAvailable: firstDayAvailable,
               selectedSector: action.payload.sectorId,
               startDatePicker: {
                 selectedDate: new Date(startDateArr[0], parseInt(startDateArr[1])-1 < 0 ? '11' : (parseInt(startDateArr[1])-1).toString(), startDateArr[2]),
@@ -92,14 +97,18 @@ export const buscadorSki = (state = initialState, action) => {
               selectedTienda: action.payload.selecetedTienda,
               placeholder: selectedEstacion.sectores.find( sector => sector.id === action.payload.sectorId).nombre,
               hasForfaitSelected: action.payload.hasForfaitSelected ? true : false,
-              hasSelectedData: action.payload.hasSelectedData
+              hasSelectedData: action.payload.hasSelectedData,
+              linkToCesta: action.payload.linkToCesta,
+              marquee: action.payload.marquee
+
             }
             
           } else {
             newUIX = { 
               ...state.UIX,
               isNotAgencia: action.payload.isNotAgencia,
-              hasSelectedData: action.payload.hasSelectedData
+              hasSelectedData: action.payload.hasSelectedData,
+              marquee: action.payload.marquee
             };
           }
           
@@ -263,8 +272,10 @@ export const buscadorSki = (state = initialState, action) => {
                 UIX: newUIX
               }  
             case types.SKY_SUBMIT_CLICK_SKI: 
-              if ( state.estaciones.estacionesList.find( estacion => estacion.estacionId === state.UIX.selectedEstacionId ).sectores[0].forfait === 1  && 
-                   displayForfaitOverlay(state.UIX.startDatePicker.selectedDate) ) {
+
+              const stationHasForfait = state.estaciones.estacionesList.find( estacion => estacion.estacionId === state.UIX.selectedEstacionId ).sectores[0].forfait === 1 ? true : false;
+
+              if ( state.UIX.isNotAgencia && stationHasForfait && DateTools.isInDateToSelectForfait(state.UIX.startDatePicker.selectedDate, state.UIX.endDatePicker.selectedDate)) {
                 newUIX = {
                   ...state.UIX,
                   showForfaitOverlay: true,
@@ -284,7 +295,8 @@ export const buscadorSki = (state = initialState, action) => {
             case types.FORFAIT_BUTTON_CLICK_SKI:
               newUIX = {
                 ...state.UIX,
-                hasForfaitSelected: action.payload.hasForfaitSelected 
+                hasForfaitSelected: action.payload.hasForfaitSelected,
+                sendData:true
               }
               return {
                 ...state, 
@@ -299,19 +311,19 @@ export const buscadorSki = (state = initialState, action) => {
               return {
                 ...state,
                 UIX: newUIX
-              }        
+              }    
+            case types.CLOSE_TO_NO_FORFAIT_STATION_OVERLAY:
+              newUIX = {
+                ...state.UIX,
+                showChangeToNoForfaitOverlay: false,
+                displaySectoresFromEstacion: '-1',
+                displayEstaciones: false
+              }
+              return {
+                ...state,
+                UIX: newUIX
+              }      
         default:
           return state;
     }
-}
-
-
-const displayForfaitOverlay = (selectedDate) => {
-  
-  let selectedDay = new Date(selectedDate);
-  let inTwoDays = new Date();
-  inTwoDays.setDate(inTwoDays.getDate() + 2);
-  inTwoDays.setHours(0,0,0,0);
-  
-  return selectedDay.getTime() >= inTwoDays.getTime() ? true : false;
 }

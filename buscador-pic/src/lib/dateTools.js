@@ -19,7 +19,7 @@ export default class DateTools {
   
   }  
 
-  static formatDateToString ( date = new Date() ) {
+  static formatDateToString ( date = new Date(), format = 'en' ) {
     
     let year = date.getFullYear();
     let month = date.getMonth();
@@ -28,8 +28,12 @@ export default class DateTools {
     let day = date.getDate();
     day = parseInt(day) < 10 ? '0'+day : day;
 
-    return `${year}-${month}-${day}`;
-
+    if ( format === 'es' ) {
+      return `${day}-${month}-${year}`;
+    } else {
+      return `${year}-${month}-${day}`;
+    }
+    
   }
 
   static hasBloquedDaysInSelected( startDate, endDate, bloquedDays ) {
@@ -61,6 +65,28 @@ export default class DateTools {
     }
 
     return hasBloquedDay;
+
+  }
+
+  static isInDateToSelectForfait( selectedStartDate = new Date(), selectedEndDate = new Date() ) {
+
+    let today = new Date();
+    today.setHours(0,0,0,0);
+    today.setDate(today.getDate() + 2);
+    
+    let startDate = new Date( selectedStartDate );
+    startDate.setHours(0,0,0,0);
+
+    let startDateOk = startDate.getTime() >= today.getTime() ? true : false;
+
+    today.setDate(today.getDate() + 10);
+
+    let endDate = new Date( selectedEndDate );
+    endDate.setHours(0,0,0,0);
+
+    let endDateOk = endDate.getTime() < today.getTime() ? true : false;
+
+    return ( startDateOk && endDateOk ) ? true : false;
 
   }
 

@@ -148,5 +148,41 @@ export const LangsString = {
     "ca": "Introdueix Quants dies",
     "en": "Enter how many days",
     "fr": "Entrez combien de jours"
-  }                          
+  },
+  atencion: {
+    "es": "¡Atención!",
+    "ca": "Atenció!",
+    "en": "Attention!",
+    "fr": "Attention!"
+  },
+  previamtenteForfait: {
+    "es": "Previamente, has seleccionado alquilar con Forfait.",
+    "ca": "Prèviament, has seleccionat llogar amb Forfet.",
+    "en": "Previously, you have selected to rent with Forfait.",
+    "fr": "Auparavant, vous avez choisi de louer avec Forfait."
+  },
+  queDeseas: {
+    "es": "La estación que acabas de seleccionar no dispone de alquiler con Forfait. ¿Qúe deseas hacer?",
+    "ca": "L'estació que acabes de seleccionar no disposa de lloguer amb Forfet. Què vols fer?",
+    "en": "The station you just selected does not have a rental with Ski Pass. What do you want to do?",
+    "fr": "The station you just selected does not have a rental with Ski Pass. What do you want to do?"
+  },
+  irACesta: {
+    "es": "Ir a cesta",
+    "ca": "Anar a cistella",
+    "en": "Go to cart",
+    "fr": "Aller au panier"
+  },
+  cambiarTxt: {
+    "es": "Cambiar",
+    "ca": "Canviar",
+    "en": "Change",
+    "fr": "Changer"
+  },
+  noCambiarTxt: {
+    "es": "No cambiar",
+    "ca": "No canviar",
+    "en": "Do not change",
+    "fr": "Ne change pas"
+  }          
 } 

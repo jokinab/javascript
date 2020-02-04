@@ -10,6 +10,9 @@ import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loading from './../../components/loading/Loading';
 import ChangeToNoForfaitOverlay from './../../components/changeToNoForfaitOverlay/ChangeToNoForfaitOverlay';
+import DateTools from './../../lib/dateTools';
+import ApiPic from './../../apiPic/apiPic';
+import Marquee from './../../components/marquee/Marquee';
 
 import { 
   fetchEstacionesItems, 
@@ -22,7 +25,8 @@ import {
   handleEndDateSelection,
   handleButtonClick,
   handleForfaitButtonClick,
-  changeToNoForfaitStation 
+  changeToNoForfaitStation,
+  closeChangeStationOverlay
 } from './../../actions/ski/estaciones';
 
 import EstacionesSectoresSelector from '../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
@@ -55,14 +59,16 @@ class BuscadorSkiComponent extends Component{
   }
     
   handleEstacionClick(target){
+    
+    this.hideErrors();
+    
     // Miramos si tenia forfait seleccionado y si la nueva estacion seleccionada no tiene forfait
-    if ( this.props.UIX.hasForfaitSelected && this.props.estaciones.estacionesList.find( estacion => estacion.estacionId === target.value ).sectores[0].forfait === 0 ) {
-      // this.props.onEstacionClick(target);
+    if ( this.props.UIX.hasForfaitSelected && this.props.estaciones.estacionesList.find( estacion => estacion.estacionId === target.value ).sectores[0].forfait === 0 && this.props.UIX.isNotAgencia ) {
       this.props.onChangeToNoForfaitStation(target);
     } else {
-      this.hideErrors();
       this.props.onEstacionClick(target);
-    }  
+    }
+
   }
 
   hideErrors(){
@@ -108,10 +114,13 @@ class BuscadorSkiComponent extends Component{
   }
 
   handleTonoForfaitStationOverlayCLick(e){
-    if ( e.target.value ) {
+
+    if ( e.target.value === 'true' ) {
       let data = {};
       data.value = this.props.UIX.noForfaitStation; 
       this.props.onEstacionClick(data);
+    } else {
+      this.props.onCloseChangeStationOverlay();
     }
   }
 
@@ -122,9 +131,47 @@ class BuscadorSkiComponent extends Component{
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
+    
     if (nextProps.UIX.sendData) {
-      alert('Mandar datos');
+
+      let dataToSend = {};
+        
+      if ( nextProps.UIX.isNotAgencia ) {
+
+        const estacion = nextProps.estaciones.estacionesList.find( estacion => estacion.sectores.find( sector => sector.id === nextProps.UIX.selectedSector) );
+        const sector = estacion.sectores.find( sector => sector.id === nextProps.UIX.selectedSector);
+        const tienda = ( sector.tiendas.find( tienda => tienda.id ===  nextProps.UIX.selectedTienda ) === undefined ) ? sector.tiendas[0].id : nextProps.UIX.selectedTienda;
+        
+        dataToSend = {
+          fecha_inicio: DateTools.formatDateToString(nextProps.UIX.startDatePicker.selectedDate, 'es'),
+          fecha_fin: DateTools.formatDateToString(nextProps.UIX.endDatePicker.selectedDate, 'es'),
+          sector_id: nextProps.UIX.selectedSector,
+          store_id: tienda, // poner la primera tienda del sector elegido
+          estacionId: estacion.estacionId,
+          forfait_select: ( nextProps.UIX.hasForfaitSelected === "true" || nextProps.UIX.hasForfaitSelected ) ? true : false
+        };
+
+      } else {
+
+        const estacion = nextProps.estaciones.estacionesList.find( estacion => estacion.estacionId === nextProps.UIX.selectedEstacionId);
+        const sector = estacion.sectores[0];
+        const tienda = sector.tiendas[0];
+        
+        dataToSend = {
+          fecha_inicio: DateTools.formatDateToString(nextProps.UIX.startDatePicker.selectedDate, 'es'),
+          fecha_fin: DateTools.formatDateToString(nextProps.UIX.endDatePicker.selectedDate, 'es'),
+          sector_id: sector.id,
+          store_id: tienda.id, // poner la primera tienda del sector elegido
+          estacionId: estacion.estacionId,
+          forfait_select: false
+        };
+
+      }  
+
+      ApiPic.sendSkiData(dataToSend);
+
     }
+
     return null;
   }
 
@@ -133,7 +180,7 @@ class BuscadorSkiComponent extends Component{
     let UIX = this.props.UIX;
     let lang = this.props.lang;
     let estacionesList = this.props.estaciones.estacionesList;
-
+    
     return (
       <div className="buscador-container">
         
@@ -234,8 +281,10 @@ class BuscadorSkiComponent extends Component{
         } 
 
         { UIX.showChangeToNoForfaitOverlay && 
-          <ChangeToNoForfaitOverlay lang={lang} handleTonoForfaitStationOverlayCLick={this.handleTonoForfaitStationOverlayCLick} />
+          <ChangeToNoForfaitOverlay lang={lang} handleTonoForfaitStationOverlayCLick={this.handleTonoForfaitStationOverlayCLick} linkToCesta={UIX.linkToCesta} />
         } 
+
+        { UIX.marquee !== '' && <Marquee text={UIX.marquee} /> }  
 
       </div>
     )
@@ -263,7 +312,8 @@ const mapDispatchToProps = (dispatch) => {
     onEndDateSelection: (date) => dispatch(handleEndDateSelection(date)),
     onButtonClick: () => dispatch(handleButtonClick()),
     onForfaitButtonClick: (e) => dispatch(handleForfaitButtonClick(e)),
-    onChangeToNoForfaitStation: (target) => dispatch(changeToNoForfaitStation(target))
+    onChangeToNoForfaitStation: (target) => dispatch(changeToNoForfaitStation(target)),
+    onCloseChangeStationOverlay: () => dispatch(closeChangeStationOverlay())
   }
 }
 
