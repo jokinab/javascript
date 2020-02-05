@@ -25,20 +25,20 @@ const ForfaitOverlay = (props) => {
           <ul className='forfait-list'>
             <li className='forfait-list-item'>
               <img src={forfaitSki} className='forfait-item-img' alt='' />
-              <span className='forfait-item-text'>{LangsString.forfaitListItemFirst[props.lang]}</span>
+              <span className='forfait-item-text' dangerouslySetInnerHTML={{ __html: `${LangsString.forfaitListItemFirst[props.lang]}` }} />  
             </li>
             <li className='forfait-list-item'>
               <img src={forfaitAhorra} className='forfait-item-img' alt='' />
-              <span className='forfait-item-text'>{LangsString.forfaitListItemSecond[props.lang]}</span>
+              <span className='forfait-item-text' dangerouslySetInnerHTML={{ __html: `${LangsString.forfaitListItemSecond[props.lang]}` }} />  
             </li>
             <li className='forfait-list-item'>
               <img src={forfaitdescuento} className='forfait-item-img' alt='' />
-              <span className='forfait-item-text'>{LangsString.forfaitListItemThird[props.lang]}</span>
+              <span className='forfait-item-text' dangerouslySetInnerHTML={{ __html: `${LangsString.forfaitListItemThird[props.lang]}` }} />  
             </li>
           </ul>
-          <h3 className='forfait-message-2'>{LangsString.forfaitSecondMessage[props.lang]}</h3>
-          <p className='forfait-ext-3'>{LangsString.forfaitLastMessageFirst[props.lang]}</p>
-          <p className='forfait-ext-3'>{LangsString.forfaitLastMessageSecond[props.lang]}</p>
+          <h3 className='forfait-message-2' dangerouslySetInnerHTML={{ __html: `${LangsString.forfaitSecondMessage[props.lang]}` }} />
+          <p className='forfait-ext-3' dangerouslySetInnerHTML={{ __html: `${LangsString.forfaitLastMessageFirst[props.lang]}` }} />
+          <p className='forfait-ext-3' dangerouslySetInnerHTML={{ __html: `${LangsString.forfaitLastMessageSecond[props.lang]}` }} />
         </div>
         <div className='forfait-buttons'>
           <button className='no-interest forfait-button' value={false} onClick={ (e) => props.handleForfaitButtonCLick(e) } >

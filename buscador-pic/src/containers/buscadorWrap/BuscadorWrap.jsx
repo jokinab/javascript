@@ -10,12 +10,14 @@ import BuscadorSki from '../buscadorSki/BuscadorSki';
 import BuscadorBici from '../buscadorBici/BuscadorBici';
 import { SelectorSkiBici } from '../../components/selectorSkiBici/SelectorSkiBici';
 import Loading from './../../components/loading/Loading';
+import TiendasFromEstacion from './../../components/tiendasFromEstacion/TiendasFromEstacion';
 
 class BuscadorWrapComponent extends Component{
   constructor(...args) {
     super(...args);
     this.state = {
-      hasUserInfo: false
+      hasUserInfo: false,
+      estacion: {}
     }
     this.handleSelection = this.handleSelection.bind(this);
   } 
@@ -30,6 +32,17 @@ class BuscadorWrapComponent extends Component{
       this.props.onFetchUserInfo();
   }
 
+
+  static getDerivedStateFromProps(nextProps, prevState){
+    // console.log(`Esto es ->>> ${JSON.stringify(nextProps.estacion)}`);
+    return {
+      hasUserInfo: false,
+      estacion: nextProps.estacion
+    }
+
+  }
+
+
   render() {
 
     let activeSki = ( this.props.selected === 'ski' || this.props.selected === undefined ) ? true : false;
@@ -43,6 +56,8 @@ class BuscadorWrapComponent extends Component{
           { this.props.hasInitInfo && this.props.showSki && activeSki && <BuscadorSki /> }
           { this.props.hasInitInfo && this.props.showBici && activeBici && <BuscadorBici /> }       
         </div>
+        { activeBici && typeof this.state.estacion !== 'undefined' && this.props.showBici && <TiendasFromEstacion estacion={this.state.estacion} lang={this.props.language} /> }
+
       </div>
     )
   }  
@@ -52,7 +67,8 @@ class BuscadorWrapComponent extends Component{
 // Mapeamos el estado a las propiedades.
 const mapStateToProps = (state) => {
   return {
-    ...state.buscador
+    ...state.buscador,
+    estacion: typeof state.buscadorBici !== 'undefined' ? state.buscadorBici.estaciones.estacionesList.find( estacion => estacion.estacionId === state.buscadorBici.UIX.selectedEstacionId ) : false
   }
 }
 

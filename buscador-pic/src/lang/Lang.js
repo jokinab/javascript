@@ -184,5 +184,61 @@ export const LangsString = {
     "ca": "No canviar",
     "en": "Do not change",
     "fr": "Ne change pas"
-  }          
+  },
+  direccionTxt: {
+    "es": "Dirección: ",
+    "ca": "Direcció: ",
+    "en": "Address: ",
+    "fr": "Adresse: "
+  },
+  verEnGoogleTxt: {
+    "es": "Ver en Google Maps",
+    "ca": "Veure a Google Maps",
+    "en": "See in Google Maps",
+    "fr": "Voir dans Google Maps"
+  },
+  telefonoTxt: {
+    "es": "Teléfono: ",
+    "ca": "Telèfon: ",
+    "en": "Phone: ",
+    "fr": "Téléphone: "
+  },
+  emailTxt: {
+    "es": "E-mail: ",
+    "ca": "E-mail: ",
+    "en": "E-mail: ",
+    "fr": "E-mail: "
+  },
+  horariosTxt: {
+    "es": "Horarios: ",
+    "ca": "Horaris: ",
+    "en": "Schedule: ",
+    "fr": "Horaires: "
+  },
+  tiendasDeTxt: {
+    "es": "TIENDAS DE  %s DONDE PODRÁS RECOGER TU MATERIAL",
+    "ca": "BOTIGUES DE %s ON PODRÀS RECOLLIR EL TEU MATERIAL",
+    "en": "SHOPS OF %s WHERE YOU CAN COLLECT YOUR MATERIAL",
+    "fr": "MAGASINS DE %s O YOU VOUS POUVEZ RECUEILLIR VOTRE MATÉRIEL"
+  },
+  tiendasDeTxt2: {
+    "es": "Los datos de las tiendas te los enviaremos por mail en un bono al confirmar tu reserva de alquiler así  que no te preocupes ahora de apuntar los datos",
+    "ca": "Les dades de les botigues te'ls enviarem per mail a un bo a l'confirmar la teva reserva de lloguer així que no hi fa d'apuntar les dades",
+    "en": "We will send you the information of the stores by email in a voucher when confirming your rental reservation so do not worry now about entering the data",
+    "fr": "Nous vous enverrons les informations des magasins par e-mail dans un bon lors de la confirmation de votre réservation de location alors ne vous inquiétez pas maintenant de la saisie des données"
+  },
+  tiendasDeTxt3: {
+    "es": "Alquiler de bicis de descenso, enduro y e.bikes",
+    "ca": "Lloguer de bicicletes de descens, enduro i e.bikes",
+    "en": "Rent of downhill, enduro and e.bikes bikes",
+    "fr": "Location de vélos de descente, enduro et e.bikes"
+  },
+  tiendasDeTxt4: {
+    "es": "El Bike Park está cerrado durante toda la temporada",
+    "ca": "The Bike Park is closed throughout the season",
+    "en": "The Bike Park is closed throughout the season",
+    "fr": "Le Bike Park est fermé toute la saison"
+  }                        
+  
+  
 } 

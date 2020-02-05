@@ -29,7 +29,8 @@ const initialState = {
       selectedDate: '',
     },
     howManyDays: 1,
-    displayAvailableStores: false
+    displayAvailableStores: false,
+    showTiendasFrom: false
   },
   estaciones: {
     estacionesList: [],
@@ -160,7 +161,8 @@ export const buscadorBici = (state = initialState, action) => {
             firstDayAvailable: new Date(firstDayAvailable),
             startDatePicker: newStartDatePicker,
             endDatePicker: newEndDatePicker,
-            displayAvailableStores: true
+            displayAvailableStores: true,
+            showTiendasFrom: true
           }
 
           return { 

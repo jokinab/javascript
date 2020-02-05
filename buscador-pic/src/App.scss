@@ -499,3 +499,137 @@ img{
 	to{  @include transform (translateX(-100%))  }
 }
 
+
+/****** Ficha Tienda *******/
+
+
+.tiendas-wrap-container{
+  margin:40px auto;
+	width:1200px;
+	max-width:96%;
+}
+
+.tiendas-from-estacion-wrap{
+  padding:10px;
+}
+
+.tiendas-ficha-message{
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size:26px;
+  text-transform: uppercase;
+}
+
+.tiendas-ficha-message-sub{
+  margin-bottom: 20px;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+.tiendas-from-estacion-cnt{
+  @include flexbox();
+  @include flex-wrap(wrap);
+  @include justify-content(flex-start);  
+}
+
+.tienda-ficha-item{
+	margin:10px;
+	width:380px;
+	max-width:100%;
+	min-width:280px;
+	border:1px solid $gray-border;
+    background:white;
+}
+
+.tienda-ficha-nombre{
+    padding: 6px 10px;
+    margin: 0;
+    color: white;
+    background: $gris-tienda-title-bg;
+    font-weight: 100;
+    font-size: 18px;
+    .fa-map-marker{
+        margin-right:5px;
+    }
+}
+
+.tienda-ficha-item-main-image{
+	position:relative;
+	height:0;
+	padding-bottom:56%;
+	overflow:hidden;
+	margin-bottom: 7px;
+	img{
+		position:absolute;
+		top:50%;
+		left:50%;
+		display:block;
+		transform:translateY(-50%) translateX(-50%);
+	}
+}
+
+.tienda-ficha-item-rest-img{
+  @include flexbox();
+  @include flex-wrap(wrap);
+  @include justify-content(flex-start);
+  max-height:80px;
+	img{
+		display:block;
+		width:32%;
+		height:auto;
+		margin-right:2%;
+        max-height:80px;
+		&:nth-child(3n){
+			margin-right:0;
+		}
+	}
+}
+
+.tienda-ficha-item-ftr{
+	font-size: 12px;
+    padding: 20px 18px;
+    font-weight: 500;
+}
+
+.tienda-ficha-message-wrap{
+	max-width: 98%;
+  margin: 0 auto;
+  width: 100%;
+	color: $negro-sect-tit;
+}
+
+.tienda-ficha-message{
+	font-size: 26px;
+	margin-bottom:20px;
+	font-weight:500;
+	strong{
+	    font-weight: 600;
+	    text-transform:uppercase;
+	}
+}
+
+.tienda-ficha-message-sub{
+	font-size:20px;
+	margin-bottom:20px;
+  font-weight: 300;
+}
+
+.tienda-ficha-prop-item{
+    position:relative;
+    padding-left: 30px;
+    color: $gris-buttons;
+    text-align:left;
+    a{
+        color:$red;
+    }
+    &:before{
+        position: absolute;
+        display:block;
+        top: 4px;
+        left: 6px;
+        font-family: FontAwesome;
+        content:"";
+    }
+}
+
+

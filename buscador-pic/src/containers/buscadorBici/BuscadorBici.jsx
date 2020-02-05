@@ -20,8 +20,7 @@ import {
   handleEndDateSelection,
   handleButtonClick,
   handleForfaitButtonClick,
-  handleCuantosDiasSelection,
-  fetchTiendasFormEstacion 
+  handleCuantosDiasSelection
 } from '../../actions/bici/estaciones';
 import EstacionesSectoresSelector from '../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
 import ForfaitOverlay from '../../components/forfaitOverlay/ForfaitOverlay';
@@ -104,16 +103,6 @@ class BuscadorBiciComponent extends Component{
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
-
-    if ( nextProps.UIX.displayAvailableStores ) {
-
-      let estacionId1 = nextProps.UIX.selectedEstacionId;
-      let estacion1 = nextProps.estaciones.estacionesList.find( estacion => estacion.estacionId === nextProps.UIX.selectedEstacionId );
-      let sector1 = estacion1.sectores[0];
-
-      nextProps.onDisplayShopsFromStation( sector1.tiendas[0].id, sector1.id, estacionId1 );
-
-    }
 
     if (nextProps.UIX.sendData) {  
 
@@ -239,8 +228,6 @@ class BuscadorBiciComponent extends Component{
           <ForfaitOverlay lang={lang} handleForfaitButtonCLick={this.handleForfaitButtonCLick} />
         } 
 
-
-
       </div>
     )
   }
@@ -267,8 +254,7 @@ const mapDispatchToProps = (dispatch) => {
     onEndDateSelection: (date) => dispatch(handleEndDateSelection(date)),
     onButtonClick: () => dispatch(handleButtonClick()),
     onForfaitButtonClick: (e) => dispatch(handleForfaitButtonClick(e)),
-    onCuantosDiasSelect: (e) => dispatch(handleCuantosDiasSelection(e) ),
-    onDisplayShopsFromStation: (e,u,j) => dispatch(fetchTiendasFormEstacion(e,u,j) )
+    onCuantosDiasSelect: (e) => dispatch(handleCuantosDiasSelection(e) )
   }
 }
 
