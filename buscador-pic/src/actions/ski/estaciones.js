@@ -31,14 +31,14 @@ export const fetchEstacionesSuccess = (items) => {
   
   let data = {};
   
-  if ( items.hasSelectedData ) {
+  if ( items.hasSelectedData === true || items.hasSelectedData === "true" ) {
     data = {
       sectorId: items.sectorId,
       fechaIni: items.fechaIni,
       fechaFin: items.fechaFin,
       selecetedTienda: items.tiendaId,
       estacionesList: items.estacionesData,
-      hasSelectedData: items.hasSelectedData,
+      hasSelectedData: true,
       isNotAgencia: items.isNotAgencia,
       hasForfaitSelected: items.hasForfaitSelected,
       linkToCesta: items.linkToCesta,
@@ -47,13 +47,12 @@ export const fetchEstacionesSuccess = (items) => {
   } else {
     data = {
       estacionesList: items.estacionesData,
-      hasSelectedData: items.hasSelectedData,
+      hasSelectedData: false,
       isNotAgencia: items.isNotAgencia,
       linkToCesta: items.linkToCesta,
       marquee: items.marquee
     }
   }
-  
   return {
       type: types.FETCH_ESTACIONES_SUCCESS_SKI,
       payload: data
@@ -68,7 +67,7 @@ export const fetchEstacionesItems = () => {
       try {
         const estacionesList = await ApiPic.getSkiEstacionesList();
         const response = await estacionesList.json();
-        // console.log(response)
+        console.log(response)
         if (response.estacionesData.length > 0) {
           // console.log('Entra en el success', JSON.stringify(response));
           dispatch(fetchEstacionesSuccess(response));

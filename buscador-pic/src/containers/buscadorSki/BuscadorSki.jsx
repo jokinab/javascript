@@ -148,7 +148,7 @@ class BuscadorSkiComponent extends Component{
           sector_id: nextProps.UIX.selectedSector,
           store_id: tienda, // poner la primera tienda del sector elegido
           estacionId: estacion.estacionId,
-          forfait_select: ( nextProps.UIX.hasForfaitSelected === "true" || nextProps.UIX.hasForfaitSelected ) ? true : false
+          forfait_select: ( nextProps.UIX.hasForfaitSelected === "true" || nextProps.UIX.hasForfaitSelected === true ) ? true : false
         };
 
       } else {

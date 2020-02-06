@@ -1,10 +1,10 @@
 import React from 'react';
-import LoadingImg from './../../images/loading.gif';
+import ApiPic from './../../apiPic/apiPic';
 
 const Loading = (props) => {
   return (
     <div className='loading-wrap'>
-      <img className='loading-img' src={LoadingImg} alt='' />
+      <img className='loading-img' src={ApiPic.getLoadingImageUrl()} alt='' />
     </div>  
   )
 }

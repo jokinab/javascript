@@ -14,7 +14,8 @@ export default class ApiPic {
     }
 
     static getInitInfo() {
-      return fetch(`${API_DOMAIN}${API_URL}${USER_INFO}`);
+      let currentType = this.isHome();
+      return fetch(`${API_DOMAIN}${API_URL}${USER_INFO}?currentType=${currentType}`);
     }
 
     static getBiciEstacionesList() {
@@ -63,11 +64,21 @@ export default class ApiPic {
 
       }        
       document.body.appendChild(formElement);
+      
       formElement.submit();
     }   
     
     static getTiendasBiciFromEstacion(tiendaId, sectorId, estacionId) {
       return fetch(`${API_DOMAIN}${TIENDAS_FORM_ESTACION_URL}?id_store=${tiendaId}&id_sector=${sectorId}&my_lang=es&bici=bici&onlyoneshop=false`);
+    }
+
+    static getLoadingImageUrl() {
+      return `${API_DOMAIN}/public/img/loading_buscador.gif`;
+    }
+
+    static isHome() {
+      let currentPath = typeof window.currentUrlPathCustom !== 'undefined' ? window.currentUrlPathCustom : '/home/home';
+      return currentPath;
     }
 
 }

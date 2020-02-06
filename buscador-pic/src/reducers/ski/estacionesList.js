@@ -73,12 +73,12 @@ export const buscadorSki = (state = initialState, action) => {
         case types.FETCH_ESTACIONES_SUCCESS_SKI:
           
           if ( action.payload.hasSelectedData ) {
-
+            
             let startDateArr = action.payload.fechaIni.split('-');
             let endDateArr = action.payload.fechaFin.split('-');
             let selectedEstacion = action.payload.estacionesList.find( estacion => estacion.sectores.find( sector => sector.id === action.payload.sectorId) );
             let firstDayAvailable = action.payload.estacionesList.find( (estacion) =>  estacion.estacionId === selectedEstacion.estacionId ).primerDiaLibre;
-
+            
             newUIX = {
               ...state.UIX,
               isNotAgencia: action.payload.isNotAgencia,
@@ -275,6 +275,10 @@ export const buscadorSki = (state = initialState, action) => {
 
               const stationHasForfait = state.estaciones.estacionesList.find( estacion => estacion.estacionId === state.UIX.selectedEstacionId ).sectores[0].forfait === 1 ? true : false;
 
+              // console.log(`stationHasForfait: ${stationHasForfait}`);
+              // console.log(`state.UIX.isNotAgencia: ${state.UIX.isNotAgencia}`);
+              // console.log(`isInDateToSelectForfait: ${DateTools.isInDateToSelectForfait(state.UIX.startDatePicker.selectedDate, state.UIX.endDatePicker.selectedDate)}`);
+              
               if ( state.UIX.isNotAgencia && stationHasForfait && DateTools.isInDateToSelectForfait(state.UIX.startDatePicker.selectedDate, state.UIX.endDatePicker.selectedDate)) {
                 newUIX = {
                   ...state.UIX,

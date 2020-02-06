@@ -27,8 +27,9 @@ const TiendasFromEstacion = (props) => {
         horarios: tiendas.find( s => s.id === id).horarios
       }
     });
+
   let textEstacion = `<strong>${props.estacion.nombre}/${props.estacion.sectores[0].nombre}</strong>`;
-  // console.log(`Esto es estacion: ${JSON.stringify(props)}`);
+  
   return (
     <div className="tiendas-wrap-container">
       <div className="tiendas-from-estacion-wrap">

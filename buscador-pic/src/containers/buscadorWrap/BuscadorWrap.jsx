@@ -11,6 +11,8 @@ import BuscadorBici from '../buscadorBici/BuscadorBici';
 import { SelectorSkiBici } from '../../components/selectorSkiBici/SelectorSkiBici';
 import Loading from './../../components/loading/Loading';
 import TiendasFromEstacion from './../../components/tiendasFromEstacion/TiendasFromEstacion';
+import ApiPic from './../../apiPic/apiPic'
+
 
 class BuscadorWrapComponent extends Component{
   constructor(...args) {
@@ -56,7 +58,8 @@ class BuscadorWrapComponent extends Component{
           { this.props.hasInitInfo && this.props.showSki && activeSki && <BuscadorSki /> }
           { this.props.hasInitInfo && this.props.showBici && activeBici && <BuscadorBici /> }       
         </div>
-        { activeBici && typeof this.state.estacion !== 'undefined' && this.props.showBici && <TiendasFromEstacion estacion={this.state.estacion} lang={this.props.language} /> }
+
+        { activeBici && ApiPic.isHome !== '/home/home'  && typeof this.state.estacion !== 'undefined' && this.props.showBici && <TiendasFromEstacion estacion={this.state.estacion} lang={this.props.language} /> }
 
       </div>
     )
