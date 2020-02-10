@@ -1,30 +1,32 @@
-const API_DOMAIN = 'https://testing.picnegre.com';  
+import Domains from './domains';
+
+const API_DOMAIN = Domains.getDomainToFetch();  
 const API_URL = '/alquiler/';
 const SKI_ESTACIONES_LIST = 'getAllEstacionesTiendasSki';
 const BICI_ESTACIONES_LIST = 'getAllEstacionesTiendasBici';
 const USER_INFO = 'getBuscadorInitInfo';
 const SEND_SKI_URL = '/alquiler/paso1_action';
 const SEND_BICI_URL = '/alquiler_bici/paso1_action';
-const TIENDAS_FORM_ESTACION_URL = '/alquiler/getAvailableStoresFromStation';
+const FROM_DOMAIN = window.location.hostname;
 
 export default class ApiPic {
 
-    static getSkiEstacionesList() {
-      return fetch(`${API_DOMAIN}${API_URL}${SKI_ESTACIONES_LIST}`);
-    }
-
     static getInitInfo() {
       let currentType = this.isHome();
-      return fetch(`${API_DOMAIN}${API_URL}${USER_INFO}?currentType=${currentType}`);
+      return fetch(`${API_DOMAIN}${API_URL}${USER_INFO}?currentType=${currentType}&from=${FROM_DOMAIN}`);
+    }
+
+    static getSkiEstacionesList() {
+      return fetch(`${API_DOMAIN}${API_URL}${SKI_ESTACIONES_LIST}?from=${FROM_DOMAIN}`);
     }
 
     static getBiciEstacionesList() {
-      return fetch(`${API_DOMAIN}${API_URL}${BICI_ESTACIONES_LIST}`);
+      return fetch(`${API_DOMAIN}${API_URL}${BICI_ESTACIONES_LIST}?from=${FROM_DOMAIN}`);
     }
 
     static sendSkiData( dataToSend = { fecha_inicio: '', fecha_fin: '', sector_id: '', estacionId: '', forfait_select: false }, lang = 'es' ) {
       
-      let sendUrl = `${API_DOMAIN}/${lang}${SEND_SKI_URL}`;
+      let sendUrl = `${API_DOMAIN}/${lang}${SEND_SKI_URL}?from=${FROM_DOMAIN}`;
 
       this.openPost(sendUrl, dataToSend);
       return;
@@ -32,7 +34,7 @@ export default class ApiPic {
 
     static sendBiciData( dataToSend = { fecha_inicio: '', cuantos_dias: '', sector_id: '', store_id: '', estacionId: '' }, lang = 'es' ) {
       
-      let sendUrl = `${API_DOMAIN}/${lang}${SEND_BICI_URL}`;
+      let sendUrl = `${API_DOMAIN}/${lang}${SEND_BICI_URL}?from=${FROM_DOMAIN}`;
 
       this.openPost(sendUrl, dataToSend);
       return;
@@ -68,10 +70,6 @@ export default class ApiPic {
       formElement.submit();
     }   
     
-    static getTiendasBiciFromEstacion(tiendaId, sectorId, estacionId) {
-      return fetch(`${API_DOMAIN}${TIENDAS_FORM_ESTACION_URL}?id_store=${tiendaId}&id_sector=${sectorId}&my_lang=es&bici=bici&onlyoneshop=false`);
-    }
-
     static getLoadingImageUrl() {
       return `${API_DOMAIN}/public/img/loading_buscador.gif`;
     }

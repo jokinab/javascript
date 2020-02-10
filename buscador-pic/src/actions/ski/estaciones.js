@@ -67,7 +67,7 @@ export const fetchEstacionesItems = () => {
       try {
         const estacionesList = await ApiPic.getSkiEstacionesList();
         const response = await estacionesList.json();
-        console.log(response)
+        // console.log(response)
         if (response.estacionesData.length > 0) {
           // console.log('Entra en el success', JSON.stringify(response));
           dispatch(fetchEstacionesSuccess(response));

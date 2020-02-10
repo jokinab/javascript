@@ -1,6 +1,7 @@
 @import "./styles/reset.scss";
 @import "./styles/mixins.scss";
-@import "./styles/variables.scss";
+// @import "./styles/variablesPic.scss";
+@import "./styles/variablesRenta.scss";
 
 
 // *********************** //
@@ -113,6 +114,7 @@
   .buscador-items{
     @include flexbox();
     @include justify-content(space-between);
+    @include flex-wrap(wrap);
   }
 
   .buscador-item {
@@ -157,6 +159,10 @@
     }
   }
 
+  .react-datepicker-popper {
+    z-index: 99;
+  }
+
   .tiendas-selector-container{
     position:absolute;
     top: 100%;
@@ -166,6 +172,7 @@
     background-color: white;
     cursor: pointer;
     z-index: 999;
+    border: 1px solid $border-estacion;
   }
 
   .day-item{
@@ -192,8 +199,11 @@
   }
 
   .estacion-item{
-    background:$black;
-    border-bottom: 1px solid $white;
+    background:$background-estacion-item;
+    border-bottom: 1px solid $border-estacion-item;
+    &:last-child{
+      border-bottom:none;
+    }
   }
 
   .estacion-image{
@@ -202,10 +212,10 @@
     height: 80px;
     padding: 10px;
     &.Vallnord:hover{
-      background: $vallnord-color;
+      background: $vallnord-color-hover;
     }
     &.Grandvalira:hover{
-      background: $grandvalira-color;
+      background: $grandvalira-color-hover;
     }
   }
 
@@ -446,7 +456,7 @@
     font-weight: 100;
   }
 
-  .error{
+  .error-txt{
     margin-bottom:5px;
   }
 
@@ -517,7 +527,7 @@
 
   .tiendas-ficha-message{
     margin-bottom: 20px;
-    font-weight: 500;
+    font-weight: 400;
     font-size:26px;
     text-transform: uppercase;
   }
@@ -589,8 +599,8 @@
 
   .tienda-ficha-item-ftr{
     font-size: 12px;
-      padding: 20px 18px;
-      font-weight: 500;
+    padding: 20px 18px;
+    font-weight: 300;
   }
 
   .tienda-ficha-message-wrap{
@@ -639,3 +649,46 @@
     }
   }
 }
+
+
+@media screen and (max-width: 900px) {
+  .buscador-wrap{
+    .selector-item {
+      border: 1px solid $selector-bg-active;
+      border-bottom: 0;
+    }
+    .buscador-message-title{
+      display:none;
+    }
+    .buscador-message-subtitle{
+      text-align:center;
+    }
+    .buscador-item {
+      width: 48%;
+      margin-bottom: 20px;
+    }
+    .tiendas-ficha-message {
+      font-size: 18px;
+    }
+    .tiendas-ficha-message-sub {
+      font-size: 14px;
+    }
+    .tienda-ficha-nombre {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .buscador-wrap{
+    .buscador-items {
+      @include flex-direction(column);
+      @include align-items(center);
+    }
+    .buscador-item {
+        width: 100%;
+        margin-bottom: 20px;
+        max-width: 360px;
+    }
+  }  
+}  

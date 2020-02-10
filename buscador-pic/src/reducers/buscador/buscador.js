@@ -46,7 +46,7 @@ export const buscador = (state = initialState, action) => {
             }
           }
         case types.FETCH_USER_INFO_SUCCESS:
-          console.log(action.payload.data.userData)
+          // console.log(action.payload.data.userData)
           let newUserInfo = {
             ...state.userInfo,
             ...action.payload.data.userData
@@ -58,7 +58,8 @@ export const buscador = (state = initialState, action) => {
             showBici: action.payload.data.showBici,
             hasInitInfo: true,
             userInfo: newUserInfo,
-            selected: action.payload.data.selected
+            selected: action.payload.data.selected,
+            language: document.documentElement.lang
           }  
         default:
           return state;

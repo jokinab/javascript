@@ -132,10 +132,17 @@ class BuscadorSkiComponent extends Component{
 
   static getDerivedStateFromProps(nextProps, prevState){
     
+    const datePickers = document.getElementsByClassName("react-datepicker__input-container");
+    Array.from(datePickers).forEach((el => el.childNodes[0].setAttribute("readOnly", true)))
+    // console.log(datePickers);
+
     if (nextProps.UIX.sendData) {
 
       let dataToSend = {};
-        
+      let fechaFin = nextProps.UIX.endDatePicker.selectedDate === '' ? 
+                      DateTools.formatDateToString(nextProps.UIX.startDatePicker.selectedDate, 'es') : 
+                      DateTools.formatDateToString(nextProps.UIX.endDatePicker.selectedDate, 'es');
+      
       if ( nextProps.UIX.isNotAgencia ) {
 
         const estacion = nextProps.estaciones.estacionesList.find( estacion => estacion.sectores.find( sector => sector.id === nextProps.UIX.selectedSector) );
@@ -144,7 +151,7 @@ class BuscadorSkiComponent extends Component{
         
         dataToSend = {
           fecha_inicio: DateTools.formatDateToString(nextProps.UIX.startDatePicker.selectedDate, 'es'),
-          fecha_fin: DateTools.formatDateToString(nextProps.UIX.endDatePicker.selectedDate, 'es'),
+          fecha_fin: fechaFin,
           sector_id: nextProps.UIX.selectedSector,
           store_id: tienda, // poner la primera tienda del sector elegido
           estacionId: estacion.estacionId,
@@ -226,8 +233,7 @@ class BuscadorSkiComponent extends Component{
                     className={configBuscadorSki.inputClass}
                     excludeDates={UIX.disabledDays.map( date => new Date(date) )}
                     minDate={new Date(UIX.firstDayAvailable)}
-                    maxDate={ ( UIX.endDatePicker.selectedDate === '' && 
-                                UIX.endDatePicker.isEndDateSelected ) ? new Date('2050-12-12') : UIX.endDatePicker.selectedDate}
+                    //maxDate={ ( UIX.endDatePicker.selectedDate === '' && UIX.endDatePicker.isEndDateSelected ) ? new Date('2050-12-12') : UIX.endDatePicker.selectedDate}
                     />       
                 }
                 <FontAwesomeIcon icon={faCalendarAlt} />
@@ -270,9 +276,9 @@ class BuscadorSkiComponent extends Component{
         }
         { UIX.showErrors.show && 
           <div className='errors-wrap'>
-            { UIX.showErrors.showError1 && <div className='error'>{LangsString.errorSector[lang]}</div> }  
-            { UIX.showErrors.showError2 && <div className='error'>{LangsString.errorFechaInicio[lang]}</div> }  
-            { UIX.showErrors.showError3 && <div className='error'>{LangsString.errorFechaFin[lang]}</div> }  
+            { UIX.showErrors.showError1 && <div className='error-txt'>{LangsString.errorSector[lang]}</div> }  
+            { UIX.showErrors.showError2 && <div className='error-txt'>{LangsString.errorFechaInicio[lang]}</div> }  
+            { UIX.showErrors.showError3 && <div className='error-txt'>{LangsString.errorFechaFin[lang]}</div> }  
           </div>
         }  
 

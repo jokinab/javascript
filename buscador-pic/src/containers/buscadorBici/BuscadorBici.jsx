@@ -92,7 +92,7 @@ class BuscadorBiciComponent extends Component{
   }
 
   handleForfaitButtonCLick(e){
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.props.onForfaitButtonClick(e.target.value);
   }
 

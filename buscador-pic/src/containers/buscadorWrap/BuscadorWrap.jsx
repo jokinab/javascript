@@ -11,8 +11,7 @@ import BuscadorBici from '../buscadorBici/BuscadorBici';
 import { SelectorSkiBici } from '../../components/selectorSkiBici/SelectorSkiBici';
 import Loading from './../../components/loading/Loading';
 import TiendasFromEstacion from './../../components/tiendasFromEstacion/TiendasFromEstacion';
-import ApiPic from './../../apiPic/apiPic'
-
+import ApiPic from './../../apiPic/apiPic';
 
 class BuscadorWrapComponent extends Component{
   constructor(...args) {
@@ -34,7 +33,6 @@ class BuscadorWrapComponent extends Component{
       this.props.onFetchUserInfo();
   }
 
-
   static getDerivedStateFromProps(nextProps, prevState){
     // console.log(`Esto es ->>> ${JSON.stringify(nextProps.estacion)}`);
     return {
@@ -43,7 +41,6 @@ class BuscadorWrapComponent extends Component{
     }
 
   }
-
 
   render() {
 
@@ -59,7 +56,7 @@ class BuscadorWrapComponent extends Component{
           { this.props.hasInitInfo && this.props.showBici && activeBici && <BuscadorBici /> }       
         </div>
 
-        { activeBici && ApiPic.isHome !== '/home/home'  && typeof this.state.estacion !== 'undefined' && this.props.showBici && <TiendasFromEstacion estacion={this.state.estacion} lang={this.props.language} /> }
+        { activeBici && ApiPic.isHome() !== '/home/home'  && typeof this.state.estacion !== 'undefined' && this.props.showBici && <TiendasFromEstacion estacion={this.state.estacion} lang={this.props.language} /> }
 
       </div>
     )
@@ -82,7 +79,6 @@ const mapDispatchToProps = (dispatch) => {
     onFetchUserInfo: () => dispatch(fetchUserInfo())
   }
 }
-
 
 // Conectamos el Componente al storage
 const BuscadorWrapContainer = connect(mapStateToProps, mapDispatchToProps)(BuscadorWrapComponent)

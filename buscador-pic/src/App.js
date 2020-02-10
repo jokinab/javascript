@@ -10,13 +10,22 @@ import BuscadorWrapContainer from './containers/buscadorWrap/BuscadorWrap';
 
 import './App.scss';
 
+let store;
 
-const store = createStore(
-  rootReducer,composeWithDevTools(
-  applyMiddleware(
-    thunkMiddleware // nos permite despachar funciones
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  store = createStore(
+    rootReducer,composeWithDevTools(
+    applyMiddleware(
+      thunkMiddleware // nos permite despachar funciones
+    )
+  ))
+} else {
+  store = createStore( 
+    rootReducer, 
+    applyMiddleware( thunkMiddleware )
   )
-))
+}
+
 
 
 const App = () => {

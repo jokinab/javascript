@@ -28,7 +28,8 @@ const initialState = {
       isStartDateSelected: false
     },
     endDatePicker: {
-      selectedDate: ''
+      selectedDate: '',
+      isStartDateSelected: false
     },
     hasForfaitSelected: false,
     noForfaitStation: '-1',
@@ -149,10 +150,12 @@ export const buscadorSki = (state = initialState, action) => {
               ...state.UIX.startDatePicker,
               selectedDate: new Date(firstDayAvailable)
             }
+            
             newEndDatePicker = {
               ...state.UIX.endDatePicker,
-              selectedDate: new Date(firstDayAvailable)
+              // selectedDate: new Date(firstDayAvailable)
             }
+            
           }          
           
           if (state.UIX.isNotAgencia) {
@@ -238,7 +241,14 @@ export const buscadorSki = (state = initialState, action) => {
                 UIX: newUIX
               }     
           case types.START_DATE_SELECTION_SKI:
-
+            
+            let selectedStartDate = new Date(action.payload.selectedDate);
+            let selectedEndDate = new Date(state.UIX.endDatePicker.selectedDate === '' ? action.payload.selectedDate: state.UIX.endDatePicker.selectedDate);
+            
+            if ( selectedEndDate.getTime() < selectedStartDate.getTime() ) {
+              selectedEndDate = selectedStartDate;
+            }
+            
             newStartDatePicker = {
               ...state.UIX.startDatePicker,
               selectedDate: action.payload.selectedDate,
@@ -246,7 +256,7 @@ export const buscadorSki = (state = initialState, action) => {
             }
             newEndDatePicker = {
               ...state.UIX.endDatePicker,
-              selectedDate: state.UIX.endDatePicker.selectedDate === '' ? action.payload.selectedDate: state.UIX.endDatePicker.selectedDate,
+              selectedDate: selectedEndDate,
             }            
             newUIX = {
               ...state.UIX,
@@ -274,10 +284,6 @@ export const buscadorSki = (state = initialState, action) => {
             case types.SKY_SUBMIT_CLICK_SKI: 
 
               const stationHasForfait = state.estaciones.estacionesList.find( estacion => estacion.estacionId === state.UIX.selectedEstacionId ).sectores[0].forfait === 1 ? true : false;
-
-              // console.log(`stationHasForfait: ${stationHasForfait}`);
-              // console.log(`state.UIX.isNotAgencia: ${state.UIX.isNotAgencia}`);
-              // console.log(`isInDateToSelectForfait: ${DateTools.isInDateToSelectForfait(state.UIX.startDatePicker.selectedDate, state.UIX.endDatePicker.selectedDate)}`);
               
               if ( state.UIX.isNotAgencia && stationHasForfait && DateTools.isInDateToSelectForfait(state.UIX.startDatePicker.selectedDate, state.UIX.endDatePicker.selectedDate)) {
                 newUIX = {

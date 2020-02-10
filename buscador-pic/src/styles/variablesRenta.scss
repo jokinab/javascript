@@ -1,0 +1,37 @@
+// Colors
+
+$selector-bg: rgba(255, 255, 255, 0.7);
+$selector-bg-active: rgb(0, 161, 223);
+$black: black;
+$white: white;
+$red: #d22539;
+$buscador-item-color: #333333;
+$fa-color: #a9a9a9;
+$sectores-bg: #b2b2b2;
+$vallnord-color: #d22539;
+$vallnord-color-hover:#d2253926;
+$grandvalira-color: #4aacd5;
+$grandvalira-color-hover: #4aacd536;
+$button-submit: #FF984E;
+$overlay-bg: rgba(193, 187, 187, 0.60);
+$overlay-color: #e41715;
+$forfait-txt-color:  #7E8691;
+$no-interest:  #C1C1C1;
+$gray-border: #e7e7e7;
+$gris-tienda-title-bg: #3d3b3c;
+$gris-buttons: #2C2C2C;
+$negro-sect-tit: #00171F;
+$border-estacion: rgb(0, 161, 223);
+$border-estacion-item: rgb(0, 161, 223);
+$background-estacion-item: white;
+
+// Containers
+
+$max-width-general: 1000px;
+
+
+@mixin general-container() {
+  width: $max-width-general;
+  max-width:96%;
+  margin: 0 auto;
+}

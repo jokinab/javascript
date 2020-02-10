@@ -132,14 +132,14 @@ export const LangsString = {
     "fr": "Choisissez d'abord un magasin"
   },
   errorFechaInicio: {
-    "es": "Seleccione primero una tienda",
+    "es": "Seleccione primero el día de recogida",
     "ca": "Introdueix Data de Recollida",
     "en": "Enter Collection Date",
     "fr": "Entrer la date de collecte"
   },
   errorFechaFin: {
-    "es": "Seleccione primero una tienda",
-    "ca": "SIntrodueix Data de Lliurament",
+    "es": "Seleccione primero el día de entrega",
+    "ca": "Introdueix Data de Lliurament",
     "en": "Enter Delivery Date",
     "fr": "Entrez la date de livraison"
   },
