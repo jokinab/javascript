@@ -9,7 +9,8 @@ import MensajeBuscadorItem from './../../components/mensajeBuscadorItem/MensajeB
 import { faMapMarkerAlt, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loading from './../../components/loading/Loading';
-import ChangeToNoForfaitOverlay from './../../components/changeToNoForfaitOverlay/ChangeToNoForfaitOverlay';
+// import ChangeToNoForfaitOverlay from './../../components/changeToNoForfaitOverlay/ChangeToNoForfaitOverlay';
+import ChangeToNoMaterialOverlay from './../../components/changeToNoMaterialOverlay/ChangeToNoMaterialOverlay';
 import DateTools from './../../lib/dateTools';
 import ApiPic from './../../apiPic/apiPic';
 import Marquee from './../../components/marquee/Marquee';
@@ -25,8 +26,10 @@ import {
   handleEndDateSelection,
   handleButtonClick,
   handleForfaitButtonClick,
-  changeToNoForfaitStation,
-  closeChangeStationOverlay
+  // changeToNoForfaitStation,
+  // closeChangeStationOverlay,
+  changeToNoMaterialSector,
+  closeChangeNoMaterialOverlay
 } from './../../actions/ski/estaciones';
 
 import EstacionesSectoresSelector from '../../components/estacionesSectoresSelector/EstacionesSectoresSelector';
@@ -50,7 +53,11 @@ class BuscadorSkiComponent extends Component{
     this.handleEndDateSelection = this.handleEndDateSelection.bind(this);
     this.handlePlaceHolderSubmit = this.handlePlaceHolderSubmit.bind(this);
     this.handleForfaitButtonCLick = this.handleForfaitButtonCLick.bind(this);
-    this.handleTonoForfaitStationOverlayCLick = this.handleTonoForfaitStationOverlayCLick.bind(this);
+    this.handleToNoMaterialSectorOverlayCLick = this.handleToNoMaterialSectorOverlayCLick.bind(this);
+  
+    this.errorsRef = React.createRef();
+    this.startDateRef = React.createRef();
+    this.endDateRef = React.createRef();
   }
 
   handleEstacionSectorSelector(){
@@ -61,14 +68,8 @@ class BuscadorSkiComponent extends Component{
   handleEstacionClick(target){
     
     this.hideErrors();
+    this.props.onEstacionClick(target);
     
-    // Miramos si tenia forfait seleccionado y si la nueva estacion seleccionada no tiene forfait
-    if ( this.props.UIX.hasForfaitSelected && this.props.estaciones.estacionesList.find( estacion => estacion.estacionId === target.value ).sectores[0].forfait === 0 && this.props.UIX.isNotAgencia ) {
-      this.props.onChangeToNoForfaitStation(target);
-    } else {
-      this.props.onEstacionClick(target);
-    }
-
   }
 
   hideErrors(){
@@ -77,51 +78,80 @@ class BuscadorSkiComponent extends Component{
     }  
   }
 
+  showErrors(errors){
+    this.props.onShowErrors(errors);  
+    if (this.errorsRef.current !== null){
+      this.errorsRef.current.scrollIntoView({block: "center", behavior: "smooth"});
+    }
+  }
+
   handleSectorClick(e){
+
     this.hideErrors();
-    this.props.onSectorClick(e);  
+
+    let selectedEstacion = this.props.estaciones.estacionesList.find( estacion => estacion.sectores.find( sector => sector.id ===  JSON.parse(e.target.value).id ) );
+    let selectedSector = selectedEstacion.sectores.find( sector => sector.id === JSON.parse(e.target.value).id );
+    
+    if ( ( this.props.UIX.hasRopaSelected && !selectedSector.hasRopa) || ( this.props.UIX.hasForfaitSelected && selectedSector.forfait === 0) ){
+      this.props.onChangeToNoMaterialSector(selectedSector);
+    }else{  
+      this.props.onSectorClick(JSON.parse(e.target.value).id, JSON.parse(e.target.value).nombre);  
+    }
+
   }
 
   handlePlaceHolderStartDayClik(){
     this.hideErrors();
-    this.props.onShowErrors({ show: true, showError1: true });
+    this.showErrors({ show: true, showError1: true });
   }
 
   handleStartDateSelection(date){
     this.hideErrors();
     this.props.onStartDateSelection(date);  
+    if (this.startDateRef.current !== null){
+      console.log(this.startDateRef);
+      // this.startDateRef.current.setAttribute("readOnly", true);
+    }
   }
 
   handlePlaceHolderEndDayClik( isStartDateSelected = false ){ 
     this.hideErrors();
     let error = ( isStartDateSelected ) ? { show: true, showError1: false, showError2: true } : { show: true, showError1: true, showError2: true };
-    this.props.onShowErrors(error);
+    this.showErrors(error);
   }  
 
   handleEndDateSelection(date){
     this.hideErrors();
     this.props.onEndDateSelection(date);
+    if (this.endDateRef.current !== null){
+      console.log(this.endDateRef);
+      // this.endDateRef.current.setAttribute("readOnly", true);
+    }
   }
 
   handlePlaceHolderSubmit(isStartDateSelected = false) {
+
     this.hideErrors();
     let error = ( isStartDateSelected ) ? { show: true, showError1: false, showError2: true } : { show: true, showError1: true, showError2: true, showError3: true };
-    this.props.onShowErrors(error);
+    this.showErrors(error);
   }
 
   handleForfaitButtonCLick(e){
     this.props.onForfaitButtonClick(e.target.value);
   }
 
-  handleTonoForfaitStationOverlayCLick(e){
-
+  handleToNoMaterialSectorOverlayCLick(e){
+    
     if ( e.target.value === 'true' ) {
-      let data = {};
-      data.value = this.props.UIX.noForfaitStation; 
-      this.props.onEstacionClick(data);
+      
+      let noMaterialSector = {};
+      noMaterialSector = this.props.UIX.noMaterialSector; 
+      this.props.onSectorClick(noMaterialSector.id, noMaterialSector.nombre, true );
+    
     } else {
-      this.props.onCloseChangeStationOverlay();
-    }
+      this.props.onCloseChangeNoMaterialSectorOverlay();
+    } 
+
   }
 
   componentDidMount(){
@@ -135,7 +165,7 @@ class BuscadorSkiComponent extends Component{
     const datePickers = document.getElementsByClassName("react-datepicker__input-container");
     Array.from(datePickers).forEach((el => el.childNodes[0].setAttribute("readOnly", true)))
     // console.log(datePickers);
-
+    
     if (nextProps.UIX.sendData) {
 
       let dataToSend = {};
@@ -233,6 +263,7 @@ class BuscadorSkiComponent extends Component{
                     className={configBuscadorSki.inputClass}
                     excludeDates={UIX.disabledDays.map( date => new Date(date) )}
                     minDate={new Date(UIX.firstDayAvailable)}
+                    ref={this.startDateRef}
                     //maxDate={ ( UIX.endDatePicker.selectedDate === '' && UIX.endDatePicker.isEndDateSelected ) ? new Date('2050-12-12') : UIX.endDatePicker.selectedDate}
                     />       
                 }
@@ -256,6 +287,7 @@ class BuscadorSkiComponent extends Component{
                     className={configBuscadorSki.inputClass}
                     excludeDates={UIX.disabledDays.map( date => new Date(date) )}
                     minDate={new Date(UIX.startDatePicker.selectedDate)}
+                    ref={this.endDateRef}
                     />       
                 }
                 <FontAwesomeIcon icon={faCalendarAlt} />
@@ -274,20 +306,18 @@ class BuscadorSkiComponent extends Component{
             </div>
           </div>    
         }
-        { UIX.showErrors.show && 
-          <div className='errors-wrap'>
-            { UIX.showErrors.showError1 && <div className='error-txt'>{LangsString.errorSector[lang]}</div> }  
-            { UIX.showErrors.showError2 && <div className='error-txt'>{LangsString.errorFechaInicio[lang]}</div> }  
-            { UIX.showErrors.showError3 && <div className='error-txt'>{LangsString.errorFechaFin[lang]}</div> }  
-          </div>
-        }  
+        <div id="errors-wrap" ref={this.errorsRef} className='errors-wrap' >
+          { UIX.showErrors.show && UIX.showErrors.showError1 && <div className='error-txt'>{LangsString.errorSector[lang]}</div> }
+          { UIX.showErrors.show && UIX.showErrors.showError2 && <div className='error-txt'>{LangsString.errorFechaInicio[lang]}</div>  }
+          { UIX.showErrors.show && UIX.showErrors.showError3 && <div className='error-txt'>{LangsString.errorFechaFin[lang]}</div> }
+        </div>
 
         { UIX.showForfaitOverlay && 
           <ForfaitOverlay lang={lang} handleForfaitButtonCLick={this.handleForfaitButtonCLick} />
         } 
 
-        { UIX.showChangeToNoForfaitOverlay && 
-          <ChangeToNoForfaitOverlay lang={lang} handleTonoForfaitStationOverlayCLick={this.handleTonoForfaitStationOverlayCLick} linkToCesta={UIX.linkToCesta} />
+        { UIX.showChangeToNoMaterialSectorOverlay && 
+          <ChangeToNoMaterialOverlay lang={lang} handleToNoMaterialSectorOverlayCLick={this.handleToNoMaterialSectorOverlayCLick} noMaterialSector={UIX.noMaterialSector} />
         } 
 
         { UIX.marquee !== '' && <Marquee text={UIX.marquee} /> }  
@@ -313,13 +343,15 @@ const mapDispatchToProps = (dispatch) => {
     onEstacionClick: (target) => dispatch(handleEstacionClick(target)),
     onHideErrors: () => dispatch(handleHideErrors()),
     onShowErrors: (error) => dispatch(handleShowErrors(error)),
-    onSectorClick: (e) => dispatch(handleSectorClick(e)),
+    onSectorClick: (id, nombre, unSelectRopa) => dispatch(handleSectorClick(id, nombre, unSelectRopa)),
     onStartDateSelection: (date) => dispatch(handleStartDateSelection(date)),
     onEndDateSelection: (date) => dispatch(handleEndDateSelection(date)),
     onButtonClick: () => dispatch(handleButtonClick()),
     onForfaitButtonClick: (e) => dispatch(handleForfaitButtonClick(e)),
-    onChangeToNoForfaitStation: (target) => dispatch(changeToNoForfaitStation(target)),
-    onCloseChangeStationOverlay: () => dispatch(closeChangeStationOverlay())
+    // onChangeToNoForfaitStation: (target) => dispatch(changeToNoForfaitStation(target)),
+    // onCloseChangeStationOverlay: () => dispatch(closeChangeStationOverlay()),
+    onChangeToNoMaterialSector: (target) => dispatch(changeToNoMaterialSector(target)),
+    onCloseChangeNoMaterialSectorOverlay: () => dispatch(closeChangeNoMaterialOverlay())
   }
 }
 

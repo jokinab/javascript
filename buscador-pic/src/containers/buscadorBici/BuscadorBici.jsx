@@ -41,6 +41,8 @@ class BuscadorBiciComponent extends Component{
     this.handleEndDateSelection = this.handleEndDateSelection.bind(this);
     this.handlePlaceHolderSubmit = this.handlePlaceHolderSubmit.bind(this);
     this.handleForfaitButtonCLick = this.handleForfaitButtonCLick.bind(this);
+
+    this.errorsRef = React.createRef();
   }
 
   handleEstacionSectorSelector(){
@@ -59,6 +61,13 @@ class BuscadorBiciComponent extends Component{
     }  
   }
 
+  showErrors(errors){
+    this.props.onShowErrors(errors);
+    if (this.errorsRef.current !== null){
+      this.errorsRef.current.scrollIntoView({block: "center", behavior: "smooth"});
+    }
+  }
+
   handleSectorClick(e){
     this.hideErrors();
     this.props.onSectorClick(e);  
@@ -66,7 +75,8 @@ class BuscadorBiciComponent extends Component{
 
   handlePlaceHolderStartDayClik(){
     this.hideErrors();
-    this.props.onShowErrors({ show: true, showError1: true });
+    this.showErrors({ show: true, showError1: true } );
+    
   }
 
   handleStartDateSelection(date){
@@ -77,7 +87,7 @@ class BuscadorBiciComponent extends Component{
   handlePlaceHolderEndDayClik( isStartDateSelected = false ){ 
     this.hideErrors();
     let error = ( isStartDateSelected ) ? { show: true, showError1: false, showError2: true } : { show: true, showError1: true, showError2: true };
-    this.props.onShowErrors(error);
+    this.showErrors( error );
   }  
 
   handleEndDateSelection(date){
@@ -88,11 +98,10 @@ class BuscadorBiciComponent extends Component{
   handlePlaceHolderSubmit(isStartDateSelected = false) {
     this.hideErrors();
     let error = ( isStartDateSelected ) ? { show: true, showError1: false, showError2: true } : { show: true, showError1: true, showError2: true, showError3: true };
-    this.props.onShowErrors(error);
+    this.showErrors(error);
   }
 
   handleForfaitButtonCLick(e){
-    // console.log(e.target.value);
     this.props.onForfaitButtonClick(e.target.value);
   }
 
@@ -109,9 +118,6 @@ class BuscadorBiciComponent extends Component{
       let estacionId = nextProps.UIX.selectedEstacionId;
       let estacion = nextProps.estaciones.estacionesList.find( estacion => estacion.estacionId === nextProps.UIX.selectedEstacionId );
       let sector = estacion.sectores[0];
-
-      // console.log(`Estacion seleccionada: ${estacion}`);
-      // console.log(`Sector seleccionado: ${JSON.stringify(sector)}`);
       
       const dataToSend = {
         fecha_inicio: DateTools.formatDateToString(nextProps.UIX.startDatePicker.selectedDate, 'es'),
@@ -216,13 +222,11 @@ class BuscadorBiciComponent extends Component{
             </div>
           </div>    
         }
-        { UIX.showErrors.show && 
-          <div className='errors-wrap'>
-            { UIX.showErrors.showError1 && <div className='error'>{LangsString.errorSector[lang]}</div> }  
-            { UIX.showErrors.showError2 && <div className='error'>{LangsString.errorFechaInicio[lang]}</div> }  
-            { UIX.showErrors.showError3 && <div className='error'>{LangsString.errorCuantosDias[lang]}</div> }   
-          </div>
-        }  
+        <div className='errors-wrap' ref={this.errorsRef}  >
+            { UIX.showErrors.show && UIX.showErrors.showError1 && <div className='error-txt'>{LangsString.errorSector[lang]}</div> }  
+            { UIX.showErrors.show && UIX.showErrors.showError2 && <div className='error-txt'>{LangsString.errorFechaInicio[lang]}</div> }  
+            { UIX.showErrors.show && UIX.showErrors.showError3 && <div className='error-txt'>{LangsString.errorCuantosDias[lang]}</div> }   
+        </div> 
 
         { UIX.showForfaitOverlay && 
           <ForfaitOverlay lang={lang} handleForfaitButtonCLick={this.handleForfaitButtonCLick} />

@@ -59,7 +59,8 @@ export const buscador = (state = initialState, action) => {
             hasInitInfo: true,
             userInfo: newUserInfo,
             selected: action.payload.data.selected,
-            language: document.documentElement.lang
+            language: document.documentElement.lang,
+            isNotAgencia: action.payload.data.userData.isNotAgencia
           }  
         default:
           return state;

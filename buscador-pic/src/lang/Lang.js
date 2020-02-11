@@ -155,11 +155,11 @@ export const LangsString = {
     "en": "Attention!",
     "fr": "Attention!"
   },
-  previamtenteForfait: {
-    "es": "Previamente, has seleccionado alquilar con Forfait.",
-    "ca": "Prèviament, has seleccionat llogar amb Forfet.",
-    "en": "Previously, you have selected to rent with Forfait.",
-    "fr": "Auparavant, vous avez choisi de louer avec Forfait."
+  mensajeForfait: {
+    "es": "Previamente, has añadido alquilar con forfait. La estación que acabas de seleccionar no dispone de alquiler con forfait.",
+    "ca": "Prèviament, has afegit llogar amb forfet. L'estació que acabes de seleccionar no disposa de lloguer amb forfet.",
+    "en": "Previously, you have added rent with ski pass. The station you just selected does not have a ski pass rental.",
+    "fr": "Auparavant, vous avez ajouté un loyer avec forfait de ski. La station que vous venez de sélectionner ne propose pas de location de forfaits de ski."
   },
   queDeseas: {
     "es": "La estación que acabas de seleccionar no dispone de alquiler con Forfait. ¿Qúe deseas hacer?",
@@ -167,23 +167,17 @@ export const LangsString = {
     "en": "The station you just selected does not have a rental with Ski Pass. What do you want to do?",
     "fr": "The station you just selected does not have a rental with Ski Pass. What do you want to do?"
   },
-  irACesta: {
-    "es": "Ir a cesta",
-    "ca": "Anar a cistella",
-    "en": "Go to cart",
-    "fr": "Aller au panier"
+  mensajeRopa: {
+    "es": "Previamente, has añadido alquilar de ropa. La estación que acabas de seleccionar no dispone de alquiler de ropa.",
+    "ca": "Prèviament, has afegit llogar de roba. L'estació que acabes de seleccionar no disposa de lloguer de roba.",
+    "en": "Previously, you have added clothing rentals. The station you just selected does not have clothing rental.",
+    "fr": "Auparavant, vous avez ajouté des locations de vêtements. La station que vous venez de sélectionner ne propose pas de location de vêtements."
   },
   cambiarTxt: {
-    "es": "Cambiar",
-    "ca": "Canviar",
-    "en": "Change",
-    "fr": "Changer"
-  },
-  noCambiarTxt: {
-    "es": "No cambiar",
-    "ca": "No canviar",
-    "en": "Do not change",
-    "fr": "Ne change pas"
+    "es": "Ok, entendido.",
+    "ca": "Ok, entès.",
+    "en": "OK understood.",
+    "fr": "Ok, compris."
   },
   direccionTxt: {
     "es": "Dirección: ",

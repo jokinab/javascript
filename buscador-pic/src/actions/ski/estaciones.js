@@ -41,6 +41,7 @@ export const fetchEstacionesSuccess = (items) => {
       hasSelectedData: true,
       isNotAgencia: items.isNotAgencia,
       hasForfaitSelected: items.hasForfaitSelected,
+      hasRopaSelected: items.hasRopaSelected,
       linkToCesta: items.linkToCesta,
       marquee: items.marquee
     }
@@ -119,13 +120,14 @@ export const handleShowErrors = (error) => {
 }
 
 // Action para cuando se clicka sector
-export const handleSectorClick = (e) => {
+export const handleSectorClick = (id, nombre, unSelectMaterial = false) => {
   return {
     type: types.SECTOR_CLICK_SKI,
     payload: {
-      selectedSector: JSON.parse(e.target.value).id,
-      placeholder: JSON.parse(e.target.value).nombre,
-      isSectorSelected: true
+      selectedSector: id,
+      placeholder: nombre,
+      isSectorSelected: true,
+      unSelectMaterial: unSelectMaterial
     }
   }
 }
@@ -166,19 +168,20 @@ export const handleForfaitButtonClick = ( hasForfaitSelected = false ) => {
   }
 }
 
-export const changeToNoForfaitStation = (target) => {
+export const changeToNoMaterialSector = (target) => {
+  console.log(target);
   return {
-    type: types.CHANGE_TO_NO_FORFAIT_STATION_OVERLAY,
+    type: types.CHANGE_TO_NO_MATERIAL_SECTOR_OVERLAY,
     payload: {
-      showChangeToNoForfaitOverlay: true,
-      noForfaitStation: target.value 
+      showChangeToNoMaterialOverlay: true,
+      noMaterialSector: target
     }
-  }    
+  }  
 }
 
-export const closeChangeStationOverlay = () => {
+export const closeChangeNoMaterialOverlay = () => {
   return {
-    type: types.CLOSE_TO_NO_FORFAIT_STATION_OVERLAY,
+    type: types.CLOSE_TO_NO_MATERIAL_OVERLAY,
     payload: {}
-  }    
+  }   
 }

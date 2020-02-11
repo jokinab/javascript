@@ -13,8 +13,7 @@ const ChangeToNoForfaitOverlay = (props) => {
           </div>
         </header>
         <div className='forfait-cnt-warning'>
-          <p className='forfait-cnt-txt'>{LangsString.previamtenteForfait[props.lang]}</p>
-          <p className='forfait-cnt-txt'>{LangsString.queDeseas[props.lang]}</p>
+          <p className='forfait-cnt-txt'>{LangsString.mensajeForfait[props.lang]}</p>
         </div>
         <div className='forfait-buttons'>
           <a className='forfait-button cambiar-red' href={props.linkToCesta} title={props.linkToCesta}>{LangsString.irACesta[props.lang]}</a>

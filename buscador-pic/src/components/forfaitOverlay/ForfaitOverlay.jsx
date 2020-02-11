@@ -44,7 +44,7 @@ const ForfaitOverlay = (props) => {
           <button className='no-interest forfait-button' value={false} onClick={ (e) => props.handleForfaitButtonCLick(e) } >
             {LangsString.alquilarSinForfait[props.lang]}
           </button>
-          <button className='si-interest forfait-button' value={true} onClick={ (e) => props.handleForfaitButtonCLick(e) } >
+          <button className='interest forfait-button' value={true} onClick={ (e) => props.handleForfaitButtonCLick(e) } >
             <img src={forfaitIcono} className='forfait-img' alt='' />
             {LangsString.alquilarConForfait[props.lang]}
           </button>

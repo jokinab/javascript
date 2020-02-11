@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import TiendaFicha from './../tiendaFicha/TiendaFicha';
 import { LangsString } from '../../lang/Lang';
 
-const TiendasFromEstacion = (props) => {
+const TiendasFromSector = (props) => {
 
   let tiendas = [];
 
-  if ( props.estacion.sectores.length > 0  ) {
-    props.estacion.sectores.map( sector => sector.tiendas.map( tienda => tiendas.push(tienda) ))
+  if ( props.sector.tiendas.length > 0  ) {
+    props.sector.tiendas.map( tienda => tiendas.push(tienda) )
   }
 
   let tiendasUnique = Array.from(new Set(tiendas.map( s => s.id)))
@@ -27,22 +27,24 @@ const TiendasFromEstacion = (props) => {
         horarios: tiendas.find( s => s.id === id).horarios
       }
     });
-
-  let textEstacion = `<strong>${props.estacion.nombre} / ${props.estacion.sectores[0].nombre}</strong>`;
   
+  let selectedEstacion = props.estacionNombre !== '' ? `${props.estacionNombre} / ` : ''; 
+  
+  let textEstacion = `<strong>${selectedEstacion}${props.sector.nombre}</strong>`;
+   
   return (
     <div className="tiendas-wrap-container">
       <div className="tiendas-from-estacion-wrap">
         <p className="tiendas-ficha-message"  dangerouslySetInnerHTML={{ __html: `${LangsString.tiendasDeTxt[props.lang].replace("%s", textEstacion )}` }} />
         <p className="tiendas-ficha-message-sub">{ LangsString.tiendasDeTxt2[props.lang] }</p>
-        <p className="tiendas-ficha-message-sub">{ LangsString.tiendasDeTxt3[props.lang] }</p>
-        <p className="tiendas-ficha-message-sub">{ LangsString.tiendasDeTxt4[props.lang] }</p>
       </div>  
       <div className="tiendas-from-estacion-cnt">
           {
+            
             tiendasUnique.length > 0 && tiendasUnique.map( ( tienda, index ) => {
               return <TiendaFicha key={index} tienda={tienda} lang={props.lang}/>
             } )
+            
           } 
       </div>  
     </div>  
@@ -50,8 +52,9 @@ const TiendasFromEstacion = (props) => {
   
 }
 
-TiendasFromEstacion.propTypes = {
-  estacionesList: PropTypes.object
+TiendasFromSector.propTypes = {
+  sector: PropTypes.object,
+  estacionNombre: PropTypes.string
 }
 
-export default TiendasFromEstacion;
+export default TiendasFromSector;

@@ -36,6 +36,14 @@ export default class DateTools {
     
   }
 
+  static formatStringToDate ( stringDate ) {
+    
+    let dateArr = stringDate.split('-');
+
+    return new Date(dateArr[0], parseInt(dateArr[1])-1 < 0 ? '11' : (parseInt(dateArr[1])-1).toString(), dateArr[2]);
+    
+  }
+
   static hasBloquedDaysInSelected( startDate, endDate, bloquedDays ) {
     
     let hasBloquedDay = false;
@@ -93,6 +101,21 @@ export default class DateTools {
     let endDateOk = endDate.getTime() < lastDayLimit.getTime() ? true : false;
 
     return ( startDateOk && endDateOk ) ? true : false;
+
+  }
+
+  static isMoreThanOneDayRent( selectedStartDate = new Date(), selectedEndDate = new Date() ) {
+
+    var date1 = new Date(selectedStartDate); 
+    var date2 = new Date(selectedEndDate); 
+      
+    // To calculate the time difference of two dates 
+    var Difference_In_Time = date2.getTime() - date1.getTime(); 
+      
+    // To calculate the no. of days between two dates 
+    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+      
+    return Difference_In_Days > 0 ? true : false;
 
   }
 
