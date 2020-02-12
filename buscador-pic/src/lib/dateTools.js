@@ -76,10 +76,7 @@ export default class DateTools {
 
   }
 
-  static isInDateToSelectForfait( selectedStartDate = new Date(), selectedEndDate = new Date() ) {
-
-    // console.log(`selectedStartDate: ${selectedStartDate}`);
-    // console.log(`selectedEndDate: ${selectedEndDate}`);
+  static isInDateToSelectForfait( selectedStartDate = new Date(), selectedEndDate = new Date(), maxDiasForfait = 10 ) {
 
     let today = new Date();
     today.setHours(0,0,0,0);
@@ -90,10 +87,8 @@ export default class DateTools {
 
     let startDateOk = startDate.getTime() >= today.getTime() ? true : false;
 
-    // console.log(`today: ${today}`);
-
     let lastDayLimit = new Date(selectedStartDate);  
-    lastDayLimit.setDate(lastDayLimit.getDate() + 10);
+    lastDayLimit.setDate(lastDayLimit.getDate() + maxDiasForfait);
 
     let endDate = new Date( selectedEndDate );
     endDate.setHours(0,0,0,0);

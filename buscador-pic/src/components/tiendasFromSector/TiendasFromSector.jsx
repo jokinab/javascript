@@ -40,11 +40,9 @@ const TiendasFromSector = (props) => {
       </div>  
       <div className="tiendas-from-estacion-cnt">
           {
-            
             tiendasUnique.length > 0 && tiendasUnique.map( ( tienda, index ) => {
               return <TiendaFicha key={index} tienda={tienda} lang={props.lang}/>
             } )
-            
           } 
       </div>  
     </div>  

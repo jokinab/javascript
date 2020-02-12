@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { LangsString } from './../../lang/Lang';
 import forfaitValldnord from './../../images/forfaitValldnord.jpg';
+import forfaitIcono from './../../images/forfaitIcono.png';
+import Domains from './../../apiPic/domains';
+
+import forfaitSkiAzul from './../../images/forfaitSkiAzul.png';
+import forfaitAhorraAzul from './../../images/forfaitAhorraAzul.png';
+import forfaitdescuentoAzul from './../../images/forfaitDescuentoAzul.png';
+
 import forfaitSki from './../../images/forfaitSki.png';
 import forfaitAhorra from './../../images/forfaitAhorra.png';
 import forfaitdescuento from './../../images/forfaitDescuento.png';
-import forfaitIcono from './../../images/forfaitIcono.png';
 
 const ForfaitOverlay = (props) => {
 
@@ -24,15 +30,15 @@ const ForfaitOverlay = (props) => {
           <h2 className='forfait-message-1'>{LangsString.forfaitMainMessage[props.lang]}</h2>
           <ul className='forfait-list'>
             <li className='forfait-list-item'>
-              <img src={forfaitSki} className='forfait-item-img' alt='' />
+              <img src={ Domains.getDomainStyles() === 'azul' ? forfaitSkiAzul : forfaitSki} className='forfait-item-img' alt='' />
               <span className='forfait-item-text' dangerouslySetInnerHTML={{ __html: `${LangsString.forfaitListItemFirst[props.lang]}` }} />  
             </li>
             <li className='forfait-list-item'>
-              <img src={forfaitAhorra} className='forfait-item-img' alt='' />
+              <img src={ Domains.getDomainStyles() === 'azul' ? forfaitAhorraAzul : forfaitAhorra } className='forfait-item-img' alt='' />
               <span className='forfait-item-text' dangerouslySetInnerHTML={{ __html: `${LangsString.forfaitListItemSecond[props.lang]}` }} />  
             </li>
             <li className='forfait-list-item'>
-              <img src={forfaitdescuento} className='forfait-item-img' alt='' />
+              <img src={ Domains.getDomainStyles() === 'azul' ? forfaitdescuentoAzul : forfaitdescuento } className='forfait-item-img' alt='' />
               <span className='forfait-item-text' dangerouslySetInnerHTML={{ __html: `${LangsString.forfaitListItemThird[props.lang]}` }} />  
             </li>
           </ul>

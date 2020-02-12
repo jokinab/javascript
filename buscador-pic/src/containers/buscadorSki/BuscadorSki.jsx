@@ -108,10 +108,6 @@ class BuscadorSkiComponent extends Component{
   handleStartDateSelection(date){
     this.hideErrors();
     this.props.onStartDateSelection(date);  
-    if (this.startDateRef.current !== null){
-      console.log(this.startDateRef);
-      // this.startDateRef.current.setAttribute("readOnly", true);
-    }
   }
 
   handlePlaceHolderEndDayClik( isStartDateSelected = false ){ 
@@ -123,10 +119,6 @@ class BuscadorSkiComponent extends Component{
   handleEndDateSelection(date){
     this.hideErrors();
     this.props.onEndDateSelection(date);
-    if (this.endDateRef.current !== null){
-      console.log(this.endDateRef);
-      // this.endDateRef.current.setAttribute("readOnly", true);
-    }
   }
 
   handlePlaceHolderSubmit(isStartDateSelected = false) {
@@ -264,6 +256,8 @@ class BuscadorSkiComponent extends Component{
                     excludeDates={UIX.disabledDays.map( date => new Date(date) )}
                     minDate={new Date(UIX.firstDayAvailable)}
                     ref={this.startDateRef}
+
+                    onFocus={(e) => e.target.readOnly = true}
                     //maxDate={ ( UIX.endDatePicker.selectedDate === '' && UIX.endDatePicker.isEndDateSelected ) ? new Date('2050-12-12') : UIX.endDatePicker.selectedDate}
                     />       
                 }
@@ -288,6 +282,8 @@ class BuscadorSkiComponent extends Component{
                     excludeDates={UIX.disabledDays.map( date => new Date(date) )}
                     minDate={new Date(UIX.startDatePicker.selectedDate)}
                     ref={this.endDateRef}
+
+                    onFocus={(e) => e.target.readOnly = true}
                     />       
                 }
                 <FontAwesomeIcon icon={faCalendarAlt} />

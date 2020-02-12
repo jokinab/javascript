@@ -294,7 +294,7 @@ export const buscadorSki = (state = initialState, action) => {
               if ( 
                   state.UIX.isNotAgencia && 
                   sector.forfait === 1 && 
-                  DateTools.isInDateToSelectForfait(state.UIX.startDatePicker.selectedDate, state.UIX.endDatePicker.selectedDate) &&
+                  DateTools.isInDateToSelectForfait( state.UIX.startDatePicker.selectedDate, state.UIX.endDatePicker.selectedDate, parseInt(sector.maxDiasForfait) ) &&
                   DateTools.isMoreThanOneDayRent(state.UIX.startDatePicker.selectedDate, state.UIX.endDatePicker.selectedDate) 
               ) {
                 newUIX = {

@@ -680,6 +680,39 @@
   }
 }
 
+@media only screen and (max-width: 767px) {
+  .buscador-wrap{
+    .forfait-hdr{
+      margin-bottom: 0px;
+    }
+    .forfait-novedad{
+      padding:0;
+    }
+    .forfait-novedad-tit {
+      font-size: 28px;
+      font-weight: 400;
+      padding: 0px 5px;
+      margin:10px 0;
+    }
+    .forfait-vallnord{
+      padding: 0;
+      max-width: 48%;
+      width: 200px;
+      @include flexbox();
+      @include align-items(center);
+    }
+
+    .forfait-buttons {
+      @include flex-direction(column);
+    }
+    .forfait-button {
+        margin-bottom: 10px;
+        margin-right: 0;
+        width: 100%;
+    }
+  }  
+}
+
 @media (max-width: 600px) {
   .buscador-wrap{
     .buscador-items {

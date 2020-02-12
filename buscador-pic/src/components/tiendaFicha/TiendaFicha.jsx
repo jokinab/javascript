@@ -15,21 +15,25 @@ const TiendaFicha = (props) => {
         </h2>
       </header>
       <div className="tienda-ficha-item-content">
-        <div className="tienda-ficha-item-main-image">
-            <img src={ props.tienda.images[0].url } width="450" height="253" alt={ props.tienda.images[0].alt } />
-        </div>
-        <div className="tienda-ficha-item-rest-img">
-          { 
-            props.tienda.images.map( ( image, index ) => { 
-                if ( index === 0 ) {
-                  return false;
-                } else { 
-                  return <img src={ image.url } width="136" height="76" alt={ image.alt } key={ index } />
-                }
-            }    
-            )
-          }
-        </div>    
+        { props.tienda.images.length > 0 && 
+          <div className="tienda-ficha-item-main-image">
+              <img src={ props.tienda.images[0].url } width="450" height="253" alt={ props.tienda.images[0].alt } />
+          </div>
+        }  
+        { props.tienda.images.length > 1 &&
+          <div className="tienda-ficha-item-rest-img">
+            { 
+              props.tienda.images.map( ( image, index ) => { 
+                  if ( index === 0 ) {
+                    return false;
+                  } else { 
+                    return <img src={ image.url } width="136" height="76" alt={ image.alt } key={ index } />
+                  }
+              }    
+              )
+            }
+          </div>    
+        }  
       </div>  
 
       <footer className="tienda-ficha-item-ftr"> 

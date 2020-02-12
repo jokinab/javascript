@@ -8,14 +8,8 @@ export default class Domains {
     switch ( currentDomain ) {
 
       case 'testing.picnegre.com':
-        domainToFetch = `https://${currentDomain}`;
-        break;
       case 'www.picnegre.com':
-        domainToFetch = `https://${currentDomain}`;
-        break; 
       case 'testing.shusski.com':
-        domainToFetch = `https://${currentDomain}`;
-        break;
       case 'shusski.com':
         domainToFetch = `https://${currentDomain}`;
         break;
@@ -34,10 +28,43 @@ export default class Domains {
       default:
         break;
         
-    }    
+    }
 
     return domainToFetch;
 
   }
+
+  static getDomainStyles() {
+    
+    let currentDomain = window.location.hostname;
+    let domainStyles;
+
+    switch ( currentDomain ) {
+
+      case 'testing.picnegre.com':
+      case 'www.picnegre.com':
+        domainStyles = 'rojo';
+        break; 
+      case 'testing.shusski.com':
+      case 'shusski.com':
+      case 'rentaski.coexia.net':
+      case 'www.renta-ski.com':
+        domainStyles = 'azul';
+        break;   
+      case '':
+        domainStyles = 'azul';
+        break;
+      case 'localhost':
+        domainStyles = 'azul';
+        break;          
+      default:
+        break;
+        
+    }
+
+    return domainStyles;
+
+  }
+
   
 }
